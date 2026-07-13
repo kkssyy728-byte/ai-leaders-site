@@ -187,9 +187,23 @@
     return String(a.label || a.name || a.title || '').localeCompare(String(b.label || b.name || b.title || ''), 'ko');
   }
 
+  function fixedInstructorRank(item) {
+    var name = String(item && item.name || '').replace(/\s+/g, '');
+    var key = String(item && (item.slug || item.id) || '').toLowerCase();
+    if (name === '아이온' || name === '아이온강사' || key === 'aion') return 1;
+    if (name === '문건우' || name === '문건우강사' || key === 'moon') return 2;
+    return 3;
+  }
+
+  function sortInstructors(a, b) {
+    var rank = fixedInstructorRank(a) - fixedInstructorRank(b);
+    if (rank !== 0) return rank;
+    return sortByOrder(a, b);
+  }
+
   function setCache(next) {
     cache.banners = (next.banners || []).map(normalizeBanner).sort(sortByOrder);
-    cache.instructors = (next.instructors || []).map(normalizeInstructor).sort(sortByOrder);
+    cache.instructors = (next.instructors || []).map(normalizeInstructor).sort(sortInstructors);
     cache.options = (next.options || []).map(normalizeOption).sort(sortByOrder);
     loaded = true;
     lastError = null;

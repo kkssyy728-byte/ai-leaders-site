@@ -13,11 +13,29 @@
     return utils.clone(value == null ? null : value);
   }
 
+  function compareByOrder(a, b) {
+    var order = Number(a.sortOrder || 0) - Number(b.sortOrder || 0);
+    if (order !== 0) return order;
+    return String(a.label || a.name || a.title || '').localeCompare(String(b.label || b.name || b.title || ''), 'ko');
+  }
+
   function sortByOrder(items) {
+    return (items || []).slice().sort(compareByOrder);
+  }
+
+  function fixedInstructorRank(item) {
+    var name = String(item && item.name || '').replace(/\s+/g, '');
+    var key = String(item && (item.slug || item.id) || '').toLowerCase();
+    if (name === '아이온' || name === '아이온강사' || key === 'aion') return 1;
+    if (name === '문건우' || name === '문건우강사' || key === 'moon') return 2;
+    return 3;
+  }
+
+  function sortInstructors(items) {
     return (items || []).slice().sort(function (a, b) {
-      var order = Number(a.sortOrder || 0) - Number(b.sortOrder || 0);
-      if (order !== 0) return order;
-      return String(a.label || a.name || a.title || '').localeCompare(String(b.label || b.name || b.title || ''), 'ko');
+      var rank = fixedInstructorRank(a) - fixedInstructorRank(b);
+      if (rank !== 0) return rank;
+      return compareByOrder(a, b);
     });
   }
 
@@ -48,14 +66,14 @@
     if (payload.expiresAt && payload.expiresAt < Date.now()) return null;
     return {
       banners: sortByOrder(payload.state.banners || []),
-      instructors: sortByOrder(payload.state.instructors || []),
+      instructors: sortInstructors(payload.state.instructors || []),
       options: sortByOrder(payload.state.options || [])
     };
   }
 
   function createPreviewStore(baseStore, state) {
-    function active(items, includeInactive) {
-      return sortByOrder(items).filter(function (item) {
+    function active(items, includeInactive, sorter) {
+      return (sorter || sortByOrder)(items).filter(function (item) {
         return includeInactive || item.isActive !== false;
       }).map(clone);
     }
@@ -69,7 +87,7 @@
         });
       },
       getInstructors: function (includeInactive) {
-        return active(state.instructors || [], includeInactive);
+        return active(state.instructors || [], includeInactive, sortInstructors);
       },
       getOptions: function (group, includeInactive) {
         return active(state.options || [], includeInactive).filter(function (item) {
