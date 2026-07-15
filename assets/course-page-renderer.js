@@ -190,7 +190,7 @@
       : course.id;
     var href = typeof s.courseDetailUrl === 'function'
       ? s.courseDetailUrl(course)
-      : '/course/' + encodeURIComponent(fallbackCode) + '/';
+      : '/course/?c=' + encodeURIComponent(fallbackCode);
     return ''
       + '<article class="card" data-cat="' + s.escapeHtml(filterKey(course)) + '" data-region="' + s.escapeHtml(regionKey(course)) + '" data-event-date="' + s.escapeHtml(course.eventDate || '') + '">'
       + '<a href="' + s.escapeHtml(href) + '" class="card-link">'

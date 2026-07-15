@@ -58,7 +58,7 @@
       : course.id;
     var href = typeof s.courseDetailUrl === 'function'
       ? s.courseDetailUrl(course)
-      : '/course/' + encodeURIComponent(fallbackCode) + '/';
+      : '/course/?c=' + encodeURIComponent(fallbackCode);
     return ''
       + '<a class="course-card" href="' + s.escapeHtml(href) + '">'
       + '<div class="course-thumb">'

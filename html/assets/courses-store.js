@@ -386,7 +386,7 @@
 
   function courseDetailUrl(course) {
     var code = getCoursePublicCode(course);
-    return code ? '/course/' + encodeURIComponent(code) + '/' : '/course/';
+    return code ? '/course/?c=' + encodeURIComponent(code) : '/course/';
   }
 
   function formatMoney(value) {

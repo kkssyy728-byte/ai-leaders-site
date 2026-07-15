@@ -514,7 +514,7 @@
   function publicCourseUrlFromCode(code){
     var href = store.courseDetailUrl
       ? store.courseDetailUrl({ publicCode: code })
-      : '/course/' + encodeURIComponent(code) + '/';
+      : '/course/?c=' + encodeURIComponent(code);
     return location.origin + href;
   }
 
