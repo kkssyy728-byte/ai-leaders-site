@@ -85,6 +85,27 @@
     </div>
 
     <section class="timeline" aria-label="업데이트 타임라인">
+      <details class="log-card" open>
+        <summary class="log-head">
+          <div class="log-date">2026.07.15</div>
+          <div class="log-head-actions">
+            <span class="log-tag">Google Ads 추적 태그 설치</span>
+            <span class="log-toggle" aria-hidden="true"></span>
+          </div>
+        </summary>
+        <div class="log-body">
+          <section class="log-section">
+            <h2>구글 광고 기본 추적 스크립트 설치</h2>
+            <ul>
+              <li>Google Ads 계정 태그 `AW-17060350229`를 공개 페이지의 `<head>` 영역에 추가했습니다.</li>
+              <li>홈페이지 루트 `index.html`과 `html/index.html`을 포함해 소개, 강연 목록/상세, 출강 문의, FAQ, 강사진, 강사 지원, 후기 페이지에서 방문 추적이 동작하도록 반영했습니다.</li>
+              <li>관리자 페이지에는 광고 추적 태그를 넣지 않아 운영 화면 방문이 광고 데이터에 섞이지 않도록 유지했습니다.</li>
+              <li>이번 반영은 기본 Google tag 설치이며, 신청 완료 전환 이벤트는 별도 완료 페이지 또는 신청 저장 성공 로직에 전환 라벨을 받아 추가해야 합니다.</li>
+            </ul>
+          </section>
+        </div>
+      </details>
+
       <details class="log-card">
         <summary class="log-head">
           <div class="log-date">2026.07.13</div>
