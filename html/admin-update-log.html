@@ -90,7 +90,7 @@
         <summary class="log-head">
           <div class="log-date">2026.07.16</div>
           <div class="log-head-actions">
-            <span class="log-tag">관리 화면·필터·저장 안정화</span>
+            <span class="log-tag">관리 화면·필터·저장·광고 추적 안정화</span>
             <span class="log-toggle" aria-hidden="true"></span>
           </div>
         </summary>
@@ -155,6 +155,16 @@
               <li>공개 페이지 푸터에 관리자 페이지 링크와 임시 비밀번호 확인창을 추가하고, 입력창을 화면 중앙에 배치했습니다.</li>
               <li>사이트 콘텐츠 관리의 왼쪽 사이드바를 다른 관리자 화면과 같은 디자인과 반응형 기준으로 통일했습니다.</li>
               <li>모든 관리자 화면의 왼쪽 하단에 홈 버튼을 추가해 랜딩페이지로 바로 이동할 수 있게 했습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>Meta 픽셀·광고 퍼널 추적 정리</h2>
+            <ul>
+              <li>신규 Meta 픽셀 <code>1509286323738952</code>를 공개 페이지에 직접 설치하고, 기존 GTM 잔여 태그와 충돌해도 같은 이벤트가 중복 전송되지 않도록 방어 로직을 추가했습니다.</li>
+              <li>광고 최적화 목표를 신청 완료 기준으로 맞출 수 있도록 완료 페이지 이벤트를 <code>Lead</code>가 아닌 <code>Purchase</code>로 전송하도록 정리했습니다.</li>
+              <li>랜딩·목록·강연 상세 진입은 <code>ViewContent</code>, 상세페이지 신청하기 클릭은 <code>InitiateCheckout</code>, 신청 완료는 <code>Purchase</code>로 이어지는 퍼널 추적 구조를 적용했습니다.</li>
+              <li>강연 상세 이벤트에는 강연명, 무료·유료 구분, 강연 코드, 가격, 통화 값을 함께 전달해 Meta 이벤트 관리자에서 강연별 성과를 구분할 수 있게 했습니다.</li>
+              <li>라이브 사이트에서 픽셀 로드, 상세페이지 <code>ViewContent</code>, 신청 시작 <code>InitiateCheckout</code>, 완료 페이지 <code>Purchase</code> 발동 여부를 확인했습니다.</li>
             </ul>
           </section>
         </div>
