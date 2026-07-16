@@ -167,6 +167,15 @@
               <li>라이브 사이트에서 픽셀 로드, 상세페이지 <code>ViewContent</code>, 신청 시작 <code>InitiateCheckout</code>, 완료 페이지 <code>Purchase</code> 발동 여부를 확인했습니다.</li>
             </ul>
           </section>
+          <section class="log-section">
+            <h2>Google Ads·GTM 전환 추적 성공 확인</h2>
+            <ul>
+              <li>공개 사이트의 Google Tag Manager 컨테이너 <code>GTM-KZ447VNR</code>는 유지하고, Meta 픽셀 전환 작업과 충돌하지 않도록 역할을 분리했습니다.</li>
+              <li>신청 완료 페이지에서 <code>lecture_application_complete</code> 데이터레이어 이벤트가 전송되는 것을 기준으로 Google Ads 전환 추적 흐름을 확인했습니다.</li>
+              <li>구글 테스트에서 신청 완료 전환 태그가 정상 감지되어, 광고 전환 측정은 GTM·Google Ads 기준으로 계속 사용할 수 있게 정리했습니다.</li>
+              <li>완료 페이지 URL은 <code>/application-complete/</code>로 정리되어 쿼리스트링 없이 깔끔하게 유지되며, 완료 이벤트에는 강연 ID·강연 코드·강연명·무료/유료 구분 값이 함께 전달됩니다.</li>
+            </ul>
+          </section>
         </div>
       </details>
 
