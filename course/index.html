@@ -813,6 +813,7 @@ async function bootCourseDetailPage() {
       : stableCourseCode(id));
   window.currentCourseForApplication = course;
   populatePage(course);
+  trackCourseViewContent();
   initNav();
   initReveal();
 }
@@ -1011,6 +1012,31 @@ function shareCourse() {
 }
 function toggleWish(btn) { btn.classList.toggle('on'); }
 
+function metaCourseParams() {
+  const c = window.currentCourseForApplication || {};
+  const price = Number(String(c.price || '').replace(/[^0-9.]/g, '')) || 0;
+  return {
+    content_name: c.titlePlain || document.title || 'AI리더스협회 강연',
+    content_category: c.type === 'paid' ? 'paid_lecture' : 'free_lecture',
+    content_type: 'lecture',
+    content_ids: [c.publicCode || c.id || new URLSearchParams(location.search).get('id') || location.pathname],
+    value: price,
+    currency: 'KRW'
+  };
+}
+
+function trackCourseViewContent() {
+  if (typeof window.aiLeadersTrackMeta === 'function') {
+    window.aiLeadersTrackMeta('ViewContent', metaCourseParams());
+  }
+}
+
+function trackApplicationStart() {
+  if (typeof window.aiLeadersTrackMeta === 'function') {
+    window.aiLeadersTrackMeta('InitiateCheckout', metaCourseParams());
+  }
+}
+
 // ── UI interactions ───────────────────────────────────────────────────────────
 function toggleCu(btn) {
   const item = btn.closest('.cu-item');
@@ -1019,6 +1045,7 @@ function toggleCu(btn) {
 }
 
 function openModal() {
+  trackApplicationStart();
   document.getElementById('modalBg').classList.add('open');
   document.getElementById('m-name').focus();
 }
