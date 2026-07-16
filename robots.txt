@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin-applications/
+Disallow: /admin-corporate-inquiries/
+Disallow: /admin-courses/
+Disallow: /admin-dashboard/
+Disallow: /admin-instructor-applications/
+Disallow: /admin-site-content/
+Disallow: /admin-update-log/
+Disallow: /html/
+Disallow: /supabase/
+Disallow: /tools/
+
+Sitemap: https://newaileaders.co.kr/sitemap.xml
