@@ -16,6 +16,7 @@ const pageMirrors = [
   ['html/admin-courses.html', ['admin-courses/index.html']],
   ['html/admin-dashboard.html', ['admin-dashboard/index.html']],
   ['html/admin-instructor-applications.html', ['admin-instructor-applications/index.html']],
+  ['html/admin-login.html', ['admin-login/index.html']],
   ['html/admin-site-content.html', ['admin-site-content/index.html']],
   ['html/admin-update-log.html', ['admin-update-log/index.html']],
   ['html/application-complete.html', ['application-complete/index.html']],

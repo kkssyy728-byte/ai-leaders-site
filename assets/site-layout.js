@@ -2,8 +2,7 @@
   'use strict';
 
   var GOOGLE_ADS_ID = 'AW-17060350229';
-  var ADMIN_ACCESS_PATH = '/admin-dashboard/';
-  var ADMIN_ACCESS_PASSWORD = '123123123';
+  var ADMIN_ACCESS_PATH = '/admin-login/?next=%2Fadmin-dashboard%2F';
 
   function ensureGoogleTag() {
     if (!GOOGLE_ADS_ID) return;
@@ -75,7 +74,7 @@
     + '        <p class="ft-biz">AI리더스협회<span class="bar">|</span>주소 : 영등포구 선유로70 우리벤처타운2<span class="bar">|</span>대표 : 김영주<span class="bar">|</span>사업자등록번호 : 352-88-01460<span class="bar">|</span>TEL : 010-4269-0213</p>'
     + '        <p class="ft-copy">COPYRIGHT ⓒ AI리더스협회 ALL RIGHTS RESERVED</p>'
     + '        <p class="ft-links">'
-    + '          <a href="/admin-dashboard/" data-admin-access>관리자 페이지</a>'
+    + '          <a href="/admin-login/?next=%2Fadmin-dashboard%2F" data-admin-access>직원 로그인</a>'
     + "          <a href=\"#privacyModal\" onclick=\"if(window.openLegal){openLegal('privacyModal');} return false;\">개인정보처리방침</a>"
     + "          <a href=\"#termsModal\" onclick=\"if(window.openLegal){openLegal('termsModal');} return false;\">이용약관</a>"
     + '        </p>'
@@ -84,122 +83,9 @@
     + '  </div>'
     + '</footer>';
 
-  var ADMIN_ACCESS_DIALOG_HTML = ''
-    + '<div class="admin-access-dialog__panel">'
-    + '  <button class="admin-access-dialog__close" type="button" data-admin-access-close aria-label="관리자 페이지 비밀번호 창 닫기">×</button>'
-    + '  <h2 id="adminAccessTitle">관리자 페이지</h2>'
-    + '  <p id="adminAccessDescription">관리자 페이지로 이동하려면 임시 비밀번호를 입력해 주세요.</p>'
-    + '  <form class="admin-access-dialog__form" id="adminAccessForm" novalidate>'
-    + '    <label for="adminAccessPassword">비밀번호</label>'
-    + '    <input id="adminAccessPassword" name="adminAccessPassword" type="password" autocomplete="off" maxlength="64" required aria-describedby="adminAccessError"/>'
-    + '    <p class="admin-access-dialog__error" id="adminAccessError" role="alert" hidden>비밀번호가 올바르지 않습니다.</p>'
-    + '    <div class="admin-access-dialog__actions">'
-    + '      <button class="admin-access-dialog__button" type="button" data-admin-access-close>취소</button>'
-    + '      <button class="admin-access-dialog__button is-primary" type="submit">확인</button>'
-    + '    </div>'
-    + '  </form>'
-    + '</div>';
-
-  function ensureAdminAccessStyle() {
-    if (document.getElementById('adminAccessStyle')) return;
-    var style = document.createElement('style');
-    style.id = 'adminAccessStyle';
-    style.textContent = ''
-      + '.admin-access-dialog{position:fixed;inset:0;width:min(420px,calc(100% - 32px));max-height:calc(100dvh - 32px);margin:auto;border:0;border-radius:16px;padding:0;background:#fff;color:#0c1828;box-shadow:0 24px 80px rgba(12,24,40,.28);overflow:auto;}'
-      + '.admin-access-dialog::backdrop{background:rgba(12,24,40,.62);}'
-      + '.admin-access-dialog__panel{position:relative;padding:30px;}'
-      + '.admin-access-dialog__panel h2{margin:0;font-size:22px;line-height:1.3;font-weight:800;color:#0c1828;}'
-      + '.admin-access-dialog__panel>p{margin:10px 0 0;color:#667085;font-size:14px;line-height:1.6;word-break:keep-all;}'
-      + '.admin-access-dialog__close{position:absolute;top:16px;right:16px;width:36px;height:36px;border:0;border-radius:50%;background:#f2f4f7;color:#667085;font-size:24px;line-height:1;cursor:pointer;}'
-      + '.admin-access-dialog__close:hover{background:#e4e7ec;color:#344054;}'
-      + '.admin-access-dialog__form{display:grid;gap:8px;margin-top:22px;}'
-      + '.admin-access-dialog__form label{font-size:13px;font-weight:800;color:#344054;}'
-      + '.admin-access-dialog__form input{width:100%;height:46px;border:1px solid #d0d5dd;border-radius:9px;background:#fff;color:#0c1828;padding:0 12px;font-size:15px;outline:none;box-sizing:border-box;}'
-      + '.admin-access-dialog__form input:focus{border-color:#0172fe;box-shadow:0 0 0 3px rgba(1,114,254,.12);}'
-      + '.admin-access-dialog__form input[aria-invalid="true"]{border-color:#d92d20;box-shadow:0 0 0 3px rgba(217,45,32,.1);}'
-      + '.admin-access-dialog__error{margin:0;color:#d92d20;font-size:12px;font-weight:700;}'
-      + '.admin-access-dialog__actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px;}'
-      + '.admin-access-dialog__button{height:44px;border:1px solid #d0d5dd;border-radius:9px;background:#fff;color:#344054;font-size:14px;font-weight:800;cursor:pointer;}'
-      + '.admin-access-dialog__button.is-primary{border-color:#0172fe;background:#0172fe;color:#fff;}'
-      + '.admin-access-dialog__button:hover{filter:brightness(.97);}'
-      + '.admin-access-dialog__button:focus-visible,.admin-access-dialog__close:focus-visible{outline:3px solid rgba(1,114,254,.22);outline-offset:2px;}'
-      + '@media(max-width:480px){.admin-access-dialog__panel{padding:26px 20px 22px;}.admin-access-dialog__actions{grid-template-columns:1fr;}.admin-access-dialog__button.is-primary{grid-row:1;}}';
-    document.head.appendChild(style);
-  }
-
-  function resetAdminAccessDialog(dialog) {
-    var input = dialog && dialog.querySelector('#adminAccessPassword');
-    var error = dialog && dialog.querySelector('#adminAccessError');
-    if (input) {
-      input.value = '';
-      input.removeAttribute('aria-invalid');
-    }
-    if (error) error.hidden = true;
-  }
-
-  function ensureAdminAccessDialog() {
-    if (!document.body) return null;
-    ensureAdminAccessStyle();
-    var dialog = document.getElementById('adminAccessDialog');
-    if (dialog) return dialog;
-    dialog = document.createElement('dialog');
-    dialog.id = 'adminAccessDialog';
-    dialog.className = 'admin-access-dialog';
-    dialog.setAttribute('aria-labelledby', 'adminAccessTitle');
-    dialog.setAttribute('aria-describedby', 'adminAccessDescription');
-    dialog.innerHTML = ADMIN_ACCESS_DIALOG_HTML;
-    document.body.appendChild(dialog);
-
-    Array.prototype.forEach.call(dialog.querySelectorAll('[data-admin-access-close]'), function (button) {
-      button.addEventListener('click', function () { dialog.close(); });
-    });
-    dialog.addEventListener('click', function (event) {
-      if (event.target === dialog) dialog.close();
-    });
-    dialog.addEventListener('cancel', function (event) {
-      event.preventDefault();
-      dialog.close();
-    });
-    dialog.addEventListener('keydown', function (event) {
-      if (event.key !== 'Escape') return;
-      event.preventDefault();
-      dialog.close();
-    });
-    dialog.addEventListener('close', function () {
-      resetAdminAccessDialog(dialog);
-    });
-    dialog.querySelector('#adminAccessPassword').addEventListener('input', function () {
-      this.removeAttribute('aria-invalid');
-      dialog.querySelector('#adminAccessError').hidden = true;
-    });
-    dialog.querySelector('#adminAccessForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      var input = dialog.querySelector('#adminAccessPassword');
-      var error = dialog.querySelector('#adminAccessError');
-      if (input.value === ADMIN_ACCESS_PASSWORD) {
-        global.location.assign(ADMIN_ACCESS_PATH);
-        return;
-      }
-      input.setAttribute('aria-invalid', 'true');
-      error.hidden = false;
-      input.focus();
-      input.select();
-    });
-    return dialog;
-  }
-
   function openAdminAccess(event) {
     if (event) event.preventDefault();
-    var dialog = ensureAdminAccessDialog();
-    if (!dialog) return;
-    resetAdminAccessDialog(dialog);
-    if (typeof dialog.showModal === 'function') {
-      dialog.showModal();
-      global.requestAnimationFrame(function () {
-        var input = dialog.querySelector('#adminAccessPassword');
-        if (input) input.focus();
-      });
-    }
+    global.location.assign(ADMIN_ACCESS_PATH);
   }
 
   function bindAdminAccessLinks() {
@@ -211,7 +97,6 @@
   }
 
   function ensureAdminAccessUi() {
-    ensureAdminAccessDialog();
     bindAdminAccessLinks();
   }
 

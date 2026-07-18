@@ -35,6 +35,8 @@
   @media(max-width:1180px){.admin-shell{grid-template-columns:1fr}.admin-side{position:relative;height:auto}.admin-main{padding:22px}.workspace{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.admin-top{display:block}}
   @media(max-width:640px){.panel-head{align-items:flex-start}.panel-head .btn-admin{height:36px;padding:0 11px}.item.is-sortable{grid-template-columns:34px 64px minmax(0,1fr)}.item.is-sortable.is-compact{grid-template-columns:34px minmax(0,1fr)}.item.is-sortable .item-thumb{width:64px}.item.is-sortable .item-actions{grid-column:2/-1;justify-content:flex-start}}
 </style>
+<link rel="stylesheet" href="/assets/admin-auth.css?v=20260719-secure-admin-1"/>
+<script src="/assets/admin-auth-bootstrap.js?v=20260719-secure-admin-1"></script>
 </head>
 <body>
 <div class="admin-shell">
@@ -172,7 +174,9 @@
   </main>
 </div>
 
-<script src="/assets/supabase-store-common.js?v=20260716-storage-auth-1"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.7/dist/umd/supabase.min.js" integrity="sha384-BmlQlKlDvXvKoxkn5OQuUo/aJQCTXeB+Kls6EccBmG4Kf8AXvp89RtO9MtPxP/r5" crossorigin="anonymous"></script>
+<script src="/assets/supabase-store-common.js?v=20260719-secure-admin-1"></script>
+<script src="/assets/admin-auth.js?v=20260719-secure-admin-1"></script>
 <script src="/assets/site-content-store.js?v=20260716-storage-auth-1"></script>
 <script src="/assets/vendor/sortable.min.js?v=1.15.6-local"></script>
 <script>

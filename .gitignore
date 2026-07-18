@@ -17,6 +17,7 @@ backup/
 
 # Dependency folders
 node_modules/
+/dist/
 
 # OS and editor noise
 .DS_Store

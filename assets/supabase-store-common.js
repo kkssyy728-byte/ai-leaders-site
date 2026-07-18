@@ -7,6 +7,40 @@
     storageBucket: 'instructor-portfolio'
   };
 
+  var PRIVATE_STORAGE_BUCKETS = {
+    'instructor-portfolio': true
+  };
+  var SENSITIVE_INSERT_TABLES = {
+    lecture_applications: true,
+    corporate_inquiries: true,
+    instructor_applications: true
+  };
+  var supabaseClient = null;
+  var activeSession = null;
+  var authReadyPromise = Promise.resolve(null);
+
+  if (global.supabase && typeof global.supabase.createClient === 'function') {
+    supabaseClient = global.supabase.createClient(CONFIG.url, CONFIG.publishableKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    });
+    authReadyPromise = supabaseClient.auth.getSession().then(function (result) {
+      if (result.error) throw result.error;
+      activeSession = result.data ? result.data.session : null;
+      return activeSession;
+    }).catch(function (error) {
+      console.error('[AI Leaders] Supabase session initialization failed.', error);
+      activeSession = null;
+      return null;
+    });
+    supabaseClient.auth.onAuthStateChange(function (_event, session) {
+      activeSession = session || null;
+    });
+  }
+
   var DEFAULT_ERROR_MESSAGE = '데이터를 불러올 수 없습니다.';
 
   function clone(value) {
@@ -158,9 +192,11 @@
     var headers = {
       apikey: CONFIG.publishableKey
     };
+    if (activeSession && activeSession.access_token) {
+      headers.Authorization = 'Bearer ' + activeSession.access_token;
     // Legacy anon keys are JWTs. New sb_publishable_* keys are opaque API keys
     // and must not be sent as Bearer tokens (Storage rejects them as invalid JWS).
-    if (/^eyJ/.test(CONFIG.publishableKey)) {
+    } else if (/^eyJ/.test(CONFIG.publishableKey)) {
       headers.Authorization = 'Bearer ' + CONFIG.publishableKey;
     }
     return mergeHeaders(headers, extra);
@@ -177,11 +213,11 @@
 
   async function request(path, options) {
     if (!hasConfig()) throw makeError();
+    await authReadyPromise;
     var url = CONFIG.url + path;
-    var requestOptions = Object.assign({
-      method: 'GET',
-      headers: buildAuthHeaders()
-    }, options || {});
+    var suppliedOptions = options || {};
+    var requestOptions = Object.assign({ method: 'GET' }, suppliedOptions);
+    requestOptions.headers = buildAuthHeaders(suppliedOptions.headers || {});
     var response = await fetch(url, requestOptions);
     var text = await response.text();
     var data = readJson(text);
@@ -210,11 +246,13 @@
         params.append(key, value);
       });
     }
+    if (options && options.order) params.set('order', options.order);
+    if (options && options.limit) params.set('limit', String(options.limit));
     return request('/rest/v1/' + table + '?' + params.toString(), {
-      headers: buildAuthHeaders({
+      headers: {
         Accept: 'application/json',
         'Accept-Profile': 'public'
-      })
+      }
     }) || [];
   }
 
@@ -222,12 +260,12 @@
     var items = Array.isArray(rows) ? rows : [rows];
     return request('/rest/v1/' + table + '?on_conflict=' + encodeURIComponent(conflictKey || 'id'), {
       method: 'POST',
-      headers: buildAuthHeaders({
+      headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Prefer: 'resolution=merge-duplicates,return=representation',
         'Content-Profile': 'public'
-      }),
+      },
       body: JSON.stringify(items)
     }) || [];
   }
@@ -236,12 +274,12 @@
     var items = Array.isArray(rows) ? rows : [rows];
     return request('/rest/v1/' + table, {
       method: 'POST',
-      headers: buildAuthHeaders({
+      headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Prefer: 'return=representation',
+        Prefer: SENSITIVE_INSERT_TABLES[table] ? 'return=minimal' : 'return=representation',
         'Content-Profile': 'public'
-      }),
+      },
       body: JSON.stringify(items)
     }) || [];
   }
@@ -251,12 +289,12 @@
     params.set('select', '*');
     return request('/rest/v1/' + table + '?' + params.toString(), {
       method: 'PATCH',
-      headers: buildAuthHeaders({
+      headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Prefer: 'return=representation',
         'Content-Profile': 'public'
-      }),
+      },
       body: JSON.stringify(payload || {})
     }) || [];
   }
@@ -266,22 +304,22 @@
     params.set('select', '*');
     return request('/rest/v1/' + table + '?' + params.toString(), {
       method: 'DELETE',
-      headers: buildAuthHeaders({
+      headers: {
         Accept: 'application/json',
         Prefer: 'return=representation',
         'Content-Profile': 'public'
-      })
+      }
     }) || [];
   }
 
   async function deleteAllRows(table) {
     return request('/rest/v1/' + table + '?id=not.is.null&select=*', {
       method: 'DELETE',
-      headers: buildAuthHeaders({
+      headers: {
         Accept: 'application/json',
         Prefer: 'return=representation',
         'Content-Profile': 'public'
-      })
+      }
     }) || [];
   }
 
@@ -321,15 +359,15 @@
     if (!file) throw makeError('업로드할 파일이 없습니다.');
     await request('/storage/v1/object/' + encodeStoragePath(storageBucket(bucketName)) + '/' + encodeStoragePath(path), {
       method: 'POST',
-      headers: buildAuthHeaders({
+      headers: {
         'Content-Type': file.type || 'application/octet-stream',
         'x-upsert': options && options.upsert ? 'true' : 'false'
-      }),
+      },
       body: file
     });
     return {
       path: path,
-      publicUrl: buildPublicUrl(path, bucketName)
+      publicUrl: PRIVATE_STORAGE_BUCKETS[storageBucket(bucketName)] ? '' : buildPublicUrl(path, bucketName)
     };
   }
 
@@ -337,8 +375,60 @@
     if (!path) return;
     await request('/storage/v1/object/' + encodeStoragePath(storageBucket(bucketName)) + '/' + encodeStoragePath(path), {
       method: 'DELETE',
-      headers: buildAuthHeaders()
+      headers: {}
     });
+  }
+
+  async function getSession() {
+    await authReadyPromise;
+    if (!supabaseClient) return activeSession;
+    var result = await supabaseClient.auth.getSession();
+    if (result.error) throw result.error;
+    activeSession = result.data ? result.data.session : null;
+    return activeSession;
+  }
+
+  async function signInWithPassword(email, password) {
+    if (!supabaseClient) throw makeError('Supabase 인증 모듈을 불러오지 못했습니다.');
+    await authReadyPromise;
+    var result = await supabaseClient.auth.signInWithPassword({
+      email: text(email),
+      password: String(password || '')
+    });
+    if (result.error) throw result.error;
+    activeSession = result.data ? result.data.session : null;
+    return result.data;
+  }
+
+  async function signOut() {
+    if (!supabaseClient) {
+      activeSession = null;
+      return;
+    }
+    var result = await supabaseClient.auth.signOut();
+    if (result.error) throw result.error;
+    activeSession = null;
+  }
+
+  function onAuthStateChange(listener) {
+    if (!supabaseClient || typeof listener !== 'function') return function () {};
+    var result = supabaseClient.auth.onAuthStateChange(listener);
+    return function () {
+      if (result && result.data && result.data.subscription) {
+        result.data.subscription.unsubscribe();
+      }
+    };
+  }
+
+  async function createSignedUrl(path, bucketName, expiresIn) {
+    if (!path) throw makeError('파일 경로가 없습니다.');
+    await authReadyPromise;
+    if (!supabaseClient) throw makeError('Supabase 인증 모듈을 불러오지 못했습니다.');
+    var result = await supabaseClient.storage
+      .from(storageBucket(bucketName))
+      .createSignedUrl(path, Math.max(60, Number(expiresIn) || 300));
+    if (result.error) throw result.error;
+    return result.data ? result.data.signedUrl : '';
   }
 
   global.AiLeadersUtils = {
@@ -386,6 +476,13 @@
     deleteAllRows: deleteAllRows,
     uploadFile: uploadFile,
     deleteFile: deleteFile,
-    buildPublicUrl: buildPublicUrl
+    buildPublicUrl: buildPublicUrl,
+    getClient: function () { return supabaseClient; },
+    authReady: function () { return authReadyPromise; },
+    getSession: getSession,
+    signInWithPassword: signInWithPassword,
+    signOut: signOut,
+    onAuthStateChange: onAuthStateChange,
+    createSignedUrl: createSignedUrl
   };
 })(window);

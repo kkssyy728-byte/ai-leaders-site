@@ -57,6 +57,8 @@
   @media(max-width:1180px){.admin-shell{grid-template-columns:1fr}.admin-side{position:relative;height:auto}.stats{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}}
   @media(max-width:720px){.admin-main{padding:18px}.admin-top{display:block}.stats{grid-template-columns:1fr}}
 </style>
+<link rel="stylesheet" href="/assets/admin-auth.css?v=20260719-secure-admin-1"/>
+<script src="/assets/admin-auth-bootstrap.js?v=20260719-secure-admin-1"></script>
 </head>
 <body>
 <div class="admin-shell">
@@ -91,13 +93,13 @@
 
     <section class="stats" aria-label="관리자 주요 통계">
       <div class="stat"><div class="stat-label">전체 강연</div><div class="stat-value" id="statCourses">0</div><div class="stat-note" id="statOpenCourses">모집중 0개</div></div>
-      <div class="stat"><div class="stat-label">강연 신청</div><div class="stat-value" id="statApplications">0</div><div class="stat-note" id="statTodayApplications">오늘 0건</div></div>
-      <div class="stat"><div class="stat-label">출강 문의</div><div class="stat-value" id="statCorporate">0</div><div class="stat-note" id="statTodayCorporate">오늘 0건</div></div>
-      <div class="stat"><div class="stat-label">강사 지원</div><div class="stat-value" id="statInstructors">0</div><div class="stat-note" id="statTodayInstructors">오늘 0건</div></div>
+      <div class="stat" data-sensitive-admin><div class="stat-label">강연 신청</div><div class="stat-value" id="statApplications">0</div><div class="stat-note" id="statTodayApplications">오늘 0건</div></div>
+      <div class="stat" data-sensitive-admin><div class="stat-label">출강 문의</div><div class="stat-value" id="statCorporate">0</div><div class="stat-note" id="statTodayCorporate">오늘 0건</div></div>
+      <div class="stat" data-sensitive-admin><div class="stat-label">강사 지원</div><div class="stat-value" id="statInstructors">0</div><div class="stat-note" id="statTodayInstructors">오늘 0건</div></div>
     </section>
 
     <div class="dashboard-grid">
-      <section class="panel" aria-label="최근 신청 현황">
+      <section class="panel" aria-label="최근 신청 현황" data-sensitive-admin>
         <div class="panel-head">
           <div>
             <div class="panel-title">최근 강연 신청</div>
@@ -114,7 +116,7 @@
         </div>
       </section>
 
-      <section class="panel" aria-label="최근 출강 문의 현황">
+      <section class="panel" aria-label="최근 출강 문의 현황" data-sensitive-admin>
         <div class="panel-head">
           <div>
             <div class="panel-title">최근 출강 문의</div>
@@ -131,7 +133,7 @@
         </div>
       </section>
 
-      <section class="panel" aria-label="최근 강사 지원 현황">
+      <section class="panel" aria-label="최근 강사 지원 현황" data-sensitive-admin>
         <div class="panel-head">
           <div>
             <div class="panel-title">최근 강사 지원</div>
@@ -151,7 +153,9 @@
   </main>
 </div>
 
-<script src="/assets/supabase-store-common.js?v=20260716-storage-auth-1"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.7/dist/umd/supabase.min.js" integrity="sha384-BmlQlKlDvXvKoxkn5OQuUo/aJQCTXeB+Kls6EccBmG4Kf8AXvp89RtO9MtPxP/r5" crossorigin="anonymous"></script>
+<script src="/assets/supabase-store-common.js?v=20260719-secure-admin-1"></script>
+<script src="/assets/admin-auth.js?v=20260719-secure-admin-1"></script>
 <script src="/assets/courses-store.js"></script>
 <script src="/assets/applications-store.js"></script>
 <script src="/assets/form-submissions-store.js"></script>

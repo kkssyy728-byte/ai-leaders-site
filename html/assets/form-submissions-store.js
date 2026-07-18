@@ -6,7 +6,8 @@
   var clone = utils.clone;
   var formatSubmittedAt = utils.formatSubmittedAt;
   var escapeHtml = utils.escapeHtml;
-  var MAX_ATTACHMENT_SIZE = 100 * 1024 * 1024;
+  var MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024;
+  var ALLOWED_ATTACHMENT_EXTENSIONS = /\.(pdf|doc|docx|ppt|pptx)$/i;
 
   function normalizeList(value) {
     return utils.parseList(value, { separator: ',' });
@@ -278,17 +279,20 @@
   async function saveFile(file) {
     if (!file) return null;
     if (file.size > MAX_ATTACHMENT_SIZE) {
-      throw new Error('100MB를 초과하는 파일은 첨부할 수 없습니다. 링크로 제출해 주세요.');
+      throw new Error('10MB를 초과하는 파일은 첨부할 수 없습니다. 링크로 제출해 주세요.');
     }
-    var path = api.createStoragePath('instructor-portfolio', file.name || 'portfolio-file');
-    var uploaded = await api.uploadFile(path, file);
+    if (!ALLOWED_ATTACHMENT_EXTENSIONS.test(file.name || '')) {
+      throw new Error('PDF, DOC, DOCX, PPT, PPTX 파일만 첨부할 수 있습니다.');
+    }
+    var path = api.createStoragePath('applications', file.name || 'portfolio-file');
+    await api.uploadFile(path, file, 'instructor-portfolio');
     return {
       fileId: path,
       fileName: file.name || 'portfolio-file',
       fileType: file.type || 'application/octet-stream',
       fileSize: file.size || 0,
       fileStoredAt: new Date().toISOString(),
-      fileUrl: uploaded.publicUrl
+      fileUrl: ''
     };
   }
 
@@ -296,13 +300,13 @@
     if (!fileId) return null;
     return {
       id: fileId,
-      url: api.buildPublicUrl(fileId)
+      url: await api.createSignedUrl(fileId, 'instructor-portfolio', 300)
     };
   }
 
   async function deleteFile(fileId) {
     if (!fileId) return;
-    await api.deleteFile(fileId);
+    await api.deleteFile(fileId, 'instructor-portfolio');
   }
 
   async function downloadFile(fileId, fileName) {

@@ -8,7 +8,7 @@
   var toNumber = utils.toNumber;
   var toBoolean = utils.toBoolean;
   var normalizeAssetUrl = utils.normalizeAssetUrl || function (value) { return text(value); };
-  var CONTENT_ASSETS_BUCKET = api && api.storageBucket ? api.storageBucket : 'instructor-portfolio';
+  var CONTENT_ASSETS_BUCKET = 'site-assets';
   var OPTION_GROUPS = {
     corporate_region: '출강 문의 지역',
     corporate_preferred_instructor: '출강 문의 선호 강사',

@@ -1,0 +1,71 @@
+html.admin-auth-pending body {
+  visibility: hidden;
+}
+
+html.admin-auth-pending::before {
+  content: "직원 권한을 확인하고 있습니다…";
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+  visibility: visible;
+  background: #f6f8fb;
+  color: #344054;
+  font: 700 14px/1.5 "Pretendard Variable", Pretendard, system-ui, sans-serif;
+}
+
+.admin-session {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .07);
+}
+
+.admin-session__name,
+.admin-session__meta {
+  margin: 0;
+}
+
+.admin-session__name {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.admin-session__meta {
+  color: rgba(255, 255, 255, .62);
+  font-size: 11px;
+}
+
+.admin-session__logout {
+  min-height: 36px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255, 255, 255, .82);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.admin-session__logout:hover,
+.admin-session__logout:focus-visible {
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+}
+
+.admin-auth-notice {
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  border: 1px solid #f7d394;
+  border-radius: 8px;
+  background: #fff8e8;
+  color: #7a4d00;
+  font-size: 13px;
+  font-weight: 700;
+}

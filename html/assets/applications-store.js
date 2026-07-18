@@ -231,7 +231,13 @@
   }
 
   async function addApplicationInternal(application) {
-    if (!loaded) await ready();
+    if (!loaded) {
+      await ready().catch(function () {
+        cache = [];
+        loaded = true;
+        lastError = null;
+      });
+    }
     if (global.CourseStore && typeof global.CourseStore.ready === 'function') {
       await global.CourseStore.ready().catch(function () {});
     }
@@ -249,18 +255,10 @@
       item.courseTitle = item.courseTitle || course.title;
       item.courseType = course.type === 'paid' ? 'paid' : 'free';
     }
-    item.isDuplicate = hasDuplicate(item);
-    if (item.isDuplicate) item.applicantCountAdjusted = false;
+    item.isDuplicate = loaded && cache.length ? hasDuplicate(item) : false;
     var rows = await api.insertRows('lecture_applications', [toRow(item)]);
     var saved = rows.length ? fromRow(rows[0]) : item;
     saved.isDuplicate = item.isDuplicate || saved.isDuplicate;
-    var adjusted = !saved.isDuplicate && saved.applicantCountAdjusted
-      ? await adjustCourseApplicantCount(saved, 1)
-      : false;
-    if (saved.applicantCountAdjusted !== adjusted) {
-      saved.applicantCountAdjusted = adjusted;
-      await patchAdjustedFlag(saved.id, adjusted);
-    }
     cache = annotateDuplicates([saved].concat(cache));
     loaded = true;
     lastError = null;
@@ -276,6 +274,9 @@
 
   async function deleteApplication(id) {
     if (!id) return getApplications();
+    await api.updateRows('lecture_applications', { id: id }, {
+      applicant_count_adjusted: false
+    });
     await api.deleteRows('lecture_applications', { id: id });
     cache = cache.filter(function (item) {
       return item.id !== id;
@@ -287,16 +288,6 @@
   }
 
   async function excludeApplication(id) {
-    var applications = getApplications();
-    var target = applications.find(function (item) {
-      return item.id === id;
-    });
-    if (target && target.applicantCountAdjusted && !target.isDuplicate) {
-      var adjusted = await adjustCourseApplicantCount(target, -1);
-      if (!adjusted) {
-        throw new Error('신청자 수를 되돌리지 못했습니다.');
-      }
-    }
     await api.deleteRows('lecture_applications', { id: id });
     cache = cache.filter(function (item) {
       return item.id !== id;
@@ -308,6 +299,9 @@
   }
 
   async function clearApplications() {
+    await api.updateRows('lecture_applications', {}, {
+      applicant_count_adjusted: false
+    });
     await api.deleteAllRows('lecture_applications');
     cache = [];
     loaded = true;
