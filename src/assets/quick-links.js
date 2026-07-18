@@ -25,7 +25,7 @@
     + '      <span class="q-label">유튜브</span><span class="q-tooltip">유튜브</span>'
     + '    </a>'
     + '    <a class="qitem" href="https://cafe.naver.com/newaileaders" target="_blank" rel="noopener" aria-label="네이버 카페 새 창에서 열기">'
-    + '      <svg class="q-naver-mark" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#111111"/><g transform="translate(4 4) scale(.6666667)"><path fill="#ffffff" d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845Z"/></g></svg>'
+    + '      <svg class="q-naver-mark" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="currentColor"/><g transform="translate(6.666667 6.666667) scale(.4444444)"><path fill="#ffffff" d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845Z"/></g></svg>'
     + '      <span class="q-label">네이버 카페</span><span class="q-tooltip">네이버 카페</span>'
     + '    </a>'
     + '  </nav>'

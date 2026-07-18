@@ -54,8 +54,11 @@ for (const expected of expectedLinks) {
 }
 if (count(component, 'class=\"qitem\"') !== 5) errors.push('src/assets/quick-links.js: expected exactly five social items');
 if (!component.includes('class=\"q-top\"')) errors.push('src/assets/quick-links.js: missing TOP button');
-if (!component.includes('class=\"q-naver-mark\"') || !component.includes('fill=\"#111111\"') || !component.includes('fill=\"#ffffff\"')) {
-  errors.push('src/assets/quick-links.js: missing monochrome Naver Cafe icon');
+if (!component.includes('class=\"q-naver-mark\"') || !component.includes('fill=\"currentColor\"') || !component.includes('fill=\"#ffffff\"')) {
+  errors.push('src/assets/quick-links.js: missing tone-matched monochrome Naver Cafe icon');
+}
+if (!component.includes('transform=\"translate(6.666667 6.666667) scale(.4444444)\"')) {
+  errors.push('src/assets/quick-links.js: Naver mark must remain at two-thirds of its previous size');
 }
 
 const styles = await readFile(path.join(root, 'src/assets/quick-links.css'), 'utf8');
@@ -75,8 +78,11 @@ const layout = await readFile(path.join(root, 'src/assets/site-layout.js'), 'utf
 if (!layout.includes('href=\"https://cafe.naver.com/newaileaders\"')) {
   errors.push('src/assets/site-layout.js: missing footer Naver Cafe link');
 }
-if (!layout.includes('aria-label=\"네이버 카페 새 창에서 열기\"') || !layout.includes('fill=\"#111111\"') || !layout.includes('fill=\"#ffffff\"')) {
-  errors.push('src/assets/site-layout.js: missing accessible monochrome footer Naver Cafe icon');
+if (!layout.includes('aria-label=\"네이버 카페 새 창에서 열기\"') || !layout.includes('fill=\"currentColor\"') || !layout.includes('fill=\"#ffffff\"')) {
+  errors.push('src/assets/site-layout.js: missing accessible tone-matched footer Naver Cafe icon');
+}
+if (!layout.includes('transform=\"translate(6.666667 6.666667) scale(.4444444)\"')) {
+  errors.push('src/assets/site-layout.js: footer Naver mark must match the reduced quick-link mark');
 }
 
 if (errors.length) {
