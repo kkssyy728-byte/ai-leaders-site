@@ -16,13 +16,13 @@ function expect(condition, message) {
 }
 
 const adminPages = [
-  'html/admin-dashboard.html',
-  'html/admin-courses.html',
-  'html/admin-site-content.html',
-  'html/admin-applications.html',
-  'html/admin-corporate-inquiries.html',
-  'html/admin-instructor-applications.html',
-  'html/admin-update-log.html'
+  'src/pages/admin/dashboard.html',
+  'src/pages/admin/courses.html',
+  'src/pages/admin/site-content.html',
+  'src/pages/admin/applications.html',
+  'src/pages/admin/corporate-inquiries.html',
+  'src/pages/admin/instructor-applications.html',
+  'src/pages/admin/update-log.html'
 ];
 
 for (const path of adminPages) {
@@ -33,21 +33,20 @@ for (const path of adminPages) {
   expect(page.includes('integrity="sha384-'), `${path}: Supabase SDK is missing SRI`);
 }
 
-const adminAuth = await text('html/assets/admin-auth.js');
-expect(adminAuth.includes('legacyMatch'), 'legacy /html/admin-*.html paths do not use the same role gate');
+const adminAuth = await text('src/assets/admin-auth.js');
 expect(adminAuth.includes('Boolean(allowedRoles'), 'unknown admin routes are allowed by default');
 expect(adminAuth.includes('[data-tab="option"], [data-section="option"]'), 'design staff can still see the restricted form-option editor');
 
-const siteLayout = await text('html/assets/site-layout.js');
+const siteLayout = await text('src/assets/site-layout.js');
 expect(!siteLayout.includes('ADMIN_ACCESS_PASSWORD'), 'site-layout.js still contains a shared admin password');
 expect(!siteLayout.includes('adminAccessPassword'), 'site-layout.js still contains the retired shared-password dialog');
 expect(siteLayout.includes('/admin-login/'), 'site-layout.js does not route staff to individual login');
 
-const commonStore = await text('html/assets/supabase-store-common.js');
+const commonStore = await text('src/assets/supabase-store-common.js');
 expect(commonStore.includes("Prefer: SENSITIVE_INSERT_TABLES[table] ? 'return=minimal'"), 'sensitive public inserts may return private records');
 expect(commonStore.includes('activeSession.access_token'), 'authenticated requests do not use the staff access token');
 
-const formStore = await text('html/assets/form-submissions-store.js');
+const formStore = await text('src/assets/form-submissions-store.js');
 expect(formStore.includes('10 * 1024 * 1024'), 'portfolio upload limit is not 10 MiB');
 expect(formStore.includes("createSignedUrl(fileId, 'instructor-portfolio', 300)"), 'private portfolio download does not use a short-lived signed URL');
 expect(!formStore.includes('api.buildPublicUrl(fileId)'), 'private portfolio file still builds a public URL');
@@ -63,7 +62,7 @@ expect(!migration.includes('grant select, insert, update, delete on table public
 expect(migration.includes('portfolio_file_public_url is null'), 'anonymous submissions can persist a public portfolio URL');
 expect(migration.trim().startsWith('-- Secure staff access') && migration.trim().endsWith('commit;'), 'security migration is not wrapped in its expected transaction');
 
-const headers = await text('_headers');
+const headers = await text('src/static/_headers');
 expect(headers.includes('Content-Security-Policy:'), 'Cloudflare security headers are missing CSP');
 expect(headers.includes('X-Frame-Options: DENY'), 'Cloudflare headers do not prevent framing');
 expect(headers.includes('/admin-*'), 'admin cache and indexing rules are missing');

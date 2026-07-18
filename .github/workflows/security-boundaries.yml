@@ -17,12 +17,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 24
-      - name: Verify generated static mirrors
-        run: node tools/sync-static-mirrors.mjs --check
+          node-version: 22.16.0
       - name: Check JavaScript syntax
         run: git ls-files -z '*.js' '*.mjs' | xargs -0 -n1 node --check
       - name: Verify authentication and data boundaries
         run: node tools/verify-security-boundaries.mjs
       - name: Build Cloudflare Pages artifact
         run: node tools/build-cloudflare-pages.mjs
+      - name: Verify generated routes and local links
+        run: node tools/verify-dist-links.mjs

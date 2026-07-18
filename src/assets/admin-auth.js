@@ -21,8 +21,6 @@
 
   function canonicalAdminPath(path) {
     var normalized = path || '/admin-dashboard/';
-    var legacyMatch = normalized.match(/^\/html\/(admin-[a-z0-9-]+)\.html\/?$/);
-    if (legacyMatch) return '/' + legacyMatch[1] + '/';
     return normalized.endsWith('/') ? normalized : normalized + '/';
   }
 
