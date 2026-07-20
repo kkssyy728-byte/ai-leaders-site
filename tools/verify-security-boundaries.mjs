@@ -8,7 +8,7 @@ const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const failures = [];
 
 async function text(path) {
-  return readFile(resolve(projectRoot, path), 'utf8');
+  return (await readFile(resolve(projectRoot, path), 'utf8')).replace(/\r\n/g, '\n');
 }
 
 function expect(condition, message) {
@@ -52,7 +52,7 @@ expect(formStore.includes("createSignedUrl(fileId, 'instructor-portfolio', 300)"
 expect(!formStore.includes('api.buildPublicUrl(fileId)'), 'private portfolio file still builds a public URL');
 
 const migration = await text('supabase/20260719_secure_staff_access.sql');
-expect(migration.includes("'instructor-portfolio',\n  false"), 'portfolio bucket is not private');
+expect(migration.includes("'instructor-portfolio',\n  'instructor-portfolio',\n  false"), 'portfolio bucket is not private');
 expect(migration.includes('lecture_applications_select_staff'), 'lecture applications are missing staff-only read policy');
 expect(!migration.includes('lecture_applications_select_public'), 'lecture applications still declare a public read policy');
 expect(migration.includes('private.has_staff_role'), 'role checks are missing from the security migration');
