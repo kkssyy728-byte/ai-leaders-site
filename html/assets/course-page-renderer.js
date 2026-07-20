@@ -50,6 +50,11 @@
     return new Date() > deadline;
   }
 
+  function closedOverlayMarkup(course) {
+    if (!isPeriodExpired(course)) return '';
+    return '<img class="course-closed-overlay" src="/images/course-closed-overlay.png" alt="" aria-hidden="true"/>';
+  }
+
   function sortByRemainingPeriod(a, b) {
     var aExpired = isPeriodExpired(a);
     var bExpired = isPeriodExpired(b);
@@ -208,6 +213,7 @@
       + '<div class="course-thumb" style="background:#e8f1ff;">'
       + lowSeatsBadge(course, remaining)
       + '<img src="' + s.escapeHtml(thumb) + '" alt="' + s.escapeHtml(course.title || '강연 이미지') + '"/>'
+      + closedOverlayMarkup(course)
       + '</div>'
       + '<div class="course-body">'
       + '<h3>' + s.escapeHtml(course.title || '강연명 미정') + '</h3>'
