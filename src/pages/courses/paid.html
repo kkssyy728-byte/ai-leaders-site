@@ -1,6 +1,72 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+(function(){
+  if (typeof window.fbq !== 'function' || window.fbq.__aiLeadersMetaGuard) return;
+  var originalFbq = window.fbq;
+  var tracked = {};
+  var initialized = {};
+  var guardedFbq = function(){
+    var command = arguments[0];
+    var name = arguments[1];
+    if (command === 'init' && name === '1509286323738952') {
+      if (initialized[name]) return;
+      initialized[name] = true;
+    }
+    if (command === 'track' && (name === 'PageView' || name === 'Lead' || name === 'Purchase' || name === 'ViewContent' || name === 'InitiateCheckout')) {
+      if (tracked[name]) return;
+      tracked[name] = true;
+    }
+    return originalFbq.apply(this, arguments);
+  };
+  window.aiLeadersTrackMeta = function(eventName, params) {
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', eventName, params || {});
+    }
+  };
+  for (var key in originalFbq) {
+    try { guardedFbq[key] = originalFbq[key]; } catch (error) {}
+  }
+  guardedFbq.__aiLeadersMetaGuard = true;
+  window.fbq = guardedFbq;
+})();
+fbq('init', '1509286323738952');
+fbq('track', 'PageView');
+(function(){
+  var path = window.location.pathname || '/';
+  var isCompletion = path.indexOf('/application-complete') === 0;
+  var isCourseDetail = path.indexOf('/course-detail') === 0 || path.indexOf('/course/') === 0;
+  if (!isCompletion && !isCourseDetail && typeof window.aiLeadersTrackMeta === 'function') {
+    window.aiLeadersTrackMeta('ViewContent', {
+      content_name: document.title || 'AI리더스협회 랜딩',
+      content_category: 'Landing',
+      content_type: 'website',
+      page_path: path
+    });
+  }
+})();
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1509286323738952&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KZ447VNR');</script>
+<!-- End Google Tag Manager -->
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>유료 강연 | AI리더스협회</title>
@@ -196,9 +262,13 @@
 </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZ447VNR"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <div data-site-nav></div>
-<script src="/assets/site-layout.js?v=20260716-admin-access-3"></script>
+<script src="/assets/site-layout.js?v=20260716-gtm-1"></script>
 
 <header class="page-hero aurora-hero" style="padding-top: calc(var(--nav-h) + 130px); padding-bottom: 150px;">
   <div class="aurora-base"></div>

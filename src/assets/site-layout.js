@@ -1,27 +1,14 @@
 (function (global) {
   'use strict';
 
-  var GOOGLE_ADS_ID = 'AW-17060350229';
   var ADMIN_ACCESS_PATH = '/admin-login/?next=%2Fadmin-dashboard%2F';
 
+  function ensureGoogleTagManager() {
+    // GTM is installed in the public HTML head snippets.
+  }
+
   function ensureGoogleTag() {
-    if (!GOOGLE_ADS_ID) return;
-    global.dataLayer = global.dataLayer || [];
-    global.gtag = global.gtag || function () { global.dataLayer.push(arguments); };
-
-    if (!document.querySelector('script[data-ai-leaders-google-tag]')) {
-      var script = document.createElement('script');
-      script.async = true;
-      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GOOGLE_ADS_ID);
-      script.setAttribute('data-ai-leaders-google-tag', GOOGLE_ADS_ID);
-      document.head.appendChild(script);
-    }
-
-    if (!global.__aiLeadersGoogleTagConfigured) {
-      global.__aiLeadersGoogleTagConfigured = true;
-      global.gtag('js', new Date());
-      global.gtag('config', GOOGLE_ADS_ID);
-    }
+    ensureGoogleTagManager();
   }
 
   var NAV_HTML = ''
@@ -148,7 +135,7 @@
   }
 
   function renderAll() {
-    ensureGoogleTag();
+    ensureGoogleTagManager();
     renderNav();
     renderFooter();
     ensureAdminAccessUi();
@@ -157,6 +144,7 @@
   global.AiLeadersLayout = {
     renderNav: renderNav,
     renderFooter: renderFooter,
+    ensureGoogleTagManager: ensureGoogleTagManager,
     ensureGoogleTag: ensureGoogleTag,
     renderAll: renderAll,
     markActiveNav: markActiveNav,
