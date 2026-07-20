@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+(function(){
+  if (typeof window.fbq !== 'function' || window.fbq.__aiLeadersMetaGuard) return;
+  var originalFbq = window.fbq;
+  var tracked = {};
+  var initialized = {};
+  var guardedFbq = function(){
+    var command = arguments[0];
+    var name = arguments[1];
+    if (command === 'init' && name === '1509286323738952') {
+      if (initialized[name]) return;
+      initialized[name] = true;
+    }
+    if (command === 'track' && (name === 'PageView' || name === 'Lead' || name === 'Purchase' || name === 'ViewContent' || name === 'InitiateCheckout')) {
+      if (tracked[name]) return;
+      tracked[name] = true;
+    }
+    return originalFbq.apply(this, arguments);
+  };
+  window.aiLeadersTrackMeta = function(eventName, params) {
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', eventName, params || {});
+    }
+  };
+  for (var key in originalFbq) {
+    try { guardedFbq[key] = originalFbq[key]; } catch (error) {}
+  }
+  guardedFbq.__aiLeadersMetaGuard = true;
+  window.fbq = guardedFbq;
+})();
+fbq('init', '1509286323738952');
+fbq('track', 'PageView');
+(function(){
+  var path = window.location.pathname || '/';
+  var isCompletion = path.indexOf('/application-complete') === 0;
+  var isCourseDetail = path.indexOf('/course-detail') === 0 || path.indexOf('/course/') === 0;
+  if (!isCompletion && !isCourseDetail && typeof window.aiLeadersTrackMeta === 'function') {
+    window.aiLeadersTrackMeta('ViewContent', {
+      content_name: document.title || 'AI리더스협회 랜딩',
+      content_category: 'Landing',
+      content_type: 'website',
+      page_path: path
+    });
+  }
+})();
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1509286323738952&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KZ447VNR');</script>
+<!-- End Google Tag Manager -->
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>출강 문의 | AI리더스협회</title>
+<meta name="description" content="기업, 기관, 단체를 위한 AI 실무 교육 출강 문의 페이지입니다. 맞춤 커리큘럼 설계부터 강의 진행까지 지원합니다."/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://newaileaders.co.kr/corporate/"/>
+<meta property="og:locale" content="ko_KR"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="AI리더스협회"/>
+<meta property="og:title" content="출강 문의 | AI리더스협회"/>
+<meta property="og:description" content="기업, 기관, 단체를 위한 AI 실무 교육 출강 문의 페이지입니다. 맞춤 커리큘럼 설계부터 강의 진행까지 지원합니다."/>
+<meta property="og:url" content="https://newaileaders.co.kr/corporate/"/>
+<meta property="og:image" content="https://newaileaders.co.kr/images/landing-banner-corporate.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="출강 문의 | AI리더스협회"/>
+<meta name="twitter:description" content="기업, 기관, 단체를 위한 AI 실무 교육 출강 문의 페이지입니다. 맞춤 커리큘럼 설계부터 강의 진행까지 지원합니다."/>
+<meta name="twitter:image" content="https://newaileaders.co.kr/images/landing-banner-corporate.jpg"/>
+
+<link rel="icon" href="../favicon.ico" type="image/x-icon"/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"/>
+<link rel="stylesheet" href="../shared.css"/>
+<style>
+  /* Process — light card flow */
+  .proc-dark { background:#fff; padding:80px 0; }
+  .proc-dark .eyebrow { color:var(--brand); }
+  .proc-dark .h { color:var(--ink); }
+  .proc-dark .sec-desc { margin-top:14px; font-size:15px; color:var(--muted); line-height:1.75; word-break:keep-all; }
+  .proc-flow { display:flex; align-items:stretch; margin-top:48px; gap:0; }
+  .proc-flow-card {
+    flex:1; background:linear-gradient(160deg, #ffffff 0%, #dbeafe 100%); border:1px solid var(--line);
+    border-radius:16px; padding:28px 18px; text-align:center;
+    position:relative; overflow:hidden;
+    transition:background .28s, border-color .28s, transform .28s, box-shadow .28s; cursor:default;
+  }
+  .proc-flow-card::before {
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    background:radial-gradient(ellipse 80% 60% at 50% -10%, rgba(59,130,246,.18) 0%, transparent 70%);
+    opacity:0; transition:opacity .28s;
+  }
+  .proc-flow-card:hover::before,
+  .proc-flow-card.is-hover::before,
+  .proc-flow-card:focus-within::before { opacity:1; }
+  .proc-flow-card:hover,
+  .proc-flow-card.is-hover,
+  .proc-flow-card:focus-within {
+    background:#eef4ff; border-color:#3b82f6;
+    transform:translateY(-6px);
+    box-shadow:0 0 16px 4px rgba(59,130,246,.18), 0 16px 36px rgba(37,99,235,.1);
+  }
+  .proc-arrow { display:flex; align-items:center; padding:0 8px; color:#94a3b8; flex:none; font-size:22px; font-weight:700; }
+  .proc-badge {
+    display:block; margin:0 auto 12px;
+    background:transparent; border:none;
+    color:#b8d4f8; font-size:72px; font-weight:800; font-style:italic;
+    line-height:1; letter-spacing:-.04em; text-indent:-.08em;
+    transition:color .22s;
+  }
+  .proc-flow-card:hover .proc-badge,
+  .proc-flow-card.is-hover .proc-badge,
+  .proc-flow-card:focus-within .proc-badge { color:#2563eb; }
+  .proc-card-title { font-size:16px; font-weight:700; color:var(--ink); word-break:keep-all; }
+  .proc-card-desc { margin-top:10px; font-size:13px; color:var(--muted); line-height:1.7; word-break:keep-all; }
+  @media(max-width:860px){ .proc-flow{ flex-wrap:wrap; gap:16px; } .proc-arrow{ display:none; } .proc-flow-card{ flex:1 1 calc(50% - 8px); min-width:0; } }
+
+  /* Inquiry section — canvas wave */
+  .inq-section { position:relative; overflow:hidden; padding:100px 0; }
+  #inq-bg { position:absolute; inset:0; overflow:hidden; background:#020818; }
+  #inq-bg canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+  .inq-layout { display:grid; grid-template-columns:1fr 1.5fr; gap:72px; align-items:center; position:relative; z-index:2; }
+  .inq-left h3 { font-size:clamp(32px,4vw,48px); font-weight:700; letter-spacing:-.02em; line-height:1.25; color:#fff; }
+  .inq-left p { margin-top:18px; font-size:16px; color:rgba(255,255,255,.72); line-height:1.78; word-break:keep-all; }
+
+  .inq-form { background:rgba(255,255,255,.1); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,.18); border-radius:20px; padding:48px; }
+  .inq-form h3 { font-size:22px; font-weight:700; margin-bottom:28px; color:#fff; }
+  .inq-form .form-label { color:rgba(255,255,255,.85); }
+  .inq-form .form-input,
+  .inq-form .form-textarea { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.22); color:#fff; border-radius:8px; }
+  .inq-form .form-select { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.22); color:#fff; border-radius:8px; color-scheme:dark; }
+  .inq-form .form-input::placeholder,
+  .inq-form .form-textarea::placeholder { color:rgba(255,255,255,.4); }
+  .inq-form .form-input:focus,
+  .inq-form .form-textarea:focus { outline:none; border-color:rgba(255,255,255,.55); background:rgba(255,255,255,.18); }
+  .inq-form .form-select:focus { outline:none; border-color:#3b82f6; }
+  .inq-form .form-select option { background:#1e3a5f; color:#fff; }
+  .inq-form label { color:rgba(255,255,255,.82); }
+  .inq-form .btn {
+    background: #fff; color: #0d1fb5; border: none; font-weight: 700;
+    border-radius: 999px;
+    position: relative; overflow: hidden;
+    transition: transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease;
+  }
+  .inq-form .btn::before {
+    content: ""; position: absolute; left: 50%; top: 50%; z-index: 0;
+    width: 220%; aspect-ratio: 1; border-radius: 50%;
+    background: linear-gradient(135deg, #e0f2fe 0%, #8bdcff 44%, #ffffff 100%);
+    opacity: 0; transform: translate(-50%,-50%) scale(0.3);
+    transition: transform .25s ease, opacity .25s ease;
+  }
+  .inq-form .btn span { position: relative; z-index: 1; }
+  .inq-form .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255,255,255,.3); }
+  .inq-form .btn:hover::before { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+  .inq-form .btn:active { transform: translateY(0) scale(.97); }
+  .inq-form p[style] { color:rgba(255,255,255,.5) !important; }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+
+  @media (max-width:900px) { .inq-layout { grid-template-columns:1fr; gap:40px; } .inq-form { padding:28px; } .two-col { grid-template-columns:1fr; } }
+
+  @media (max-width:900px) { .inq-layout { grid-template-columns:1fr; gap:40px; } .inq-aside { position:static; } .inq-form { padding:28px; } .two-col { grid-template-columns:1fr; } }
+
+  /* ── Aurora hero background (light) ── */
+  .beams-hero { background: #eef2f7 !important; }
+  .beams-hero::before { display: none; }
+  .beams-hero .hero-grid { display: none; }
+  .beams-hero h1 { color: #0a1628; }
+  .beams-hero .ph-desc { color: rgba(10,22,40,.65); }
+  /* 밝은 배경용 네비 다크 모드 */
+  .nav:not(.scrolled) .nav-link { color: var(--ink) !important; }
+  .nav:not(.scrolled) .nav-link svg { stroke: var(--ink) !important; }
+  .nav:not(.scrolled) .dropdown a { color: var(--ink); }
+  .nav:not(.scrolled) .logo-white { display: none !important; }
+  .nav:not(.scrolled) .logo-ink { display: block !important; }
+  .nav:not(.scrolled) .nav-cta .btn { background: var(--brand); color: #fff; }
+  .aurora-bg-layer {
+    position: absolute; inset: -40px; pointer-events: none; will-change: transform;
+    background-image:
+      repeating-linear-gradient(100deg, #fff 0%, #fff 7%, transparent 10%, transparent 12%, #fff 16%),
+      repeating-linear-gradient(100deg, #3b82f6 10%, #818cf8 15%, #06b6d4 20%, #6366f1 25%, #3b82f6 30%);
+    background-size: 300%, 200%;
+    background-position: 50% 50%, 50% 50%;
+    filter: blur(10px) invert(1);
+    opacity: 0.55;
+    animation: hero-aurora 60s linear infinite;
+    -webkit-mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
+    mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
+  }
+  @keyframes hero-aurora {
+    from { background-position: 50% 50%, 50% 50%; }
+    to   { background-position: 350% 50%, 350% 50%; }
+  }
+  .eyebrow{ font-size:18px; font-weight:700; letter-spacing:-.01em; text-transform:none; color:var(--brand); }
+</style>
+<style>
+  .legal-modal-bg{position:fixed;inset:0;z-index:9999;background:rgba(12,24,40,.55);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s ease;}
+  .legal-modal-bg.open{opacity:1;pointer-events:auto;}
+  .legal-modal{background:#fff;border-radius:16px;width:100%;max-width:680px;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(12,24,40,.18);transform:translateY(12px);transition:transform .2s ease;}
+  .legal-modal-bg.open .legal-modal{transform:translateY(0);}
+  .legal-modal-head{display:flex;align-items:center;justify-content:space-between;padding:24px 28px 20px;border-bottom:1px solid var(--line);}
+  .legal-modal-head h2{font-size:18px;font-weight:700;color:var(--ink);}
+  .legal-modal-close{width:36px;height:36px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:8px;color:var(--muted);transition:background .15s;}
+  .legal-modal-close:hover{background:var(--paper);color:var(--ink);}
+  .legal-modal-body{overflow-y:auto;padding:24px 28px 32px;font-size:14px;line-height:1.85;color:var(--muted);}
+  .legal-modal-body h3{font-size:15px;font-weight:700;color:var(--ink);margin:24px 0 8px;}
+  .legal-modal-body h3:first-child{margin-top:0;}
+  .legal-modal-body p{margin-bottom:10px;}
+  .legal-modal-body ul{padding-left:18px;margin-bottom:10px;}
+  .legal-modal-body li{margin-bottom:4px;}
+  .legal-modal-body table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:13px;}
+  .legal-modal-body th,.legal-modal-body td{border:1px solid var(--line);padding:8px 10px;text-align:left;}
+  .legal-modal-body th{background:var(--paper);font-weight:600;color:var(--ink);}
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZ447VNR"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div data-site-nav></div>
+<script src="/assets/site-layout.js?v=20260716-gtm-1"></script>
+
+<header class="page-hero beams-hero" style="padding-top: calc(var(--nav-h) + 130px); padding-bottom: 150px;">
+  <div class="aurora-bg-layer"></div>
+  <div class="container">
+    <h1>기업·기관 전용 AI 출강 교육 서비스</h1>
+    <p class="ph-desc">수준별·직군별 맞춤 커리큘럼으로 조직 전체의 AI 역량을 끌어올립니다.</p>
+  </div>
+</header>
+
+<main>
+  <!-- PROCESS -->
+  <section class="proc-dark">
+    <div class="container">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">Process</p>
+          <h2 class="h">출강 진행 순서</h2>
+          <p class="sec-desc">복잡한 절차 없이 빠르고 간단하게 진행됩니다. 문의 접수 후 영업일 기준 1일 이내 담당자가 연락드립니다.</p>
+        </div>
+      </div>
+      <div class="proc-flow reveal">
+        <div class="proc-flow-card">
+          <div class="proc-badge">1</div>
+          <div class="proc-card-title">문의 접수</div>
+          <p class="proc-card-desc">하단 폼 또는 카카오로 문의주세요. 평일 2시간 이내 회신합니다.</p>
+        </div>
+        <div class="proc-arrow">›</div>
+        <div class="proc-flow-card">
+          <div class="proc-badge">2</div>
+          <div class="proc-card-title">니즈 파악 상담</div>
+          <p class="proc-card-desc">담당자와 전화 또는 화상으로 목적, 인원, 일정, 예산을 확인합니다.</p>
+        </div>
+        <div class="proc-arrow">›</div>
+        <div class="proc-flow-card">
+          <div class="proc-badge">3</div>
+          <div class="proc-card-title">커리큘럼 제안</div>
+          <p class="proc-card-desc">귀사 업무 환경에 맞는 맞춤 커리큘럼 초안을 무료로 제안드립니다.</p>
+        </div>
+        <div class="proc-arrow">›</div>
+        <div class="proc-flow-card">
+          <div class="proc-badge">4</div>
+          <div class="proc-card-title">견적 확정</div>
+          <p class="proc-card-desc">인원, 시간, 출강 여부에 따라 견적을 확정합니다.<br>추가 협의 가능.</p>
+        </div>
+        <div class="proc-arrow">›</div>
+        <div class="proc-flow-card">
+          <div class="proc-badge">5</div>
+          <div class="proc-card-title">강의 진행</div>
+          <p class="proc-card-desc">약속된 일정에 강의 진행. 이후 자료 제공 및 Q&A 채널 운영.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INQUIRY FORM -->
+  <section class="inq-section" id="form">
+    <div id="inq-bg"></div>
+    <div class="container">
+      <div class="inq-layout">
+        <div class="inq-left reveal">
+          <p class="eyebrow" style="color:rgba(255,255,255,.6);">Contact</p>
+          <h3>편하게<br/>문의주세요</h3>
+          <p>문의해주시면 빠르게 답변 해드리겠습니다.</p>
+        </div>
+
+        <div class="inq-form reveal">
+          <h3>출강 문의</h3>
+          <form onsubmit="submitForm(event)">
+            <div class="two-col">
+              <div class="form-group"><label class="form-label" for="f-company">기업/기관명<span class="req">*</span></label><input class="form-input" id="f-company" type="text" placeholder="(주)회사이름" required/></div>
+              <div class="form-group"><label class="form-label" for="f-name">담당자 성함<span class="req">*</span></label><input class="form-input" id="f-name" type="text" placeholder="홍길동" required autocomplete="name"/></div>
+            </div>
+            <div class="two-col" style="margin-top:16px;">
+              <div class="form-group"><label class="form-label" for="f-phone">연락처<span class="req">*</span></label><input class="form-input" id="f-phone" type="tel" placeholder="010-0000-0000" required autocomplete="tel"/></div>
+              <div class="form-group"><label class="form-label" for="f-email">이메일<span class="req">*</span></label><input class="form-input" id="f-email" type="email" placeholder="work@company.com" required autocomplete="email"/></div>
+            </div>
+            <div class="two-col" style="margin-top:16px;">
+              <div class="form-group"><label class="form-label" for="f-count">수강 예정 인원</label>
+                <select class="form-select" id="f-count"><option value="">선택</option><option>5명 이하</option><option>5–15명</option><option>15–30명</option><option>30–50명</option><option>50명 이상</option></select>
+              </div>
+              <div class="form-group"><label class="form-label" for="f-date">희망 진행 시기</label>
+                <select class="form-select" id="f-date"><option value="">선택</option><option>1개월 이내</option><option>1–3개월</option><option>3개월 이후</option><option>미정</option></select>
+              </div>
+            </div>
+            <div class="two-col" style="margin-top:16px;">
+<div class="form-group"><label class="form-label" for="f-loc">강의 장소</label>
+                <select class="form-select" id="f-loc"><option value="">선택</option><option>귀사 방문 출강</option><option>AI리더스협회 본원</option><option>미정 (협의 가능)</option></select>
+              </div>
+              <div class="form-group"><label class="form-label" for="f-region">지역</label>
+                <select class="form-select" id="f-region"><option value="">선택</option><option>서울특별시</option><option>부산광역시</option><option>대구광역시</option><option>인천광역시</option><option>광주광역시</option><option>대전광역시</option><option>울산광역시</option><option>세종특별자치시</option><option>경기도</option><option>강원특별자치도</option><option>충청북도</option><option>충청남도</option><option>전북특별자치도</option><option>전라남도</option><option>경상북도</option><option>경상남도</option><option>제주특별자치도</option></select>
+              </div>
+            </div>
+            <div class="two-col" style="margin-top:16px;">
+              <div class="form-group"><label class="form-label" for="f-preferred-instructor">선호 강사</label>
+                <select class="form-select" id="f-preferred-instructor"><option value="">선택</option><option>아이온 강사</option><option>문건우 강사</option><option>상관없음</option></select>
+              </div>
+              <div class="form-group"><label class="form-label" for="f-level">수강생 AI 활용 수준</label>
+                <select class="form-select" id="f-level"><option value="">선택</option><option>전혀 모름 (완전 입문)</option><option>용어는 아는 정도</option><option>가끔 써봄</option><option>어느 정도 활용 중</option></select>
+              </div>
+            </div>
+            <div class="form-group" style="margin-top:16px;"><label class="form-label" for="f-topic">관심 주제</label>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;">
+                <label style="display:flex;align-items:center;gap:5px;font-size:14px;cursor:pointer;color:rgba(255,255,255,.82);"><input type="checkbox" value="chatgpt"/> ChatGPT 실무</label>
+                <label style="display:flex;align-items:center;gap:5px;font-size:14px;cursor:pointer;color:rgba(255,255,255,.82);"><input type="checkbox" value="claude"/> Claude 활용</label>
+                <label style="display:flex;align-items:center;gap:5px;font-size:14px;cursor:pointer;color:rgba(255,255,255,.82);"><input type="checkbox" value="marketing"/> AI 마케팅</label>
+                <label style="display:flex;align-items:center;gap:5px;font-size:14px;cursor:pointer;color:rgba(255,255,255,.82);"><input type="checkbox" value="auto"/> 업무 자동화</label>
+                <label style="display:flex;align-items:center;gap:5px;font-size:14px;cursor:pointer;color:rgba(255,255,255,.82);"><input type="checkbox" value="image"/> AI 이미지</label>
+                <label style="display:flex;align-items:center;gap:5px;font-size:14px;cursor:pointer;color:rgba(255,255,255,.82);"><input type="checkbox" value="custom"/> 맞춤 설계 요청</label>
+              </div>
+            </div>
+            <div class="form-group" style="margin-top:16px;"><label class="form-label" for="f-msg">요청사항 및 교육 목적<span class="req">*</span></label><textarea class="form-textarea" id="f-msg" placeholder="팀의 현재 AI 활용 상황, 강의 후 원하는 변화, 예산 범위 등을 자유롭게 적어주세요." required></textarea></div>
+            <button class="btn" type="submit" style="width:100%;height:54px;font-size:16px;margin-top:24px;"><span>문의 신청하기</span></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+<script>
+(function(){
+  var section = document.getElementById('form');
+  var bg = document.getElementById('inq-bg');
+
+  // main canvas (displayed)
+  var canvas = document.createElement('canvas');
+  bg.appendChild(canvas);
+  var ctx = canvas.getContext('2d');
+
+  // offscreen canvas for low-res render
+  var off = document.createElement('canvas');
+  var offCtx = off.getContext('2d');
+
+  var SCALE = 2;
+  var width, height, imageData, data;
+
+  function resize() {
+    canvas.width  = section.offsetWidth;
+    canvas.height = section.offsetHeight;
+    width  = Math.floor(canvas.width  / SCALE);
+    height = Math.floor(canvas.height / SCALE);
+    off.width  = width;
+    off.height = height;
+    imageData = offCtx.createImageData(width, height);
+    data = imageData.data;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // lookup tables
+  var SIN_T = new Float32Array(1024);
+  var COS_T = new Float32Array(1024);
+  for (var i = 0; i < 1024; i++) {
+    var ang = (i / 1024) * Math.PI * 2;
+    SIN_T[i] = Math.sin(ang);
+    COS_T[i] = Math.cos(ang);
+  }
+  var PI2 = Math.PI * 2;
+  function fsin(x) {
+    var idx = ((x % PI2) / PI2 * 1024 | 0) & 1023;
+    return SIN_T[idx < 0 ? idx + 1024 : idx];
+  }
+  function fcos(x) {
+    var idx = ((x % PI2) / PI2 * 1024 | 0) & 1023;
+    return COS_T[idx < 0 ? idx + 1024 : idx];
+  }
+
+  var startTime = Date.now();
+
+  function render() {
+    var time = (Date.now() - startTime) * 0.001;
+    for (var y = 0; y < height; y++) {
+      for (var x = 0; x < width; x++) {
+        var ux = (2 * x - width)  / height;
+        var uy = (2 * y - height) / height;
+        var a = 0, d = 0;
+        for (var k = 0; k < 4; k++) {
+          a += fcos(k - d + time * 0.5 - a * ux);
+          d += fsin(k * uy + a);
+        }
+        var wave      = (fsin(a) + fcos(d)) * 0.5;
+        var intensity = 0.3 + 0.4 * wave;
+        var base      = 0.1 + 0.15 * fcos(ux + uy + time * 0.3);
+        var blue      = 0.2  * fsin(a * 1.5 + time * 0.2);
+        var purple    = 0.15 * fcos(d * 2   + time * 0.1);
+        var r = Math.max(0, Math.min(1, base + purple * 0.8))               * intensity;
+        var g = Math.max(0, Math.min(1, base + blue   * 0.6))               * intensity;
+        var b = Math.max(0, Math.min(1, base + blue   * 1.2 + purple * 0.4))* intensity;
+        var idx = (y * width + x) * 4;
+        data[idx]     = r * 255;
+        data[idx + 1] = g * 255;
+        data[idx + 2] = b * 255;
+        data[idx + 3] = 255;
+      }
+    }
+    offCtx.putImageData(imageData, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(off, 0, 0, canvas.width, canvas.height);
+    requestAnimationFrame(render);
+  }
+  render();
+})();
+</script>
+
+</main>
+
+<div data-site-footer></div>
+<script>window.AiLeadersLayout && window.AiLeadersLayout.renderFooter();</script>
+
+<script src="/assets/supabase-store-common.js?v=20260716-storage-auth-1"></script>
+<script src="/assets/site-content-store.js?v=20260716-storage-auth-1"></script>
+<script src="/assets/form-submissions-store.js"></script>
+<script src="/assets/site-content-renderer.js?v=20260717-hero-routing-1"></script>
+<script>
+(function(){
+  const nav=document.getElementById('nav'),hamb=document.getElementById('hamb');
+  function setScrolled(){nav.classList.toggle('scrolled',window.scrollY>60);}
+  setScrolled();window.addEventListener('scroll',setScrolled,{passive:true});
+  hamb?.addEventListener('click',()=>{const open=nav.classList.toggle('open');hamb.setAttribute('aria-expanded',String(open));hamb.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');});
+  document.addEventListener('click',e=>{if(nav.classList.contains('open')&&!nav.contains(e.target)){nav.classList.remove('open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','메뉴 열기');}});
+  const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');ro.unobserve(e.target);}}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+})();
+(function(){
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.proc-flow-card, .proc-step'));
+  var active = null;
+  function setActive(card) {
+    if (active && active !== card) active.classList.remove('is-hover');
+    active = card || null;
+    if (active) active.classList.add('is-hover');
+  }
+  cards.forEach(function(card) {
+    card.addEventListener('pointerenter', function() { setActive(card); });
+    card.addEventListener('pointerleave', function() { if (active === card) setActive(null); });
+    card.addEventListener('touchstart', function() { setActive(card); }, { passive:true });
+  });
+  document.addEventListener('touchstart', function(event) {
+    if (!event.target.closest('.proc-flow-card, .proc-step')) setActive(null);
+  }, { passive:true });
+})();
+function fieldValue(id) {
+  var el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+function checkedLabels(form) {
+  return Array.prototype.map.call(form.querySelectorAll('input[type="checkbox"]:checked'), function (input) {
+    var label = input.closest('label');
+    return label ? label.textContent.trim() : input.value;
+  });
+}
+async function submitForm(e) {
+  e.preventDefault();
+  var form = e.target;
+  if (window.CorporateInquiryStore) {
+    try {
+      await window.CorporateInquiryStore.addInquiry({
+        company: fieldValue('f-company'),
+        name: fieldValue('f-name'),
+        phone: fieldValue('f-phone'),
+        email: fieldValue('f-email'),
+        headcount: fieldValue('f-count'),
+        preferredDate: fieldValue('f-date'),
+        location: fieldValue('f-loc'),
+        region: fieldValue('f-region'),
+        preferredInstructor: fieldValue('f-preferred-instructor'),
+        level: fieldValue('f-level'),
+        topics: checkedLabels(form),
+        message: fieldValue('f-msg'),
+        source: 'corporate'
+      });
+    } catch (error) {
+      alert(error.message || '데이터를 불러올 수 없습니다.');
+      return;
+    }
+  }
+  alert('출강 문의가 접수되었습니다!\n평일 2시간 이내로 담당자가 연락드리겠습니다.');
+  form.reset();
+}
+</script>
+<!-- ===== 우측 리모컨(퀵메뉴) 바 ===== -->
+
+<div data-site-quick-links></div>
+<script src="/assets/quick-links.js?v=20260719-mobile-tabs-1"></script>
+<!-- ===== 리모컨 바 끝 ===== -->
+
+<!-- ===== 개인정보·이용약관 팝업 ===== -->
+<div class="legal-modal-bg" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+  <div class="legal-modal">
+    <div class="legal-modal-head"><h2 id="privacyTitle">개인정보처리방침</h2><button class="legal-modal-close" onclick="closeLegal('privacyModal')" aria-label="닫기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+    <div class="legal-modal-body">
+      <p>AI리더스협회(이하 "협회")는 이용자의 개인정보를 중요하게 생각하며, 「개인정보 보호법」 및 관련 법령을 준수합니다.</p>
+      <h3>1. 개인정보 수집 항목 및 수집 방법</h3>
+      <table><thead><tr><th>구분</th><th>수집 항목</th><th>수집 목적</th></tr></thead><tbody>
+        <tr><td>무료 강연 신청</td><td>이름, 연락처, 나이대</td><td>강연 신청 확인 및 안내 문자 발송</td></tr>
+        <tr><td>유료 강연 신청</td><td>이름, 연락처, 이메일, 결제 정보</td><td>강연 신청 확인, 수강료 결제, 수료증 발급</td></tr>
+        <tr><td>출강 문의</td><td>담당자명, 소속, 연락처, 이메일</td><td>기업 교육 상담 및 견적 안내</td></tr>
+        <tr><td>강사 지원</td><td>이름, 연락처, 이메일, 경력 정보</td><td>강사 자격 검토 및 채용 심사</td></tr>
+      </tbody></table>
+      <h3>2. 개인정보의 이용 목적</h3>
+      <ul><li>강연 예약 확인 및 일정 안내</li><li>수강료 결제 처리 및 환불 처리</li><li>수료증 및 강의 자료 제공</li><li>고객 문의 응대</li><li>신규 강연 일정 안내 (동의한 경우)</li></ul>
+      <h3>3. 개인정보 보유 및 이용 기간</h3>
+      <ul><li>계약·청약철회 기록: 5년 (전자상거래법)</li><li>소비자 불만·분쟁 기록: 3년 (전자상거래법)</li><li>강연 신청 기록: 서비스 종료 후 1년</li></ul>
+      <h3>4. 개인정보의 제3자 제공</h3>
+      <p>협회는 이용자의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 법령에 의한 경우는 예외입니다.</p>
+      <h3>5. 이용자 권리 행사</h3>
+      <p>전화(010-4269-0213)로 열람·정정·삭제·처리정지를 요청할 수 있습니다.</p>
+      <h3>6. 개인정보 보호책임자</h3>
+      <ul><li>성명: 김영주</li><li>전화: 010-4269-0213</li></ul>
+      <h3>7. 시행일</h3>
+      <p>본 방침은 2025년 1월 1일부터 시행됩니다.</p>
+    </div>
+  </div>
+</div>
+<div class="legal-modal-bg" id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+  <div class="legal-modal">
+    <div class="legal-modal-head"><h2 id="termsTitle">이용약관</h2><button class="legal-modal-close" onclick="closeLegal('termsModal')" aria-label="닫기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+    <div class="legal-modal-body">
+      <h3>제1조 (목적)</h3>
+      <p>이 약관은 AI리더스협회(이하 "협회")가 운영하는 홈페이지 및 강연 서비스의 이용 조건과 절차, 협회와 이용자의 권리·의무 및 책임 사항을 규정합니다.</p>
+      <h3>제2조 (정의)</h3>
+      <ul><li>"서비스"란 협회가 제공하는 무료·유료 강연, 기업 출강 교육, 강사 지원 등 일체의 서비스를 말합니다.</li><li>"이용자"란 본 약관에 동의하고 서비스를 이용하는 자를 말합니다.</li></ul>
+      <h3>제3조 (약관의 효력 및 변경)</h3>
+      <p>본 약관은 서비스 화면에 게시함으로써 효력이 발생합니다. 변경 시 최소 7일 전 홈페이지를 통해 공지합니다.</p>
+      <h3>제4조 (서비스 이용)</h3>
+      <ul><li>이용자는 정확한 정보를 입력하여 수강 신청해야 합니다.</li><li>무료 강연 중복 신청이 확인될 경우 현장 입장이 제한될 수 있습니다.</li></ul>
+      <h3>제5조 (수강료 결제 및 환불)</h3>
+      <ul><li>시작 5일 전까지: 전액 환불</li><li>시작 4~1일 전: 50% 환불</li><li>시작 당일 / 이후: 환불 불가</li></ul>
+      <p>환불 요청: 전화 010-4269-0213</p>
+      <h3>제6조 (이용자 의무)</h3>
+      <ul><li>강연 중 타인 방해 행위 금지</li><li>강의 내용 및 자료 무단 녹화·복제·배포 금지</li><li>강연장 내 흡연, 음주 금지</li></ul>
+      <h3>제7조 (지식재산권)</h3>
+      <p>협회가 제작한 모든 콘텐츠의 저작권은 협회에 귀속됩니다.</p>
+      <h3>제8조 (면책조항)</h3>
+      <ul><li>천재지변 등 불가항력으로 서비스를 제공하지 못한 경우 협회는 책임지지 않습니다.</li><li>이용자 본인 부주의로 발생한 안전사고에 대해 협회는 책임지지 않습니다.</li></ul>
+      <h3>제9조 (시행일)</h3>
+      <p>본 약관은 2025년 1월 1일부터 시행됩니다.</p>
+      <p style="margin-top:20px;color:var(--hint);font-size:13px;">AI리더스협회 | 영등포구 선유로70 우리벤처타운2 | 대표: 김영주 | 사업자등록번호: 352-88-01460</p>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  function openLegal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+  function closeLegal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+  window.openLegal=openLegal;window.closeLegal=closeLegal;
+  document.querySelectorAll('.legal-modal-bg').forEach(function(bg){bg.addEventListener('click',function(e){if(e.target===bg)closeLegal(bg.id);});});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.legal-modal-bg.open').forEach(function(el){closeLegal(el.id);});});
+})();
+</script>
+<!-- ===== 팝업 끝 ===== -->
+
+
+<script src="/assets/mobile-nav.js"></script>
+</body>
+</html>

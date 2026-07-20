@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+(function(){
+  if (typeof window.fbq !== 'function' || window.fbq.__aiLeadersMetaGuard) return;
+  var originalFbq = window.fbq;
+  var tracked = {};
+  var initialized = {};
+  var guardedFbq = function(){
+    var command = arguments[0];
+    var name = arguments[1];
+    if (command === 'init' && name === '1509286323738952') {
+      if (initialized[name]) return;
+      initialized[name] = true;
+    }
+    if (command === 'track' && (name === 'PageView' || name === 'Lead' || name === 'Purchase' || name === 'ViewContent' || name === 'InitiateCheckout')) {
+      if (tracked[name]) return;
+      tracked[name] = true;
+    }
+    return originalFbq.apply(this, arguments);
+  };
+  window.aiLeadersTrackMeta = function(eventName, params) {
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', eventName, params || {});
+    }
+  };
+  for (var key in originalFbq) {
+    try { guardedFbq[key] = originalFbq[key]; } catch (error) {}
+  }
+  guardedFbq.__aiLeadersMetaGuard = true;
+  window.fbq = guardedFbq;
+})();
+fbq('init', '1509286323738952');
+fbq('track', 'PageView');
+(function(){
+  var path = window.location.pathname || '/';
+  var isCompletion = path.indexOf('/application-complete') === 0;
+  var isCourseDetail = path.indexOf('/course-detail') === 0 || path.indexOf('/course/') === 0;
+  if (!isCompletion && !isCourseDetail && typeof window.aiLeadersTrackMeta === 'function') {
+    window.aiLeadersTrackMeta('ViewContent', {
+      content_name: document.title || 'AI리더스협회 랜딩',
+      content_category: 'Landing',
+      content_type: 'website',
+      page_path: path
+    });
+  }
+})();
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1509286323738952&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KZ447VNR');</script>
+<!-- End Google Tag Manager -->
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>무료 강연 | AI리더스협회</title>
+<meta name="description" content="AI리더스협회의 무료 AI 체험 강연을 확인하세요. 생성형 AI 활용의 첫걸음을 부담 없이 경험할 수 있습니다."/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://newaileaders.co.kr/course-free/"/>
+<meta property="og:locale" content="ko_KR"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="AI리더스협회"/>
+<meta property="og:title" content="무료 강연 | AI리더스협회"/>
+<meta property="og:description" content="AI리더스협회의 무료 AI 체험 강연을 확인하세요. 생성형 AI 활용의 첫걸음을 부담 없이 경험할 수 있습니다."/>
+<meta property="og:url" content="https://newaileaders.co.kr/course-free/"/>
+<meta property="og:image" content="https://newaileaders.co.kr/images/landing-banner-free.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="무료 강연 | AI리더스협회"/>
+<meta name="twitter:description" content="AI리더스협회의 무료 AI 체험 강연을 확인하세요. 생성형 AI 활용의 첫걸음을 부담 없이 경험할 수 있습니다."/>
+<meta name="twitter:image" content="https://newaileaders.co.kr/images/landing-banner-free.jpg"/>
+
+<link rel="icon" href="../favicon.ico" type="image/x-icon"/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"/>
+<link rel="stylesheet" href="../shared.css"/>
+<style>
+  /* ── Hero 한 줄 강제 ── */
+  .page-hero h1 { white-space: nowrap; }
+  .page-hero .ph-desc { max-width: none; white-space: nowrap; }
+
+  /* ── Aurora hero ── */
+  .aurora-hero { background: #000 !important; position: relative; overflow: hidden; }
+  .aurora-hero::before { display: none; }
+  .aurora-hero .hero-grid { display: none; }
+  .aurora-base {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(30,58,138,.4) 0%, rgba(88,28,135,.3) 50%, rgba(55,48,163,.4) 100%);
+    opacity: .7;
+  }
+  .aurora-wave { position: absolute; inset: 0; pointer-events: none; }
+  .aurora-wave-1 {
+    opacity: .6;
+    background: radial-gradient(ellipse 800px 600px at 50% 20%, rgba(59,130,246,.3) 0%, transparent 50%);
+    animation: aurora1 8s ease-in-out infinite alternate;
+  }
+  .aurora-wave-2 {
+    opacity: .5;
+    background: radial-gradient(ellipse 600px 400px at 80% 30%, rgba(139,92,246,.4) 0%, transparent 50%);
+    animation: aurora2 6s ease-in-out infinite alternate-reverse;
+  }
+  .aurora-wave-3 {
+    opacity: .4;
+    background: radial-gradient(ellipse 700px 500px at 20% 60%, rgba(236,72,153,.3) 0%, transparent 50%);
+    animation: aurora3 10s ease-in-out infinite alternate;
+  }
+  .aurora-wave-4 {
+    opacity: .3;
+    background: radial-gradient(ellipse 900px 300px at 60% 80%, rgba(34,197,94,.2) 0%, transparent 50%);
+    animation: aurora4 7s ease-in-out infinite alternate-reverse;
+  }
+  .aurora-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.2) 0%, transparent 50%, rgba(0,0,0,.1) 100%);
+  }
+  @keyframes aurora1 {
+    0%   { transform: translateX(-100px) translateY(-50px)  rotate(0deg)   scale(1);   }
+    50%  { transform: translateX(50px)   translateY(30px)   rotate(180deg) scale(1.1); }
+    100% { transform: translateX(100px)  translateY(-30px)  rotate(360deg) scale(.9);  }
+  }
+  @keyframes aurora2 {
+    0%   { transform: translateX(80px)   translateY(40px)   rotate(45deg)  scale(.8);  }
+    50%  { transform: translateX(-30px)  translateY(-20px)  rotate(225deg) scale(1.2); }
+    100% { transform: translateX(-80px)  translateY(60px)   rotate(405deg) scale(.9);  }
+  }
+  @keyframes aurora3 {
+    0%   { transform: translateX(-50px)  translateY(20px)   rotate(90deg)  scale(1.1); }
+    50%  { transform: translateX(70px)   translateY(-40px)  rotate(270deg) scale(.8);  }
+    100% { transform: translateX(-20px)  translateY(50px)   rotate(450deg) scale(1);   }
+  }
+  @keyframes aurora4 {
+    0%   { transform: translateX(30px)   translateY(-20px)  rotate(135deg) scale(.9);  }
+    50%  { transform: translateX(-60px)  translateY(10px)   rotate(315deg) scale(1.1); }
+    100% { transform: translateX(40px)   translateY(-60px)  rotate(495deg) scale(.8);  }
+  }
+
+  .course-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .c-thumb { aspect-ratio: 16/10; background: var(--brand-50); position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .c-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .c-thumb-icon { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--brand); }
+  .c-thumb-icon svg { width: 36px; height: 36px; stroke: currentColor; }
+  .c-thumb-icon span { font-size: 12px; font-weight: 600; }
+  .card .c-badges { position: absolute !important; top: 12px; left: 12px; display: flex; gap: 6px; z-index: 2; }
+  .card .c-badges .badge { font-size: 16px; }
+  .c-body { padding: 22px; }
+  .c-body h3 { font-size: 16px; font-weight: 700; line-height: 1.45; word-break: keep-all; }
+  .c-by { margin-top: 8px; font-size: 13px; color: var(--muted); }
+  .c-meta { margin-top: 14px; display: flex; flex-direction: column; gap: 7px; }
+  .c-meta-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); }
+  .c-meta-item svg { width: 14px; height: 14px; stroke: currentColor; flex: none; color: var(--brand); }
+  .c-footer { margin-top: 18px; padding-top: 16px; border-top: none; display: flex; align-items: center; justify-content: space-between; }
+
+  .notice-box { background: linear-gradient(90deg, #eff6ff 0%, #dbeafe 100%); border: none; padding: 20px 24px; display: flex; gap: 14px; align-items: flex-start; margin-bottom: 72px; }
+  .notice-box svg { width: 20px; height: 20px; stroke: var(--brand); flex: none; margin-top: 2px; }
+  .notice-box p { font-size: 14px; color: var(--ink); line-height: 1.7; word-break: keep-all; }
+
+  /* Modal */
+  .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:500; align-items:center; justify-content:center; padding:20px; }
+  .modal-bg.open { display:flex; }
+  .modal { background:#fff; width:100%; max-width:520px; padding:40px; position:relative; max-height:90vh; overflow-y:auto; }
+  .modal h3 { font-size:22px; font-weight:700; margin-bottom:24px; }
+  .modal-close { position:absolute; top:16px; right:16px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; background:none; border:none; cursor:pointer; color:var(--muted); }
+  .modal-close svg { width:20px; height:20px; stroke:currentColor; }
+  .modal .form-group + .form-group { margin-top:16px; }
+  .modal .btn { width:100%; margin-top:24px; height:54px; font-size:16px; }
+  .modal .privacy { margin-top:12px; font-size:12px; color:var(--hint); text-align:center; }
+  .date-hidden { display: none !important; }
+
+  /* 카드 선 제거 */
+  /* 카드 — 메인페이지 동일 스타일 */
+  #courseGrid .card { border:none; box-shadow:none; background:#fff; overflow:hidden; transition:transform .25s ease, box-shadow .3s ease; display:block; }
+  #courseGrid .card:hover { transform:translateY(-2px); box-shadow:0 14px 30px rgba(12,24,40,.12); }
+  #courseGrid .card .card-link { display:block; text-decoration:none; color:#0c1828; }
+  #courseGrid .card .course-thumb { position:relative; aspect-ratio:1/1; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  #courseGrid .card .course-thumb > img:not(.course-closed-overlay) { width:100%; height:100%; object-fit:cover; transition:transform .3s ease; }
+  #courseGrid .card .course-closed-overlay { position:absolute; inset:0; z-index:1; width:100%; height:100%; object-fit:cover; pointer-events:none; }
+  #courseGrid .card .cc-deadline-badge { position:absolute; top:12px; left:12px; z-index:2; height:28px; display:inline-flex; align-items:center; border-radius:4px; padding:0 10px; background:#ef1f1f; color:#fff; font-size:12px; font-weight:900; box-shadow:0 8px 18px rgba(239,31,31,.22); }
+  #courseGrid .card:hover .course-thumb > img:not(.course-closed-overlay) { transform:scale(1.05); }
+  #courseGrid .card .course-body { padding:18px 18px 20px; }
+  #courseGrid .card .course-body h3 { font-size:18px; font-weight:700; line-height:1.45; margin-bottom:8px; }
+  #courseGrid .card .cc-instructor { margin:0 0 6px; font-size:13px; font-weight:700; color:#667085; line-height:1.35; }
+  #courseGrid .card .cc-remaining { margin:0 0 14px; font-size:13px; font-weight:900; color:#0172fe; line-height:1.35; }
+  #courseGrid .card .cc-price { font-size:18px; font-weight:800; color:#ef1f1f; margin-bottom:14px; }
+  #courseGrid .card .cc-tags { display:flex; flex-wrap:wrap; gap:6px; }
+  #courseGrid .card .cc-tags span { font-size:11px; font-weight:700; padding:4px 10px; border-radius:4px; color:#5b6675; background:rgba(12,24,40,.055); }
+  #courseGrid .card .cc-tags .hot { color:#0172fe; background:#e8f1ff; }
+
+  /* 강의 시간 (두 번째 meta 항목) 숨김 */
+  .c-meta .c-meta-item:nth-child(2) { display: none; }
+
+
+  /* ── 마감 임박 배지 — 메인 페이지 태그 스타일 + 빨간색 ── */
+  .c-badges .badge.yellow {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: #fff;
+    color: #000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  /* sec-head 아래 간격 축소 */
+  #courses .sec-head { margin-bottom: 48px; }
+
+  /* 잔여석 숨김 + 신청하기 버튼 전체 너비 */
+  .c-spots { display: none !important; }
+  .c-footer { justify-content: center; }
+  .c-footer .btn.sm {
+    width: 100%; border-radius: 2px;
+    background: #3b7de8; color: #fff; font-weight: 700;
+    height: 46px; font-size: 15px; border: none;
+    box-shadow: 0 4px 14px rgba(59,125,232,.35);
+    transition: background .15s, box-shadow .15s, transform .1s;
+  }
+  .c-footer .btn.sm:hover { background: #2563c9; box-shadow: 0 6px 18px rgba(59,125,232,.45); transform: translateY(-1px); }
+
+  @media (max-width:860px) { .course-grid { grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:540px) { .course-grid { grid-template-columns:1fr; } }
+
+  /* CTA 배경 — 아래→위 무한 그라디언트 (끊김 없는 타일 방식) */
+  #cta-gradient-bg { position:absolute; inset:0; overflow:hidden; }
+  .cta-rise-layer {
+    position:absolute; left:0; top:0; width:100%; height:100%;
+    background: linear-gradient(to top,
+      #020010 0%,
+      #0a1560 20%,
+      #2e1260 45%,
+      #4a0c24 70%,
+      #020010 100%
+    );
+    background-size: 100% 600px;
+    background-repeat: repeat-y;
+    animation: cta-scroll 8s linear infinite;
+  }
+  @keyframes cta-scroll {
+    from { background-position: 0 0; }
+    to   { background-position: 0 -600px; }
+  }
+
+  
+
+  /* ── 탭바 언더라인 스타일 ── */
+  .filters { gap: 0; border-bottom: 1.5px solid var(--line); margin-bottom: 36px; }
+  .filter-btn {
+    height: 44px; padding: 0 20px; border: none; border-bottom: 2.5px solid transparent;
+    background: transparent; color: var(--muted); font-size: 15px; font-weight: 500;
+    margin-bottom: -1.5px; border-radius: 0;
+  }
+  .filter-btn:hover  { border-bottom-color: var(--brand); color: var(--brand); background: transparent; }
+  .filter-btn.active { border-bottom-color: var(--brand); color: var(--ink); font-weight: 700; background: transparent; }
+  .subfilters { display: flex; gap: 8px; flex-wrap: wrap; margin: -18px 0 32px; }
+  .dd { position: relative; }
+  .dd-btn {
+    display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px;
+    border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink);
+    font-weight: 700; cursor: pointer; box-shadow: 0 4px 14px rgba(20,30,50,.06);
+  }
+  .dd-btn:hover, .dd.open .dd-btn { border-color: var(--brand); color: var(--brand); background: var(--brand-50); }
+  .dd-btn svg { width: 16px; height: 16px; stroke: currentColor; transition: transform .18s ease; }
+  .dd.open .dd-btn svg { transform: rotate(180deg); }
+  .dd-menu {
+    position: absolute; left: 0; top: calc(100% + 8px); z-index: 20; display: none;
+    min-width: 240px; max-width: min(320px, calc(100vw - 40px)); padding: 8px;
+    border: 1px solid var(--line); border-radius: 12px; background: #fff;
+    box-shadow: 0 18px 44px rgba(20,30,50,.14);
+  }
+  .dd.open .dd-menu { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; }
+  .dd-opt {
+    min-height: 34px; border: 0; border-radius: 8px; background: transparent; color: var(--muted);
+    font-size: 13px; font-weight: 700; cursor: pointer;
+  }
+  .dd-opt:hover, .dd-opt.active { background: var(--brand-50); color: var(--brand); }
+
+  /* ===== 리모콘 바 ===== */
+.eyebrow{ font-size:18px; font-weight:700; letter-spacing:-.01em; text-transform:none; color:var(--brand); }
+</style>
+<style>
+  .legal-modal-bg{position:fixed;inset:0;z-index:9999;background:rgba(12,24,40,.55);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s ease;}
+  .legal-modal-bg.open{opacity:1;pointer-events:auto;}
+  .legal-modal{background:#fff;border-radius:16px;width:100%;max-width:680px;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(12,24,40,.18);transform:translateY(12px);transition:transform .2s ease;}
+  .legal-modal-bg.open .legal-modal{transform:translateY(0);}
+  .legal-modal-head{display:flex;align-items:center;justify-content:space-between;padding:24px 28px 20px;border-bottom:1px solid var(--line);}
+  .legal-modal-head h2{font-size:18px;font-weight:700;color:var(--ink);}
+  .legal-modal-close{width:36px;height:36px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:8px;color:var(--muted);transition:background .15s;}
+  .legal-modal-close:hover{background:var(--paper);color:var(--ink);}
+  .legal-modal-body{overflow-y:auto;padding:24px 28px 32px;font-size:14px;line-height:1.85;color:var(--muted);}
+  .legal-modal-body h3{font-size:15px;font-weight:700;color:var(--ink);margin:24px 0 8px;}
+  .legal-modal-body h3:first-child{margin-top:0;}
+  .legal-modal-body p{margin-bottom:10px;}
+  .legal-modal-body ul{padding-left:18px;margin-bottom:10px;}
+  .legal-modal-body li{margin-bottom:4px;}
+  .legal-modal-body table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:13px;}
+  .legal-modal-body th,.legal-modal-body td{border:1px solid var(--line);padding:8px 10px;text-align:left;}
+  .legal-modal-body th{background:var(--paper);font-weight:600;color:var(--ink);}
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZ447VNR"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div data-site-nav></div>
+<script src="/assets/site-layout.js?v=20260716-gtm-1"></script>
+
+<header class="page-hero aurora-hero" style="padding-top: calc(var(--nav-h) + 130px); padding-bottom: 150px;">
+  <div class="aurora-base"></div>
+  <div class="aurora-wave aurora-wave-1"></div>
+  <div class="aurora-wave aurora-wave-2"></div>
+  <div class="aurora-wave aurora-wave-3"></div>
+  <div class="aurora-wave aurora-wave-4"></div>
+  <div class="aurora-overlay"></div>
+  <div class="container" style="position:relative;z-index:10;">
+    <h1>무료로 경험하는 AI 첫걸음</h1>
+    <p class="ph-desc">AI를 처음 배우는 분들도 쉽게 따라올 수 있는 실전형 무료강연을 만나보세요.</p>
+  </div>
+</header>
+
+<main>
+  <section class="section" id="courses">
+    <div class="container">
+
+      <div class="sec-head reveal">
+        <div><p class="eyebrow">Free Lecture</p><h2 class="h">AI 무료 특강</h2></div>
+      </div>
+
+      <div class="filters reveal" role="group" aria-label="강의 필터">
+        <button class="filter-btn active" onclick="filterCourse('all',this)">전체</button>
+        <button class="filter-btn" onclick="filterCourse('chatgpt',this)">제미나이</button>
+        <button class="filter-btn" onclick="filterCourse('claude',this)">클로드</button>
+        <button class="filter-btn" onclick="filterCourse('canva',this)">AI종합</button>
+      </div>
+
+      <div class="subfilters reveal" role="group" aria-label="지역 필터">
+        <div class="dd" id="regionDd">
+          <button class="dd-btn" type="button" onclick="toggleRegionDd(event)">
+            <span id="regionDdLabel">지역</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="dd-menu" id="regionDdMenu">
+            <button class="dd-opt active" type="button" data-region="all" onclick="filterRegion('all',this)">전체</button>
+            <button class="dd-opt" type="button" data-region="서울" onclick="filterRegion('서울',this)">서울</button>
+            <button class="dd-opt" type="button" data-region="부산" onclick="filterRegion('부산',this)">부산</button>
+            <button class="dd-opt" type="button" data-region="대구" onclick="filterRegion('대구',this)">대구</button>
+            <button class="dd-opt" type="button" data-region="인천" onclick="filterRegion('인천',this)">인천</button>
+            <button class="dd-opt" type="button" data-region="광주" onclick="filterRegion('광주',this)">광주</button>
+            <button class="dd-opt" type="button" data-region="대전" onclick="filterRegion('대전',this)">대전</button>
+            <button class="dd-opt" type="button" data-region="울산" onclick="filterRegion('울산',this)">울산</button>
+            <button class="dd-opt" type="button" data-region="세종" onclick="filterRegion('세종',this)">세종</button>
+            <button class="dd-opt" type="button" data-region="경기" onclick="filterRegion('경기',this)">경기</button>
+            <button class="dd-opt" type="button" data-region="강원" onclick="filterRegion('강원',this)">강원</button>
+            <button class="dd-opt" type="button" data-region="충북" onclick="filterRegion('충북',this)">충북</button>
+            <button class="dd-opt" type="button" data-region="충남" onclick="filterRegion('충남',this)">충남</button>
+            <button class="dd-opt" type="button" data-region="전북" onclick="filterRegion('전북',this)">전북</button>
+            <button class="dd-opt" type="button" data-region="전남" onclick="filterRegion('전남',this)">전남</button>
+            <button class="dd-opt" type="button" data-region="경북" onclick="filterRegion('경북',this)">경북</button>
+            <button class="dd-opt" type="button" data-region="경남" onclick="filterRegion('경남',this)">경남</button>
+            <button class="dd-opt" type="button" data-region="제주" onclick="filterRegion('제주',this)">제주</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-grid reveal" id="courseGrid">
+
+        <article class="card" data-cat="chatgpt" data-event-date="2026-07-03">
+          <a href="/course/?c=c1tbhva" class="card-link">
+            <div class="course-thumb" style="background:#e8f1ff;">
+              <img src="/images/제미나이썸네일.jpg" alt="제미나이 기초"/>
+            </div>
+            <div class="course-body">
+              <h3>[강남] 제미나이 완벽 실무 활용법</h3>
+              <p class="cc-price">D-DAY</p>
+              <div class="cc-tags"><span>무료</span><span>인기</span></div>
+            </div>
+          </a>
+        </article>
+
+        <article class="card" data-cat="claude" data-event-date="2026-07-05">
+          <a href="/course/?c=cpn1kbt" class="card-link">
+            <div class="course-thumb" style="background:#fdf4ee;">
+              <img src="/images/클로드썸네일.jpg" alt="클로드 입문"/>
+            </div>
+            <div class="course-body">
+              <h3>[서초] 클로드 실전 활용법</h3>
+              <p class="cc-price">D-2</p>
+              <div class="cc-tags"><span>무료</span></div>
+            </div>
+          </a>
+        </article>
+
+        <article class="card" data-cat="canva" data-event-date="2026-07-07">
+          <a href="/course/?c=cda1s46" class="card-link">
+            <div class="course-thumb" style="background:#f0fdf4;">
+              <img src="/images/ai종합썸네일.jpg" alt="AI종합"/>
+            </div>
+            <div class="course-body">
+              <h3>[종로] 제미나이 완벽 실무 활용법</h3>
+              <p class="cc-price">D-4</p>
+              <div class="cc-tags"><span>무료</span><span>마감임박</span></div>
+            </div>
+          </a>
+        </article>
+
+        <article class="card" data-cat="chatgpt" data-event-date="2026-07-15">
+          <a href="/course/?c=cmn38bx" class="card-link">
+            <div class="course-thumb" style="background:#e8f1ff;">
+              <img src="/images/제미나이썸네일.jpg" alt="제미나이"/>
+            </div>
+            <div class="course-body">
+              <h3>[마포] 제미나이 완벽 실무 활용법</h3>
+              <p class="cc-price">D-12</p>
+              <div class="cc-tags"><span>무료</span></div>
+            </div>
+          </a>
+        </article>
+
+        <article class="card" data-cat="chatgpt" data-event-date="2026-07-10">
+          <a href="/course/?c=c1f0wjd" class="card-link">
+            <div class="course-thumb" style="background:#e8f1ff;">
+              <img src="/images/제미나이썸네일.jpg" alt="제미나이 기초"/>
+            </div>
+            <div class="course-body">
+              <h3>[송파] 제미나이 완벽 실무 활용법</h3>
+              <p class="cc-price">D-7</p>
+              <div class="cc-tags"><span>무료</span></div>
+            </div>
+          </a>
+        </article>
+
+        <article class="card" data-cat="claude" data-event-date="2026-07-19">
+          <a href="/course/?c=c1vw46v" class="card-link">
+            <div class="course-thumb" style="background:#fdf4ee;">
+              <img src="/images/클로드썸네일.jpg" alt="클로드"/>
+            </div>
+            <div class="course-body">
+              <h3>[영등포] 클로드 실전 활용법</h3>
+              <p class="cc-price">D-16</p>
+              <div class="cc-tags"><span>무료</span></div>
+            </div>
+          </a>
+        </article>
+
+        <article class="card" data-cat="canva" data-event-date="2026-07-23">
+          <a href="/course/?c=csmoom4" class="card-link">
+            <div class="course-thumb" style="background:#f0fdf4;">
+              <img src="/images/ai종합썸네일.jpg" alt="AI종합"/>
+            </div>
+            <div class="course-body">
+              <h3>[용산] 제미나이 완벽 실무 활용법</h3>
+              <p class="cc-price">D-20</p>
+              <div class="cc-tags"><span>무료</span></div>
+            </div>
+          </a>
+        </article>
+
+      </div><!-- /course-grid -->
+    </div>
+  </section>
+
+  <!-- UPGRADE CTA -->
+</main>
+
+<!-- REGISTRATION MODAL -->
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="닫기"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <h3 id="modalTitle">무료 강의 신청</h3>
+    <p id="modalCourseName" style="font-size:16px;color:var(--brand);font-weight:600;margin-bottom:20px;"></p>
+    <form onsubmit="submitForm(event)">
+      <div class="form-group"><label class="form-label" for="m-name">이름<span class="req">*</span></label><input class="form-input" id="m-name" type="text" placeholder="홍길동" required autocomplete="name"/></div>
+      <div class="form-group" style="margin-top:14px;"><label class="form-label" for="m-phone">연락처<span class="req">*</span></label><input class="form-input" id="m-phone" type="tel" placeholder="010-0000-0000" required autocomplete="tel"/></div>
+      <div class="form-group" style="margin-top:14px;"><label class="form-label" for="m-age">연령대<span class="req">*</span></label><select class="form-select" id="m-age" required><option value="">선택해주세요</option><option>30대</option><option>40대</option><option>50대</option><option>60세~65세 이하</option></select></div>
+      <div class="form-group" style="margin-top:20px;">
+        <p style="font-size:13px;color:var(--ink);line-height:1.6;margin-bottom:4px;">중복 참여시 당첨 알림문자가 있더라도, 현장에서 입장이 제한됩니다.</p>
+        <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;"><input type="checkbox" id="chk1" autocomplete="off" style="accent-color:var(--brand);width:16px;height:16px;flex-shrink:0;"/>확인했습니다.</label>
+      </div>
+      <div class="form-group" style="margin-top:16px;">
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ink);line-height:1.6;cursor:pointer;"><input type="checkbox" id="chk2" autocomplete="off" style="accent-color:var(--brand);width:16px;height:16px;flex-shrink:0;margin-top:2px;"/>개인정보 수집·이용 및 행사장 안전 수칙에 동의합니다.</label>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+          <button type="button" onclick="document.getElementById('privacyModal').style.display='flex'" style="font-size:12px;color:var(--brand);border:1px solid var(--brand);background:transparent;padding:4px 12px;border-radius:4px;cursor:pointer;line-height:1.6;">개인정보 수집·이용 전문보기</button>
+          <button type="button" onclick="document.getElementById('safetyModal').style.display='flex'" style="font-size:12px;color:var(--brand);border:1px solid var(--brand);background:transparent;padding:4px 12px;border-radius:4px;cursor:pointer;line-height:1.6;">행사장 안전 수칙 전문보기</button>
+        </div>
+      </div>
+      <button class="btn" type="submit">신청하기</button>
+      <p class="privacy">신청 정보는 강의 확정 안내에만 사용됩니다.</p>
+    </form>
+  </div>
+</div>
+
+<!-- PRIVACY POLICY MODAL -->
+<div class="legal-modal-bg" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+  <div class="legal-modal">
+    <div class="legal-modal-head">
+      <h2 id="privacyTitle">개인정보처리방침</h2>
+      <button class="legal-modal-close" onclick="closeLegal('privacyModal')" aria-label="닫기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <p>AI리더스협회(이하 "협회")는 이용자의 개인정보를 중요하게 생각하며, 「개인정보 보호법」 및 관련 법령을 준수합니다. 본 방침은 협회가 제공하는 강연 신청·운영 서비스와 관련하여 수집·이용·보관·파기하는 개인정보에 관한 사항을 규정합니다.</p>
+
+      <h3>1. 개인정보 수집 항목 및 수집 방법</h3>
+      <table>
+        <thead><tr><th>구분</th><th>수집 항목</th><th>수집 목적</th></tr></thead>
+        <tbody>
+          <tr><td>무료 강연 신청</td><td>이름, 연락처, 나이대</td><td>강연 신청 확인 및 안내 문자 발송</td></tr>
+          <tr><td>유료 강연 신청</td><td>이름, 연락처, 이메일, 결제 정보</td><td>강연 신청 확인, 수강료 결제, 수료증 발급</td></tr>
+          <tr><td>출강 문의</td><td>담당자명, 소속, 연락처, 이메일</td><td>기업 교육 상담 및 견적 안내</td></tr>
+          <tr><td>강사 지원</td><td>이름, 연락처, 이메일, 경력 정보</td><td>강사 자격 검토 및 채용 심사</td></tr>
+        </tbody>
+      </table>
+      <p>수집 방법: 홈페이지 신청 양식, 이메일, 전화 등을 통한 직접 입력</p>
+
+      <h3>2. 개인정보의 이용 목적</h3>
+      <ul>
+        <li>강연 예약 확인 및 일정 안내</li>
+        <li>수강료 결제 처리 및 환불 처리</li>
+        <li>수료증 및 강의 자료 제공</li>
+        <li>고객 문의 응대</li>
+        <li>신규 강연 일정 및 혜택 안내 (동의한 경우에 한함)</li>
+      </ul>
+
+      <h3>3. 개인정보 보유 및 이용 기간</h3>
+      <p>수집된 개인정보는 이용 목적 달성 후 즉시 파기하는 것을 원칙으로 합니다. 단, 관계 법령에 따라 아래와 같이 보관합니다.</p>
+      <ul>
+        <li>계약·청약철회 기록: 5년 (전자상거래법)</li>
+        <li>소비자 불만·분쟁 기록: 3년 (전자상거래법)</li>
+        <li>강연 신청 기록: 서비스 종료 후 1년</li>
+      </ul>
+
+      <h3>4. 개인정보의 제3자 제공</h3>
+      <p>협회는 이용자의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 다만, 법령에 의한 경우 또는 이용자의 사전 동의가 있는 경우는 예외로 합니다.</p>
+
+      <h3>5. 개인정보 처리 위탁</h3>
+      <p>협회는 현재 개인정보 처리 업무를 외부에 위탁하지 않습니다. 향후 위탁이 발생할 경우 본 방침을 통해 고지합니다.</p>
+
+      <h3>6. 이용자 권리 및 행사 방법</h3>
+      <p>이용자는 언제든지 자신의 개인정보에 대해 다음 권리를 행사할 수 있습니다.</p>
+      <ul>
+        <li>개인정보 열람 요청</li>
+        <li>오류 정정 요청</li>
+        <li>삭제 요청</li>
+        <li>처리 정지 요청</li>
+      </ul>
+      <p>권리 행사는 전화(010-4269-0213)로 요청하시면 지체 없이 처리합니다.</p>
+
+      <h3>7. 개인정보의 파기</h3>
+      <p>보유 기간 만료 또는 목적 달성 시 즉시 파기합니다. 전자 파일은 복구 불가능한 방법으로 삭제하며, 서면은 분쇄 또는 소각합니다.</p>
+
+      <h3>8. 개인정보 보호책임자</h3>
+      <ul>
+        <li>성명: 김영주</li>
+        <li>소속: AI리더스협회</li>
+        <li>전화: 010-4269-0213</li>
+      </ul>
+
+      <h3>9. 개인정보처리방침 변경</h3>
+      <p>본 방침은 2025년 1월 1일부터 시행되며, 내용 변경 시 홈페이지 공지를 통해 사전 안내합니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SAFETY MODAL -->
+<div id="safetyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:600;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;width:100%;max-width:560px;max-height:80vh;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;position:relative;">
+    <div style="padding:24px 24px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <h4 style="font-size:17px;font-weight:700;margin:0;">행사장 안전 수칙</h4>
+      <button onclick="document.getElementById('safetyModal').style.display='none'" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;" aria-label="닫기">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="padding:24px;overflow-y:auto;font-size:13px;color:var(--ink);line-height:1.8;">
+      <p style="font-weight:700;margin-bottom:12px;">[행사장 안전사고 배상책임]</p>
+      <p style="margin-bottom:20px;">행사장 내에서 본인 부주의로 발생된 안전사고는 행사관계자가 책임지지 않으므로 안전에 각별히 유의해야 합니다.</p>
+      <div style="padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.8;">
+        <p>※ 상기 내용이 변경되는 경우 본 게시를 통해 그 내용을 안내해 드립니다.</p>
+        <p>※ 본 약관에 동의하는 것은 행사장 안전사고 배상책임 내용을 숙지한 것으로 간주합니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-site-footer></div>
+<script>window.AiLeadersLayout && window.AiLeadersLayout.renderFooter();</script>
+
+<script src="/assets/supabase-store-common.js?v=20260716-storage-auth-1"></script>
+<script src="/assets/courses-store.js"></script>
+<script src="/assets/course-page-renderer.js"></script>
+<script src="/assets/applications-store.js"></script>
+<script>
+CoursePageRenderer.render({ type: 'free' });
+</script>
+<script>
+(function(){
+  const nav=document.getElementById('nav'),hamb=document.getElementById('hamb');
+  function setScrolled(){nav.classList.toggle('scrolled',window.scrollY>60);}
+  setScrolled();window.addEventListener('scroll',setScrolled,{passive:true});
+  hamb?.addEventListener('click',()=>{const open=nav.classList.toggle('open');hamb.setAttribute('aria-expanded',String(open));hamb.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');});
+  document.addEventListener('click',e=>{if(nav.classList.contains('open')&&!nav.contains(e.target)){nav.classList.remove('open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','메뉴 열기');}});
+  const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');ro.unobserve(e.target);}}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+})();
+
+function filterCourse(cat, btn) {
+  if (window.CoursePageRenderer && window.CoursePageRenderer.filter) {
+    window.CoursePageRenderer.filter(cat, btn);
+  }
+}
+
+function toggleRegionDd(e) {
+  if (e) e.stopPropagation();
+  var dd = document.getElementById('regionDd');
+  if (dd) dd.classList.toggle('open');
+}
+
+function filterRegion(region, btn) {
+  if (window.CoursePageRenderer && window.CoursePageRenderer.filterRegion) {
+    window.CoursePageRenderer.filterRegion(region, btn);
+  }
+}
+
+document.addEventListener('click', function(e) {
+  var dd = document.getElementById('regionDd');
+  if (dd && dd.classList.contains('open') && !dd.contains(e.target)) {
+    dd.classList.remove('open');
+  }
+});
+
+function openModal(courseName) {
+  document.getElementById('modalCourseName').textContent = courseName;
+  document.getElementById('modalBg').classList.add('open');
+  document.getElementById('m-name').focus();
+}
+function closeModal() {
+  document.getElementById('modalBg').classList.remove('open');
+}
+document.getElementById('modalBg').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+async function submitForm(e) {
+  e.preventDefault();
+  const c1 = document.getElementById('chk1');
+  const c2 = document.getElementById('chk2');
+  if (!c1.checked) { alert('첫 번째 확인 항목에 동의해주세요.'); return; }
+  if (!c2.checked) { alert('두 번째 확인 항목에 동의해주세요.'); return; }
+  if (window.ApplicationStore) {
+    try {
+      await window.ApplicationStore.addApplication({
+        courseType: 'free',
+        courseTitle: document.getElementById('modalCourseName').textContent.replace(/^신청 강의:\s*/, ''),
+        name: document.getElementById('m-name').value.trim(),
+        phone: document.getElementById('m-phone').value.trim(),
+        age: document.getElementById('m-age').value,
+        source: 'course-free'
+      });
+    } catch (error) {
+      alert(error.message || '데이터를 불러올 수 없습니다.');
+      return;
+    }
+  }
+  alert('신청이 완료되었습니다!\n카카오 채널을 통해 확정 메시지를 보내드립니다.');
+  closeModal();
+  e.target.reset();
+}
+</script>
+
+<div data-site-quick-links></div>
+<script src="/assets/quick-links.js?v=20260719-mobile-tabs-1"></script>
+<!-- ===== 리모컨 바 끝 ===== -->
+
+<!-- ===== 개인정보·이용약관 팝업 ===== -->
+
+<!-- 개인정보처리방침 팝업 -->
+<div class="legal-modal-bg" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+  <div class="legal-modal">
+    <div class="legal-modal-head">
+      <h2 id="privacyTitle">개인정보처리방침</h2>
+      <button class="legal-modal-close" onclick="closeLegal('privacyModal')" aria-label="닫기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <p>AI리더스협회(이하 "협회")는 이용자의 개인정보를 중요하게 생각하며, 「개인정보 보호법」 및 관련 법령을 준수합니다. 본 방침은 협회가 제공하는 강연 신청·운영 서비스와 관련하여 수집·이용·보관·파기하는 개인정보에 관한 사항을 규정합니다.</p>
+
+      <h3>1. 개인정보 수집 항목 및 수집 방법</h3>
+      <table>
+        <thead><tr><th>구분</th><th>수집 항목</th><th>수집 목적</th></tr></thead>
+        <tbody>
+          <tr><td>무료 강연 신청</td><td>이름, 연락처, 나이대</td><td>강연 신청 확인 및 안내 문자 발송</td></tr>
+          <tr><td>유료 강연 신청</td><td>이름, 연락처, 이메일, 결제 정보</td><td>강연 신청 확인, 수강료 결제, 수료증 발급</td></tr>
+          <tr><td>출강 문의</td><td>담당자명, 소속, 연락처, 이메일</td><td>기업 교육 상담 및 견적 안내</td></tr>
+          <tr><td>강사 지원</td><td>이름, 연락처, 이메일, 경력 정보</td><td>강사 자격 검토 및 채용 심사</td></tr>
+        </tbody>
+      </table>
+      <p>수집 방법: 홈페이지 신청 양식, 이메일, 전화 등을 통한 직접 입력</p>
+
+      <h3>2. 개인정보의 이용 목적</h3>
+      <ul>
+        <li>강연 예약 확인 및 일정 안내</li>
+        <li>수강료 결제 처리 및 환불 처리</li>
+        <li>수료증 및 강의 자료 제공</li>
+        <li>고객 문의 응대</li>
+        <li>신규 강연 일정 및 혜택 안내 (동의한 경우에 한함)</li>
+      </ul>
+
+      <h3>3. 개인정보 보유 및 이용 기간</h3>
+      <p>수집된 개인정보는 이용 목적 달성 후 즉시 파기하는 것을 원칙으로 합니다. 단, 관계 법령에 따라 아래와 같이 보관합니다.</p>
+      <ul>
+        <li>계약·청약철회 기록: 5년 (전자상거래법)</li>
+        <li>소비자 불만·분쟁 기록: 3년 (전자상거래법)</li>
+        <li>강연 신청 기록: 서비스 종료 후 1년</li>
+      </ul>
+
+      <h3>4. 개인정보의 제3자 제공</h3>
+      <p>협회는 이용자의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 다만, 법령에 의한 경우 또는 이용자의 사전 동의가 있는 경우는 예외로 합니다.</p>
+
+      <h3>5. 개인정보 처리 위탁</h3>
+      <p>협회는 현재 개인정보 처리 업무를 외부에 위탁하지 않습니다. 향후 위탁이 발생할 경우 본 방침을 통해 고지합니다.</p>
+
+      <h3>6. 이용자 권리 및 행사 방법</h3>
+      <p>이용자는 언제든지 자신의 개인정보에 대해 다음 권리를 행사할 수 있습니다.</p>
+      <ul>
+        <li>개인정보 열람 요청</li>
+        <li>오류 정정 요청</li>
+        <li>삭제 요청</li>
+        <li>처리 정지 요청</li>
+      </ul>
+      <p>권리 행사는 전화(010-4269-0213)로 요청하시면 지체 없이 처리합니다.</p>
+
+      <h3>7. 개인정보의 파기</h3>
+      <p>보유 기간 만료 또는 목적 달성 시 즉시 파기합니다. 전자 파일은 복구 불가능한 방법으로 삭제하며, 서면은 분쇄 또는 소각합니다.</p>
+
+      <h3>8. 개인정보 보호책임자</h3>
+      <ul>
+        <li>성명: 김영주</li>
+        <li>소속: AI리더스협회</li>
+        
+        <li>전화: 010-4269-0213</li>
+      </ul>
+
+      <h3>9. 개인정보처리방침 변경</h3>
+      <p>본 방침은 2025년 1월 1일부터 시행되며, 내용 변경 시 홈페이지 공지를 통해 사전 안내합니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 이용약관 팝업 -->
+<div class="legal-modal-bg" id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+  <div class="legal-modal">
+    <div class="legal-modal-head">
+      <h2 id="termsTitle">이용약관</h2>
+      <button class="legal-modal-close" onclick="closeLegal('termsModal')" aria-label="닫기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="legal-modal-body">
+      <h3>제1조 (목적)</h3>
+      <p>이 약관은 AI리더스협회(이하 "협회")가 운영하는 홈페이지 및 강연 서비스(이하 "서비스")의 이용 조건과 절차, 협회와 이용자의 권리·의무 및 책임 사항을 규정함을 목적으로 합니다.</p>
+
+      <h3>제2조 (정의)</h3>
+      <ul>
+        <li>"서비스"란 협회가 제공하는 무료·유료 강연, 기업 출강 교육, 강사 지원 등 일체의 서비스를 말합니다.</li>
+        <li>"이용자"란 본 약관에 동의하고 서비스를 이용하는 자를 말합니다.</li>
+        <li>"수강신청"이란 이용자가 특정 강연에 참가 신청하는 행위를 말합니다.</li>
+      </ul>
+
+      <h3>제3조 (약관의 효력 및 변경)</h3>
+      <p>본 약관은 서비스 화면에 게시하거나 이용자에게 공지함으로써 효력이 발생합니다. 협회는 관련 법령을 위반하지 않는 범위에서 약관을 변경할 수 있으며, 변경 시 최소 7일 전 홈페이지를 통해 공지합니다.</p>
+
+      <h3>제4조 (서비스 이용)</h3>
+      <ul>
+        <li>이용자는 정확한 정보를 입력하여 수강 신청해야 합니다.</li>
+        <li>허위 정보 입력으로 발생한 불이익은 이용자 본인이 부담합니다.</li>
+        <li>무료 강연 중복 신청이 확인될 경우 현장 입장이 제한될 수 있습니다.</li>
+      </ul>
+
+      <h3>제5조 (수강료 결제 및 환불)</h3>
+      <p><strong>환불 / 취소 규정:</strong></p>
+      <ul>
+        <li>시작 5일 전까지: 전액 환불</li>
+        <li>시작 4~1일 전: 50% 환불</li>
+        <li>시작 당일 / 이후: 환불 불가</li>
+      </ul>
+      <p>환불 요청은 전화(010-4269-0213)로 접수 가능합니다.</p>
+
+      <h3>제6조 (이용자 의무)</h3>
+      <ul>
+        <li>강연 중 타인을 방해하는 행위 금지</li>
+        <li>강의 내용 및 자료의 무단 녹화·복제·배포 금지</li>
+        <li>강연장 내 흡연, 음주 금지</li>
+        <li>관련 법령 및 협회 운영 정책 준수</li>
+      </ul>
+
+      <h3>제7조 (지식재산권)</h3>
+      <p>협회가 제작한 강의 자료, 영상, 이미지 등 모든 콘텐츠의 저작권은 협회에 귀속됩니다. 이용자는 협회의 사전 동의 없이 콘텐츠를 복제·수정·배포·판매하여서는 안 됩니다.</p>
+
+      <h3>제8조 (면책조항)</h3>
+      <ul>
+        <li>천재지변, 불가항력적 사유로 서비스를 제공하지 못한 경우 협회는 책임을 지지 않습니다.</li>
+        <li>강연장 내 이용자 본인 부주의로 발생한 안전사고에 대해 협회는 책임지지 않습니다.</li>
+        <li>이용자가 제공한 허위 정보로 인한 피해는 이용자 본인이 책임집니다.</li>
+      </ul>
+
+      <h3>제9조 (분쟁 해결)</h3>
+      <p>서비스 이용 관련 분쟁 발생 시 협회와 이용자는 상호 협의를 통해 해결함을 원칙으로 합니다. 협의가 이루어지지 않을 경우 관할 법원은 협회 소재지 관할 법원으로 합니다.</p>
+
+      <h3>제10조 (시행일)</h3>
+      <p>본 약관은 2025년 1월 1일부터 시행됩니다.</p>
+      <p style="margin-top:20px;color:var(--hint);font-size:13px;">AI리더스협회 | 영등포구 선유로70 우리벤처타운2 | 대표: 김영주 | 사업자등록번호: 352-88-01460</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function openLegal(id){
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeLegal(id){
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow='';
+  }
+  window.openLegal=openLegal;
+  window.closeLegal=closeLegal;
+  document.querySelectorAll('.legal-modal-bg').forEach(function(bg){
+    bg.addEventListener('click',function(e){ if(e.target===bg) closeLegal(bg.id); });
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') document.querySelectorAll('.legal-modal-bg.open').forEach(function(el){ closeLegal(el.id); }); });
+})();
+</script>
+<!-- ===== 팝업 끝 ===== -->
+
+<script src="/assets/mobile-nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+name: Security boundaries
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.16.0
+      - name: Check JavaScript syntax
+        run: git ls-files -z '*.js' '*.mjs' | xargs -0 -n1 node --check
+      - name: Verify authentication and data boundaries
+        run: node tools/verify-security-boundaries.mjs
+      - name: Build Cloudflare Pages artifact
+        run: node tools/build-cloudflare-pages.mjs
+      - name: Verify public quick links
+        run: node tools/verify-quick-links.mjs
+      - name: Verify generated routes and local links
+        run: node tools/verify-dist-links.mjs
