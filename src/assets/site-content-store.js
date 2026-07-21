@@ -328,10 +328,10 @@
     return refresh();
   }
 
-  async function uploadAsset(file, prefix) {
+  async function uploadAsset(file, prefix, options) {
     if (!api || !file) throw new Error('업로드할 파일이 없습니다.');
     var path = api.createStoragePath(prefix || 'site-assets', file.name);
-    return api.uploadFile(path, file, CONTENT_ASSETS_BUCKET);
+    return api.uploadFile(path, file, CONTENT_ASSETS_BUCKET, Object.assign({ cacheControl: 31536000 }, options || {}));
   }
 
   function subscribe(listener) {

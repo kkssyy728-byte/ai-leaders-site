@@ -90,7 +90,7 @@
               <div class="field"><label for="bannerSecondaryLabel">2차 버튼명</label><input id="bannerSecondaryLabel" placeholder="유료 특강 신청"/></div>
               <div class="field"><label for="bannerSecondaryUrl">2차 링크</label><input id="bannerSecondaryUrl" placeholder="course-paid.html"/></div>
               <div class="field full"><label for="bannerImage">배너 이미지</label><input id="bannerImage" placeholder="/images/banner.jpg 또는 이미지 URL"/><p class="field-help">이미지 1개만 등록하면 PC와 모바일에 자동 반응형으로 적용됩니다. 비워두면 기존 랜딩페이지 기본 이미지가 유지됩니다.</p></div>
-              <div class="field full"><label>배너 이미지 업로드</label><div class="upload-row"><input id="bannerImageFile" type="file" accept="image/*"/><button class="btn-admin" type="button" data-upload="bannerImage" data-file="bannerImageFile" data-prefix="hero">업로드</button></div></div>
+              <div class="field full"><label>배너 이미지 업로드</label><div class="upload-row"><input id="bannerImageFile" type="file" accept="image/*"/><button class="btn-admin" type="button" data-upload="bannerImage" data-file="bannerImageFile" data-prefix="hero">업로드</button></div><p class="field-help">이미지는 최대 1920px WebP로 자동 압축한 뒤 장기 캐시를 적용합니다.</p></div>
               <div class="field full"><label>배너 비디오 파일</label><div class="upload-row"><input id="bannerVideoFile" type="file" accept="video/mp4,video/webm,video/quicktime,video/*"/><button class="btn-admin" type="button" data-upload="bannerVideoUrl" data-file="bannerVideoFile" data-prefix="hero-video" data-upload-kind="video">업로드</button><button class="btn-admin ghost" type="button" id="bannerVideoClearBtn">비디오 제거</button></div><input id="bannerVideoUrl" type="hidden"/><p class="field-help" id="bannerVideoStatus">업로드된 비디오가 없으면 이미지 배너가 노출됩니다.</p></div>
               <div class="field full"><label class="switch-row"><input id="bannerActive" type="checkbox" checked/> 활성화</label></div>
             </div>
@@ -122,7 +122,7 @@
               <div class="field"><label for="instructorRole">역할/타이틀</label><input id="instructorRole" placeholder="AI 브랜드·콘텐츠 전략 강사"/></div>
               <div class="field"><label for="instructorLabel">라벨</label><input id="instructorLabel" placeholder="대표 강사"/></div>
               <div class="field full"><label for="instructorPhoto">사진</label><input id="instructorPhoto" placeholder="/images/profile.png 또는 이미지 URL"/></div>
-              <div class="field full"><label>사진 업로드</label><div class="upload-row"><input id="instructorPhotoFile" type="file" accept="image/*"/><button class="btn-admin" id="instructorPhotoUploadBtn" type="button" data-upload="instructorPhoto" data-file="instructorPhotoFile" data-prefix="instructors">업로드</button></div><p class="field-help" id="instructorPhotoStatus">이미지를 선택하면 원본 파일이 자동 업로드됩니다.</p><div class="upload-preview" id="instructorPhotoPreview" hidden><img id="instructorPhotoPreviewImage" alt="강사 사진 미리보기"/><span>업로드된 원본 이미지 미리보기</span></div></div>
+              <div class="field full"><label>사진 업로드</label><div class="upload-row"><input id="instructorPhotoFile" type="file" accept="image/*"/><button class="btn-admin" id="instructorPhotoUploadBtn" type="button" data-upload="instructorPhoto" data-file="instructorPhotoFile" data-prefix="instructors">업로드</button></div><p class="field-help" id="instructorPhotoStatus">이미지를 선택하면 자동 압축한 뒤 업로드합니다.</p><div class="upload-preview" id="instructorPhotoPreview" hidden><img id="instructorPhotoPreviewImage" alt="강사 사진 미리보기"/><span>최적화된 이미지 미리보기</span></div></div>
               <div class="field full"><label for="instructorLandingSummary">랜딩페이지 소개</label><textarea id="instructorLandingSummary"></textarea></div>
               <div class="field full"><label for="instructorAboutSummary">소개페이지 소개</label><textarea id="instructorAboutSummary"></textarea></div>
               <div class="field full"><label for="instructorCareers">이력</label><textarea id="instructorCareers" placeholder="한 줄에 하나씩 입력"></textarea></div>
@@ -179,6 +179,8 @@
 <script src="/assets/admin-auth.js?v=20260719-secure-admin-1"></script>
 <script src="/assets/site-content-store.js?v=20260716-storage-auth-1"></script>
 <script src="/assets/vendor/sortable.min.js?v=1.15.6-local"></script>
+<script src="/assets/vendor/compressor.min.js?v=1.3.0-local"></script>
+<script src="/assets/image-upload-optimizer.js?v=20260721-egress-pilot-1"></script>
 <script>
 (function(){
   var store = window.SiteContentStore;
@@ -591,17 +593,28 @@
       button.textContent = '업로드 중';
       if (isInstructorPhoto) {
         setInstructorPhotoUploading(true);
-        setInstructorPhotoStatus('강사 이미지를 원본 화질로 업로드하고 있습니다.');
+        setInstructorPhotoStatus('강사 이미지를 압축하고 있습니다.');
       }
-      var uploaded = await store.uploadAsset(file, button.getAttribute('data-prefix'));
+      var optimization = null;
+      var uploadFile = file;
+      if (kind === 'image' && window.AiLeadersImageOptimizer) {
+        button.textContent = '압축 중';
+        optimization = await window.AiLeadersImageOptimizer.optimize(file);
+        uploadFile = optimization.file;
+        button.textContent = '업로드 중';
+      }
+      var uploaded = await store.uploadAsset(uploadFile, button.getAttribute('data-prefix'));
       target.value = uploaded.publicUrl;
       fileInput.value = '';
       if (target.id === 'bannerVideoUrl') setBannerVideoStatus(target.value);
       if (isInstructorPhoto) {
         setInstructorPhotoPreview(target.value);
-        setInstructorPhotoStatus('업로드가 완료되었습니다. 저장 버튼을 눌러 강사 정보에 반영해 주세요.');
+        setInstructorPhotoStatus('최적화 업로드가 완료되었습니다. 저장 버튼을 눌러 강사 정보에 반영해 주세요.');
       }
-      setNotice((kind === 'video' ? '비디오를' : '이미지를') + ' 업로드했습니다. 저장 버튼을 눌러 콘텐츠에 반영해 주세요.');
+      var sizeMessage = optimization && optimization.changed
+        ? ' (' + window.AiLeadersImageOptimizer.formatBytes(optimization.beforeBytes) + ' → ' + window.AiLeadersImageOptimizer.formatBytes(optimization.afterBytes) + ')'
+        : '';
+      setNotice((kind === 'video' ? '비디오를' : '이미지를') + ' 업로드했습니다' + sizeMessage + '. 저장 버튼을 눌러 콘텐츠에 반영해 주세요.');
       return uploaded;
     } catch (error) {
       if (isInstructorPhoto) setInstructorPhotoStatus(error.message || '강사 이미지 업로드에 실패했습니다.', true);
@@ -623,7 +636,7 @@
   });
   $('instructorPhoto').addEventListener('input', function(){
     setInstructorPhotoPreview(this.value);
-    setInstructorPhotoStatus(text(this.value) ? '입력한 이미지 주소를 미리보기 중입니다. 저장 버튼을 눌러 반영해 주세요.' : '이미지를 선택하면 원본 파일이 자동 업로드됩니다.');
+    setInstructorPhotoStatus(text(this.value) ? '입력한 이미지 주소를 미리보기 중입니다. 저장 버튼을 눌러 반영해 주세요.' : '이미지를 선택하면 자동 압축한 뒤 업로드합니다.');
   });
 
   $('bannerVideoClearBtn').addEventListener('click', function(){

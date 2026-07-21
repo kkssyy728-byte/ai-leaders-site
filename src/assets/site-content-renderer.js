@@ -4,6 +4,7 @@
   var liveStore = global.SiteContentStore;
   var utils = global.AiLeadersUtils || {};
   var escapeHtml = utils.escapeHtml;
+  var publicMedia = global.AiLeadersPublicMedia;
   var PREVIEW_PREFIX = 'aiLeadersSiteContentPreview:';
   var previewState = readPreviewState();
   var store = previewState ? createPreviewStore(liveStore, previewState) : liveStore;
@@ -129,11 +130,17 @@
     return '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(alt || '') + '"' + (className ? ' class="' + escapeHtml(className) + '"' : '') + ' loading="lazy" decoding="async">';
   }
 
+  function resolvePublicMediaUrl(value) {
+    return publicMedia && typeof publicMedia.resolve === 'function'
+      ? publicMedia.resolve(value)
+      : value;
+  }
+
   function preferredHeroImage(banner) {
     var useMobile = global.matchMedia && global.matchMedia('(max-width: 720px)').matches;
-    return useMobile
+    return resolvePublicMediaUrl(useMobile
       ? (banner.mobileImage || banner.desktopImage)
-      : (banner.desktopImage || banner.mobileImage);
+      : (banner.desktopImage || banner.mobileImage));
   }
 
   function decodeImage(image) {
@@ -368,8 +375,8 @@
           return '<div class="slide' + fallbackClass + active + '"><video class="hero-bg-img" muted playsinline loop preload="' + (eager ? 'auto' : 'none') + '" '
             + (eager ? 'src' : 'data-src') + '="' + escapeHtml(banner.videoUrl) + '"></video></div>';
         }
-        var desktop = banner.desktopImage || banner.mobileImage;
-        var mobile = banner.mobileImage || banner.desktopImage;
+        var desktop = resolvePublicMediaUrl(banner.desktopImage || banner.mobileImage);
+        var mobile = resolvePublicMediaUrl(banner.mobileImage || banner.desktopImage);
         if (!desktop && !mobile) {
           return '<div class="slide' + fallbackClass + active + '"></div>';
         }

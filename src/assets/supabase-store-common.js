@@ -365,12 +365,17 @@
 
   async function uploadFile(path, file, bucketName, options) {
     if (!file) throw makeError('업로드할 파일이 없습니다.');
+    var uploadHeaders = {
+      'Content-Type': file.type || 'application/octet-stream',
+      'x-upsert': options && options.upsert ? 'true' : 'false'
+    };
+    var cacheSeconds = Number(options && options.cacheControl);
+    if (Number.isFinite(cacheSeconds) && cacheSeconds > 0) {
+      uploadHeaders['cache-control'] = 'max-age=' + Math.min(Math.floor(cacheSeconds), 31536000);
+    }
     await request('/storage/v1/object/' + encodeStoragePath(storageBucket(bucketName)) + '/' + encodeStoragePath(path), {
       method: 'POST',
-      headers: {
-        'Content-Type': file.type || 'application/octet-stream',
-        'x-upsert': options && options.upsert ? 'true' : 'false'
-      },
+      headers: uploadHeaders,
       body: file
     });
     return {
