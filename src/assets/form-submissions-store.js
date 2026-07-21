@@ -94,7 +94,7 @@
         submittedAt: new Date().toISOString()
       }));
       var rows = await api.insertRows(options.table, [toRow(normalized)]);
-      var saved = rows.length ? fromRow(rows[0]) : normalized;
+      var saved = Array.isArray(rows) && rows.length ? fromRow(rows[0]) : normalized;
       cache.unshift(saved);
       loaded = true;
       lastError = null;

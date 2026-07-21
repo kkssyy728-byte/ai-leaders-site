@@ -257,7 +257,7 @@
     }
     item.isDuplicate = loaded && cache.length ? hasDuplicate(item) : false;
     var rows = await api.insertRows('lecture_applications', [toRow(item)]);
-    var saved = rows.length ? fromRow(rows[0]) : item;
+    var saved = Array.isArray(rows) && rows.length ? fromRow(rows[0]) : item;
     saved.isDuplicate = item.isDuplicate || saved.isDuplicate;
     cache = annotateDuplicates([saved].concat(cache));
     loaded = true;
