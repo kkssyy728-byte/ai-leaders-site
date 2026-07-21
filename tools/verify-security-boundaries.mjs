@@ -40,7 +40,9 @@ expect(adminAuth.includes('[data-tab="option"], [data-section="option"]'), 'desi
 const siteLayout = await text('src/assets/site-layout.js');
 expect(!siteLayout.includes('ADMIN_ACCESS_PASSWORD'), 'site-layout.js still contains a shared admin password');
 expect(!siteLayout.includes('adminAccessPassword'), 'site-layout.js still contains the retired shared-password dialog');
-expect(siteLayout.includes('/admin-login/'), 'site-layout.js does not route staff to individual login');
+expect(siteLayout.includes("ADMIN_ACCESS_PATH = '/admin-dashboard/'"), 'site-layout.js does not route the admin link through the protected dashboard');
+expect(siteLayout.includes('data-admin-access>관리자 페이지</a>'), 'site-layout.js does not label the public admin link correctly');
+expect(!siteLayout.includes('/admin-login/?next=%2Fadmin-dashboard%2F'), 'site-layout.js still flashes the login page for an active admin session');
 
 const commonStore = await text('src/assets/supabase-store-common.js');
 expect(commonStore.includes("Prefer: SENSITIVE_INSERT_TABLES[table] ? 'return=minimal'"), 'sensitive public inserts may return private records');

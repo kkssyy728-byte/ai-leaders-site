@@ -49,17 +49,8 @@
   .log-section ul{margin:0;padding-left:18px;color:var(--admin-ink);font-size:14px}
   .log-section li + li{margin-top:6px}
   .log-note{margin-top:14px;color:var(--admin-muted);font-size:12px}
-  .live-audit{margin-bottom:20px;padding:20px;border:1px solid var(--admin-line);border-radius:10px;background:var(--admin-panel);box-shadow:0 8px 24px rgba(16,24,40,.04)}
-  .live-audit-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
-  .live-audit h2{margin:0;font-size:18px}
-  .live-audit p{margin:5px 0 0;color:var(--admin-muted);font-size:13px}
-  .audit-list{display:grid;gap:8px}
-  .audit-row{display:grid;grid-template-columns:minmax(160px,.8fr) minmax(180px,1fr) minmax(200px,1.4fr);gap:12px;padding:12px;border:1px solid #e4e9f1;border-radius:8px;background:#fbfcfe;font-size:13px}
-  .audit-row strong{display:block;color:var(--admin-ink)}
-  .audit-meta{color:var(--admin-muted);font-size:12px}
-  .audit-state{padding:16px;border-radius:8px;background:#f6f8fb;color:var(--admin-muted);font-size:13px;text-align:center}
   @media(max-width:1180px){.admin-shell{grid-template-columns:1fr}.admin-side{position:relative;height:auto}}
-  @media(max-width:720px){.admin-main{padding:18px}.admin-top{display:block}.log-head{align-items:flex-start}.log-head-actions{flex-wrap:wrap;justify-content:flex-end}.log-date{font-size:16px}.audit-row{grid-template-columns:1fr}}
+  @media(max-width:720px){.admin-main{padding:18px}.admin-top{display:block}.log-head{align-items:flex-start}.log-head-actions{flex-wrap:wrap;justify-content:flex-end}.log-date{font-size:16px}}
 </style>
 <link rel="stylesheet" href="/assets/admin-auth.css?v=20260719-secure-admin-1"/>
 <script src="/assets/admin-auth-bootstrap.js?v=20260719-secure-admin-1"></script>
@@ -95,18 +86,6 @@
     <div class="notice">
       이 페이지는 단순한 요약이 아니라, 실제로 어떤 화면과 흐름이 바뀌었는지를 확인하기 위한 운영용 기록입니다. 날짜를 눌러 필요한 날짜의 상세 변경 내역만 펼쳐서 확인할 수 있습니다.
     </div>
-
-    <section class="live-audit" aria-labelledby="liveAuditTitle">
-      <div class="live-audit-head">
-        <div>
-          <h2 id="liveAuditTitle">최근 관리자 변경 기록</h2>
-          <p>직원 계정으로 저장·수정·삭제한 최근 50건을 자동으로 표시합니다.</p>
-        </div>
-      </div>
-      <div class="audit-list" id="liveAuditList" aria-live="polite">
-        <div class="audit-state">변경 기록을 불러오는 중입니다.</div>
-      </div>
-    </section>
 
     <section class="timeline" aria-label="업데이트 타임라인">
       <details class="log-card" open>
@@ -517,68 +496,5 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.7/dist/umd/supabase.min.js" integrity="sha384-BmlQlKlDvXvKoxkn5OQuUo/aJQCTXeB+Kls6EccBmG4Kf8AXvp89RtO9MtPxP/r5" crossorigin="anonymous"></script>
 <script src="/assets/supabase-store-common.js?v=20260721-form-submit-1"></script>
 <script src="/assets/admin-auth.js?v=20260719-secure-admin-1"></script>
-<script>
-(function () {
-  'use strict';
-  var list = document.getElementById('liveAuditList');
-  var api = window.AiLeadersSupabase;
-  var tableLabels = {
-    courses: '강연',
-    site_banners: '배너',
-    instructors: '강사진',
-    form_options: '폼 선택지',
-    staff_members: '직원 권한'
-  };
-  var operationLabels = { INSERT: '등록', UPDATE: '수정', DELETE: '삭제' };
-  var roleLabels = window.AiLeadersAdminAuth ? window.AiLeadersAdminAuth.roleLabels : {};
-
-  function esc(value) {
-    return String(value == null ? '' : value)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-  }
-
-  function changedFields(row) {
-    if (row.operation !== 'UPDATE') return operationLabels[row.operation] || row.operation;
-    var before = row.old_record || {};
-    var after = row.new_record || {};
-    var ignored = { created_at: true, updated_at: true };
-    var fields = Object.keys(after).filter(function (key) {
-      return !ignored[key] && JSON.stringify(before[key]) !== JSON.stringify(after[key]);
-    });
-    return fields.length ? fields.slice(0, 6).join(', ') : '내용 수정';
-  }
-
-  function render(rows) {
-    if (!rows.length) {
-      list.innerHTML = '<div class="audit-state">아직 자동 변경 기록이 없습니다.</div>';
-      return;
-    }
-    list.innerHTML = rows.map(function (row) {
-      var date = new Date(row.changed_at);
-      var dateText = Number.isNaN(date.getTime()) ? '-' : date.toLocaleString('ko-KR');
-      var actor = row.actor_display_name || '직원';
-      var role = roleLabels[row.actor_role] || row.actor_role || '-';
-      return '<article class="audit-row">'
-        + '<div><strong>' + esc(tableLabels[row.entity_table] || row.entity_table) + ' ' + esc(operationLabels[row.operation] || row.operation) + '</strong><span class="audit-meta">항목 ' + esc(row.entity_id || '-') + '</span></div>'
-        + '<div><strong>' + esc(actor) + '</strong><span class="audit-meta">' + esc(role) + '</span></div>'
-        + '<div><strong>' + esc(changedFields(row)) + '</strong><span class="audit-meta">' + esc(dateText) + '</span></div>'
-        + '</article>';
-    }).join('');
-  }
-
-  window.AiLeadersAdminAuth.ready.then(function (auth) {
-    if (!auth) return [];
-    return api.selectRows('content_audit_log', {
-      select: 'id,entity_table,entity_id,operation,actor_display_name,actor_role,old_record,new_record,changed_at',
-      order: 'changed_at.desc',
-      limit: 50
-    });
-  }).then(render).catch(function (error) {
-    console.error('[AI Leaders] Audit log load failed.', error);
-    list.innerHTML = '<div class="audit-state">자동 변경 기록을 불러오지 못했습니다. 보안 마이그레이션 적용 상태를 확인해 주세요.</div>';
-  });
-})();
-</script>
 </body>
 </html>

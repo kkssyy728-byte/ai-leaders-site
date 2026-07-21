@@ -1,7 +1,7 @@
 (function (global) {
   'use strict';
 
-  var ADMIN_ACCESS_PATH = '/admin-login/?next=%2Fadmin-dashboard%2F';
+  var ADMIN_ACCESS_PATH = '/admin-dashboard/';
 
   function ensureGoogleTagManager() {
     // GTM is installed in the public HTML head snippets.
@@ -62,7 +62,7 @@
     + '        <p class="ft-biz">AI리더스협회<span class="bar">|</span>주소 : 영등포구 선유로70 우리벤처타운2<span class="bar">|</span>대표 : 김영주<span class="bar">|</span>사업자등록번호 : 352-88-01460<span class="bar">|</span>TEL : 010-4269-0213</p>'
     + '        <p class="ft-copy">COPYRIGHT ⓒ AI리더스협회 ALL RIGHTS RESERVED</p>'
     + '        <p class="ft-links">'
-    + '          <a href="/admin-login/?next=%2Fadmin-dashboard%2F" data-admin-access>직원 로그인</a>'
+    + '          <a href="/admin-dashboard/" data-admin-access>관리자 페이지</a>'
     + "          <a href=\"#privacyModal\" onclick=\"if(window.openLegal){openLegal('privacyModal');} return false;\">개인정보처리방침</a>"
     + "          <a href=\"#termsModal\" onclick=\"if(window.openLegal){openLegal('termsModal');} return false;\">이용약관</a>"
     + '        </p>'
