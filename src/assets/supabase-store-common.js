@@ -272,7 +272,7 @@
 
   async function insertRows(table, rows) {
     var items = Array.isArray(rows) ? rows : [rows];
-    return request('/rest/v1/' + table, {
+    var result = await request('/rest/v1/' + table, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -281,7 +281,8 @@
         'Content-Profile': 'public'
       },
       body: JSON.stringify(items)
-    }) || [];
+    });
+    return Array.isArray(result) ? result : [];
   }
 
   async function updateRows(table, filters, payload) {
