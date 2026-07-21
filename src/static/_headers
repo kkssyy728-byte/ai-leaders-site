@@ -17,7 +17,7 @@
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
 /images/managed/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cloudflare-CDN-Cache-Control: public, max-age=31536000, immutable
 
 /videos/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
