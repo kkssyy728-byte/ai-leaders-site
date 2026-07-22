@@ -173,6 +173,26 @@ h3.sh {
 .form-textarea { min-height: 140px; resize: vertical; line-height: 1.7; }
 .form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239aa6b6' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
 .form-hint   { font-size: 12px; color: var(--hint); }
+.form-group { position: relative; }
+.form-input.is-invalid, .form-select.is-invalid, .form-textarea.is-invalid { border-color: #e11d48 !important; }
+.field-popup {
+  position: absolute; top: 100%; left: 0; margin-top: 8px; z-index: 40;
+  display: inline-flex; align-items: center; gap: 7px;
+  background: #fff; color: #1f2937; border: 1px solid #f3a49a; border-radius: 7px;
+  padding: 8px 12px; font-size: 12.5px; font-weight: 700; line-height: 1.3;
+  box-shadow: 0 10px 24px rgba(180,35,24,.16);
+  animation: fieldPopupIn .15s ease; max-width: 320px;
+}
+.field-popup::before {
+  content: ""; position: absolute; top: -6px; left: 15px; width: 10px; height: 10px;
+  background: #fff; border-left: 1px solid #f3a49a; border-top: 1px solid #f3a49a; transform: rotate(45deg);
+}
+.field-popup .fp-icon {
+  flex: none; width: 16px; height: 16px; border-radius: 50%; background: #f79009; color: #fff;
+  font-size: 11px; font-weight: 900; display: flex; align-items: center; justify-content: center; font-style: normal;
+}
+@keyframes fieldPopupIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.check-row.is-invalid { outline: 1.5px solid #e11d48; outline-offset: 4px; border-radius: 2px; }
 .form-grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .form-box    {
   background: var(--paper); border: 1px solid var(--line);
@@ -435,22 +455,23 @@ h3.sh {
     background: #fff !important; color: var(--ink) !important;
     height: auto; max-height: 100dvh; overflow-y: auto;
     flex-direction: column; align-items: stretch;
+    box-shadow: 0 12px 28px rgba(12, 24, 40, .18);
   }
   .nav.open .logo-text { color: var(--ink); }
   .nav.open .logo-dot  { color: var(--brand); }
-  .nav.open .container { position: relative; flex-direction: column; align-items: stretch; padding-top: 14px; padding-bottom: 14px; }
-  .nav.open .hamb { position: absolute; top: 14px; right: 24px; z-index: 2; color: var(--ink); }
+  .nav.open .container { position: relative; flex-direction: column; align-items: stretch; padding-top: 18px; padding-bottom: 14px; }
+  .nav.open .hamb { position: absolute; top: 13px; right: 24px; z-index: 2; color: var(--ink); }
   .nav.open .menu { display: flex; flex-direction: column; align-items: stretch; gap: 2px; margin-top: 16px; }
-  .nav.open .nav-link { padding: 13px 8px; font-size: 16px; border-bottom: 1px solid var(--line); justify-content: space-between; }
+  .nav.open .nav-link { padding: 12px 8px; font-size: 18px; justify-content: space-between; }
   .nav.open .dropdown {
     display: none; position: static; opacity: 1; visibility: visible; transform: none;
-    box-shadow: none; border: none; padding: 4px 0 8px 16px; min-width: 0;
+    box-shadow: none; border: none; padding: 0 0 8px 12px; min-width: 0;
   }
   .nav.open .nav-item .ar { transform: none; }
   .nav.open .nav-item.sub-open > .dropdown { display: block; }
   .nav.open .nav-item.sub-open > .nav-link .ar { transform: rotate(180deg); }
-  .nav.open .nav-cta { display: flex; }
-  .nav.open .nav-cta .btn { display: flex; width: 100%; margin-top: 12px; height: 50px; }
+  .nav.open .nav-cta { display: none; }
+  .nav.open .nav-cta .btn { display: none; }
   .nav.open .brand { order: -1; padding-right: 58px; }
   .g4 { grid-template-columns: repeat(2, 1fr); }
   .g3 { grid-template-columns: repeat(2, 1fr); }
@@ -511,7 +532,6 @@ h3.sh {
 @media (max-width: 420px) {
   .g4 { grid-template-columns: 1fr; }
   .foot-cols { grid-template-columns: 1fr; }
-  .nav.open .hamb { right: 18px; }
 }
 
 .course-pager {
@@ -576,7 +596,7 @@ h3.sh {
 .nav.scrolled .brand .logo-ink{ display:block; }
 .nav.open .brand .logo-white{ display:none; }
 .nav.open .brand .logo-ink{ display:block; }
-@media (max-width:640px){ .nav .brand .logo{ height:32px; } }
+@media (max-width:640px){ .nav .brand .logo{ width:132px; height:auto; } }
 
 
 /* ===== 메인 홈 푸터 디자인 (서브페이지 공통) ===== */

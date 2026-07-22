@@ -4,15 +4,22 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>사이트 콘텐츠 | AI리더스협회</title>
-<link rel="icon" href="../favicon.ico"/>
+<link rel="icon" href="../favicon.ico" type="image/x-icon"/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"/>
+<link rel="stylesheet" href="../shared.css"/>
 <style>
   :root{--admin-bg:#f4f7fb;--admin-panel:#fff;--admin-ink:#101828;--admin-muted:#667085;--admin-line:#d9e2ec;--admin-brand:#0172fe;--admin-good:#067647;--admin-danger:#b42318}
-  *{box-sizing:border-box}body{margin:0;background:var(--admin-bg);color:var(--admin-ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}
+  *{box-sizing:border-box}body{margin:0;background:var(--admin-bg);color:var(--admin-ink);font-family:"Pretendard Variable",Pretendard,system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}
   .admin-shell{min-height:100vh;display:grid;grid-template-columns:260px minmax(0,1fr)}
-  .admin-side{background:#0b1220;color:#fff;padding:28px 22px;position:sticky;top:0;height:100vh}
-  .admin-logo{font-size:20px;font-weight:900}.admin-logo span{display:block;font-size:12px;color:rgba(255,255,255,.6);margin-top:4px}
+  .admin-side{position:sticky;top:0;height:100vh;background:#0d1b2f;color:#fff;padding:24px 18px;display:flex;flex-direction:column}
+  .admin-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:0}
+  .admin-brand-mark{width:34px;height:34px;border-radius:8px;background:var(--admin-brand);display:grid;place-items:center;font-weight:900}
   .admin-nav{margin-top:34px;display:grid;gap:8px}.admin-nav a{padding:12px;border-radius:8px;color:rgba(255,255,255,.72);font-weight:700}.admin-nav a.is-active,.admin-nav a:hover{background:rgba(255,255,255,.1);color:#fff}
-  .admin-side-bottom{position:absolute;left:22px;right:22px;bottom:24px;display:grid;gap:8px}.admin-side-shortcut{display:block;padding:11px 12px;border-radius:8px;background:rgba(255,255,255,.08);font-size:13px;color:rgba(255,255,255,.78);font-weight:800}
+  .admin-side-footer{margin-top:auto;display:grid;gap:12px}
+  .admin-side-shortcut{display:flex;align-items:center;justify-content:center;min-height:40px;padding:0 12px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:rgba(255,255,255,.82);font-size:13px;font-weight:800}
+  .admin-side-shortcut:hover,.admin-side-shortcut.is-active{background:rgba(255,255,255,.12);color:#fff}
+  .admin-side-note{margin:0;color:rgba(255,255,255,.62);font-size:12px;line-height:1.65}
   .admin-main{padding:34px;min-width:0}.admin-top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:22px}.admin-kicker{font-size:12px;text-transform:uppercase;color:var(--admin-brand);font-weight:900;letter-spacing:.08em}.admin-top h1{margin:4px 0 6px;font-size:30px}.admin-desc{margin:0;color:var(--admin-muted);line-height:1.6}
   .notice{border:1px solid #b8dcff;background:#eef7ff;color:#174a7c;border-radius:8px;padding:12px 14px;font-size:13px;font-weight:700;margin-bottom:18px}
   .workspace{display:grid;grid-template-columns:minmax(320px,460px) minmax(0,1fr);gap:18px;align-items:start}.stack{display:grid;gap:18px}.panel{background:var(--admin-panel);border:1px solid var(--admin-line);border-radius:8px;box-shadow:0 8px 24px rgba(16,24,40,.04);overflow:hidden}.panel-head{padding:18px 20px;border-bottom:1px solid var(--admin-line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-title{font-size:17px;font-weight:900}.panel-sub{font-size:12px;color:var(--admin-muted);margin-top:2px;line-height:1.45}.panel-body{padding:20px}
@@ -23,13 +30,13 @@
   .btn-admin{height:40px;border:1px solid var(--admin-line);background:#fff;border-radius:8px;padding:0 13px;font-size:13px;font-weight:900;cursor:pointer}.btn-admin.primary{background:var(--admin-brand);border-color:var(--admin-brand);color:#fff}.btn-admin.danger{background:#fff5f5;border-color:#fecaca;color:var(--admin-danger)}.btn-admin.ghost{background:#f8fafc}.btn-admin[disabled]{opacity:.55;cursor:not-allowed}
   .form-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.list{display:grid;gap:10px}.list-empty{border:1px dashed var(--admin-line);border-radius:8px;padding:22px;text-align:center;color:var(--admin-muted);font-weight:800}
   .item{display:grid;grid-template-columns:74px minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid var(--admin-line);border-radius:8px;background:#fff;padding:12px}.item-thumb{width:74px;height:56px;border-radius:7px;background:#eef2f7;overflow:hidden;display:grid;place-items:center;color:var(--admin-muted);font-size:11px;font-weight:900}.item-thumb.square{height:74px}.item-thumb img,.item-thumb video{width:100%;height:100%;object-fit:cover;display:block}.item-thumb video{background:#000}.item-title{font-size:14px;font-weight:900;line-height:1.35}.item-meta{margin-top:4px;color:var(--admin-muted);font-size:12px;line-height:1.45}.item-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.pill{display:inline-flex;height:23px;align-items:center;border-radius:999px;padding:0 8px;font-size:11px;font-weight:900;background:#eef5ff;color:var(--admin-brand);margin-right:4px}.pill.off{background:#f2f4f7;color:#667085}
-  @media(max-width:960px){.admin-shell{grid-template-columns:1fr}.admin-side{position:relative;height:auto}.admin-side-bottom{position:static;margin-top:26px}.admin-main{padding:22px}.workspace{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.admin-top{display:block}}
+  @media(max-width:960px){.admin-shell{grid-template-columns:1fr}.admin-side{position:relative;height:auto}.admin-main{padding:22px}.workspace{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.admin-top{display:block}}
 </style>
 </head>
 <body>
 <div class="admin-shell">
   <aside class="admin-side">
-    <div class="admin-logo">AI리더스 관리자<span>AI Leaders Admin</span></div>
+    <div class="admin-brand"><span class="admin-brand-mark">AI</span><span>AI리더스 관리자</span></div>
     <nav class="admin-nav" aria-label="관리자 메뉴">
       <a href="admin-dashboard.html">대시보드</a>
       <a href="admin-courses.html">강연 관리</a>
@@ -38,8 +45,9 @@
       <a href="admin-corporate-inquiries.html">출강 문의</a>
       <a href="admin-instructor-applications.html">강사 지원</a>
     </nav>
-    <div class="admin-side-bottom">
+    <div class="admin-side-footer">
       <a class="admin-side-shortcut" href="admin-update-log.html">업데이트 로그</a>
+      <p class="admin-side-note">배너·강사·옵션 데이터는 Supabase 기준으로 저장되며 공개 페이지와 같은 데이터를 공유합니다.</p>
     </div>
   </aside>
 
@@ -79,6 +87,7 @@
               <div class="field full"><label for="bannerImage">배너 이미지</label><input id="bannerImage" placeholder="../images/banner.jpg 또는 이미지 URL"/><p class="field-help">이미지 1개만 등록하면 PC와 모바일에 자동 반응형으로 적용됩니다. 비워두면 기존 랜딩페이지 기본 이미지가 유지됩니다.</p></div>
               <div class="field full"><label>배너 이미지 업로드</label><div class="upload-row"><input id="bannerImageFile" type="file" accept="image/*"/><button class="btn-admin" type="button" data-upload="bannerImage" data-file="bannerImageFile" data-prefix="hero">업로드</button></div></div>
               <div class="field full"><label>배너 비디오 파일</label><div class="upload-row"><input id="bannerVideoFile" type="file" accept="video/mp4,video/webm,video/quicktime,video/*"/><button class="btn-admin" type="button" data-upload="bannerVideoUrl" data-file="bannerVideoFile" data-prefix="hero-video" data-upload-kind="video">업로드</button><button class="btn-admin ghost" type="button" id="bannerVideoClearBtn">비디오 제거</button></div><input id="bannerVideoUrl" type="hidden"/><p class="field-help" id="bannerVideoStatus">업로드된 비디오가 없으면 이미지 배너가 노출됩니다.</p></div>
+              <div class="field"><label for="bannerOverlayColor">오버레이 색상</label><div class="upload-row"><input id="bannerOverlayColor" type="color" value="#021642" style="padding:2px;height:40px;width:64px;flex:none;"/><input id="bannerOverlayColorHex" placeholder="#021642" style="flex:1;"/></div><p class="field-help">이미지/영상 위에 깔리는 그라데이션 색상입니다. 배너마다 다르게 지정할 수 있습니다.</p></div>
               <div class="field full"><label class="switch-row"><input id="bannerActive" type="checkbox" checked/> 활성화</label></div>
             </div>
             <div class="form-actions">
@@ -112,6 +121,7 @@
               <div class="field full"><label for="instructorPhoto">사진</label><input id="instructorPhoto" placeholder="../images/profile.png 또는 이미지 URL"/></div>
               <div class="field full"><label>사진 업로드</label><div class="upload-row"><input id="instructorPhotoFile" type="file" accept="image/*"/><button class="btn-admin" type="button" data-upload="instructorPhoto" data-file="instructorPhotoFile" data-prefix="instructors">업로드</button></div></div>
               <div class="field full"><label for="instructorLandingSummary">랜딩페이지 소개</label><textarea id="instructorLandingSummary"></textarea></div>
+              <div class="field full"><label for="instructorLandingTags">랜딩페이지 특징 태그</label><textarea id="instructorLandingTags" placeholder="한 줄에 하나씩 입력 (강사 소개 카드에 태그로 노출됩니다)"></textarea></div>
               <div class="field full"><label for="instructorAboutSummary">소개페이지 소개</label><textarea id="instructorAboutSummary"></textarea></div>
               <div class="field full"><label for="instructorCareers">이력</label><textarea id="instructorCareers" placeholder="한 줄에 하나씩 입력"></textarea></div>
               <div class="field"><label for="instructorSort">노출 순서</label><input id="instructorSort" type="number" value="1"/></div>
@@ -193,6 +203,12 @@
     if (item.videoUrl) return mediaThumb(item.videoUrl, 'video');
     return mediaThumb(DEFAULT_HERO_IMAGE, 'image');
   }
+  function normalizeHexColor(value){
+    var v = text(value);
+    if (!v) return '';
+    if (v.charAt(0) !== '#') v = '#' + v;
+    return /^#[0-9a-fA-F]{6}$/.test(v) ? v.toLowerCase() : '';
+  }
   function setBannerVideoStatus(value){
     var status = $('bannerVideoStatus');
     if (!status) return;
@@ -219,9 +235,10 @@
     list.innerHTML = state.banners.map(function(item){
       var hasImage = item.desktopImage || item.mobileImage;
       var imageStatus = hasImage ? '등록 이미지 사용' : (item.videoUrl ? '등록 비디오 사용' : '기본 랜딩 이미지 사용');
+      var overlaySwatch = '<span class="pill" style="padding-left:6px;"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:' + esc(item.overlayColor || '#021642') + ';margin-right:5px;vertical-align:-1px;border:1px solid rgba(0,0,0,.15);"></span>오버레이</span>';
       return '<div class="item">'
         + bannerThumb(item)
-        + '<div><div class="item-title">' + esc(item.title || '제목 없음') + '</div><div class="item-meta"><span class="pill">' + esc(item.placement) + '</span><span class="pill' + (item.isActive ? '' : ' off') + '">' + (item.isActive ? '활성' : '비활성') + '</span><span class="pill">' + esc(imageStatus) + '</span>순서 ' + esc(item.sortOrder) + '<br>' + esc(item.subtitle || '') + '</div></div>'
+        + '<div><div class="item-title">' + esc(item.title || '제목 없음') + '</div><div class="item-meta"><span class="pill">' + esc(item.placement) + '</span><span class="pill' + (item.isActive ? '' : ' off') + '">' + (item.isActive ? '활성' : '비활성') + '</span><span class="pill">' + esc(imageStatus) + '</span>' + overlaySwatch + '순서 ' + esc(item.sortOrder) + '<br>' + esc(item.subtitle || '') + '</div></div>'
         + '<div class="item-actions"><button class="btn-admin" type="button" data-edit-banner="' + esc(item.id) + '">수정</button></div>'
         + '</div>';
     }).join('');
@@ -242,6 +259,8 @@
     $('bannerImage').value = item.desktopImage || item.mobileImage || '';
     $('bannerVideoUrl').value = item.videoUrl || '';
     setBannerVideoStatus(item.videoUrl || '');
+    $('bannerOverlayColor').value = normalizeHexColor(item.overlayColor) || '#021642';
+    $('bannerOverlayColorHex').value = $('bannerOverlayColor').value;
     $('bannerSort').value = item.sortOrder || state.banners.length + 1;
     $('bannerActive').checked = item.isActive !== false;
     $('bannerDeleteBtn').hidden = !item.id;
@@ -260,6 +279,7 @@
       desktopImage: text($('bannerImage').value),
       mobileImage: '',
       videoUrl: text($('bannerVideoUrl').value),
+      overlayColor: normalizeHexColor($('bannerOverlayColorHex').value) || normalizeHexColor($('bannerOverlayColor').value) || '#021642',
       sortOrder: Number($('bannerSort').value || 0),
       isActive: $('bannerActive').checked
     };
@@ -289,6 +309,7 @@
     $('instructorLabel').value = item.label || '';
     $('instructorPhoto').value = item.photo || '';
     $('instructorLandingSummary').value = item.landingSummary || '';
+    $('instructorLandingTags').value = (item.landingDetails || []).join('\n');
     $('instructorAboutSummary').value = item.aboutSummary || '';
     $('instructorCareers').value = (item.careerItems || []).join('\n');
     $('instructorSort').value = item.sortOrder || state.instructors.length + 1;
@@ -307,6 +328,7 @@
       label: text($('instructorLabel').value),
       photo: text($('instructorPhoto').value),
       landingSummary: text($('instructorLandingSummary').value),
+      landingDetails: splitLines($('instructorLandingTags').value),
       aboutSummary: text($('instructorAboutSummary').value),
       careerItems: splitLines($('instructorCareers').value),
       sortOrder: Number($('instructorSort').value || 0),
@@ -364,29 +386,11 @@
     return JSON.parse(JSON.stringify(value || {}));
   }
 
-  function compareByOrder(a, b){
-    var order = Number(a.sortOrder || 0) - Number(b.sortOrder || 0);
-    if (order !== 0) return order;
-    return String(a.label || a.name || a.title || '').localeCompare(String(b.label || b.name || b.title || ''), 'ko');
-  }
-
   function sortByOrder(items){
-    return items.slice().sort(compareByOrder);
-  }
-
-  function fixedInstructorRank(item){
-    var name = String(item && item.name || '').replace(/\s+/g, '');
-    var key = String(item && (item.slug || item.id) || '').toLowerCase();
-    if (name === '아이온' || name === '아이온강사' || key === 'aion') return 1;
-    if (name === '문건우' || name === '문건우강사' || key === 'moon') return 2;
-    return 3;
-  }
-
-  function sortInstructors(items){
     return items.slice().sort(function(a, b){
-      var rank = fixedInstructorRank(a) - fixedInstructorRank(b);
-      if (rank !== 0) return rank;
-      return compareByOrder(a, b);
+      var order = Number(a.sortOrder || 0) - Number(b.sortOrder || 0);
+      if (order !== 0) return order;
+      return String(a.label || a.name || a.title || '').localeCompare(String(b.label || b.name || b.title || ''), 'ko');
     });
   }
 
@@ -405,7 +409,7 @@
     if (tab === 'banner') {
       draft.banners = upsertPreviewItem(draft.banners || [], collectBanner(), 'banner');
     } else if (tab === 'instructor') {
-      draft.instructors = sortInstructors(upsertPreviewItem(draft.instructors || [], collectInstructor(), 'instructor'));
+      draft.instructors = upsertPreviewItem(draft.instructors || [], collectInstructor(), 'instructor');
     } else if (tab === 'option') {
       draft.options = upsertPreviewItem(draft.options || [], collectOption(), 'option');
     }
@@ -481,20 +485,32 @@
     });
   });
 
+  // 파일 선택 후 "업로드" 버튼을 누르지 않고 바로 "저장"을 눌러도
+  // 선택된 파일이 자동으로 업로드되도록 공용 함수로 분리.
+  // (이 부분을 누락하면 이전에 저장된 이미지/영상 URL이 그대로 남아
+  //  "새 파일로 교체가 안 된다"는 문제가 발생함)
+  async function uploadPendingFile(fileInputId, targetId, prefix){
+    var fileInput = $(fileInputId);
+    var target = $(targetId);
+    var file = fileInput && fileInput.files && fileInput.files[0];
+    if (!file || !target) return false;
+    var uploaded = await store.uploadAsset(file, prefix);
+    target.value = uploaded.publicUrl;
+    fileInput.value = '';
+    if (target.id === 'bannerVideoUrl') setBannerVideoStatus(target.value);
+    return true;
+  }
+
   document.querySelectorAll('[data-upload]').forEach(function(button){
     button.addEventListener('click', async function(){
       var fileInput = $(button.getAttribute('data-file'));
-      var target = $(button.getAttribute('data-upload'));
       var file = fileInput && fileInput.files && fileInput.files[0];
       var kind = button.getAttribute('data-upload-kind') || 'image';
-      if (!file || !target) { alert('업로드할 파일을 선택해 주세요.'); return; }
+      if (!file) { alert('업로드할 파일을 선택해 주세요.'); return; }
       try {
         button.disabled = true;
         button.textContent = '업로드 중';
-        var uploaded = await store.uploadAsset(file, button.getAttribute('data-prefix'));
-        target.value = uploaded.publicUrl;
-        fileInput.value = '';
-        if (target.id === 'bannerVideoUrl') setBannerVideoStatus(target.value);
+        await uploadPendingFile(button.getAttribute('data-file'), button.getAttribute('data-upload'), button.getAttribute('data-prefix'));
         setNotice((kind === 'video' ? '비디오를' : '이미지를') + ' 업로드했습니다. 저장 버튼을 눌러 콘텐츠에 반영해 주세요.');
       } catch (error) {
         setNotice(error.message || '업로드에 실패했습니다.', true);
@@ -512,8 +528,29 @@
     setNotice('비디오 연결을 제거했습니다. 저장 버튼을 눌러 콘텐츠에 반영해 주세요.');
   });
 
-  $('bannerForm').addEventListener('submit', function(event){ event.preventDefault(); saveWithStatus(function(){ return store.saveBanner(collectBanner()); }); });
-  $('instructorForm').addEventListener('submit', function(event){ event.preventDefault(); saveWithStatus(function(){ return store.saveInstructor(collectInstructor()); }); });
+  $('bannerOverlayColor').addEventListener('input', function(){
+    $('bannerOverlayColorHex').value = $('bannerOverlayColor').value;
+  });
+  $('bannerOverlayColorHex').addEventListener('input', function(){
+    var normalized = normalizeHexColor($('bannerOverlayColorHex').value);
+    if (normalized) $('bannerOverlayColor').value = normalized;
+  });
+
+  $('bannerForm').addEventListener('submit', function(event){
+    event.preventDefault();
+    saveWithStatus(async function(){
+      await uploadPendingFile('bannerImageFile', 'bannerImage', 'hero');
+      await uploadPendingFile('bannerVideoFile', 'bannerVideoUrl', 'hero-video');
+      return store.saveBanner(collectBanner());
+    });
+  });
+  $('instructorForm').addEventListener('submit', function(event){
+    event.preventDefault();
+    saveWithStatus(async function(){
+      await uploadPendingFile('instructorPhotoFile', 'instructorPhoto', 'instructors');
+      return store.saveInstructor(collectInstructor());
+    });
+  });
   $('optionForm').addEventListener('submit', function(event){ event.preventDefault(); saveWithStatus(function(){ return store.saveOption(collectOption()); }); });
   $('bannerNewBtn').addEventListener('click', function(){ fillBanner(null); });
   $('instructorNewBtn').addEventListener('click', function(){ fillInstructor(null); });

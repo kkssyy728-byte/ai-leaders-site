@@ -8,27 +8,6 @@
   }
 
   ready(function(){
-    function rootUrlFromHtmlIndex(url){
-      if(!url || url.origin !== window.location.origin) return "";
-      if(!/\/html\/index\.html$/i.test(url.pathname)) return "";
-      return url.origin + url.pathname.replace(/\/html\/index\.html$/i, "/") + url.search + url.hash;
-    }
-
-    var currentRootUrl = rootUrlFromHtmlIndex(window.location);
-    if(currentRootUrl){
-      window.history.replaceState(window.history.state, document.title, currentRootUrl);
-    }
-
-    document.addEventListener("click", function(event){
-      if(event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
-      if(!link || link.target && link.target !== "_self") return;
-      var normalized = rootUrlFromHtmlIndex(new URL(link.getAttribute("href"), document.baseURI));
-      if(!normalized) return;
-      event.preventDefault();
-      window.location.href = normalized;
-    }, true);
-
     var nav = document.getElementById("nav");
     var hamb = document.getElementById("hamb");
     if(!nav || !hamb || nav.__aiLeadersMobileNav) return;

@@ -180,6 +180,22 @@
     return type === 'paid' ? '유료 강연' : '무료 강연';
   }
 
+  function formatPhone(raw) {
+    var v = String(raw || '').replace(/[^0-9]/g, '').slice(0, 11);
+    if (!v) return '';
+    var isSeoul = v.slice(0, 2) === '02';
+    if (isSeoul) v = v.slice(0, 10);
+    if (v.length <= (isSeoul ? 2 : 3)) return v;
+    if (isSeoul) {
+      if (v.length <= 6) return v.slice(0, 2) + '-' + v.slice(2);
+      if (v.length <= 9) return v.slice(0, 2) + '-' + v.slice(2, v.length - 4) + '-' + v.slice(-4);
+      return v.slice(0, 2) + '-' + v.slice(2, 6) + '-' + v.slice(6, 10);
+    }
+    if (v.length <= 7) return v.slice(0, 3) + '-' + v.slice(3);
+    if (v.length <= 10) return v.slice(0, 3) + '-' + v.slice(3, v.length - 4) + '-' + v.slice(-4);
+    return v.slice(0, 3) + '-' + v.slice(3, 7) + '-' + v.slice(7, 11);
+  }
+
   function sourceLabel(source) {
     var labels = {
       'course-free': '무료 강연 목록',
@@ -245,7 +261,7 @@
         + '<td><strong>' + esc(item.courseTitle || '강연명 없음') + '</strong><span class="muted">' + esc(sourceLabel(item.source)) + '</span></td>'
         + '<td><span class="type ' + (item.courseType === 'paid' ? 'paid' : '') + '">' + esc(typeLabel(item.courseType)) + '</span></td>'
         + '<td><strong>' + esc(item.name || '-') + '</strong></td>'
-        + '<td><div class="contact"><span>' + esc(item.phone || '-') + '</span><span>' + esc(item.email || '') + '</span></div></td>'
+        + '<td><div class="contact"><span>' + esc(formatPhone(item.phone) || '-') + '</span><span>' + esc(item.email || '') + '</span></div></td>'
         + '<td>' + esc(extraInfo(item)) + '</td>'
         + '<td class="message-cell">' + esc(messageInfo(item)).replace(/\n/g, '<br>') + '</td>'
         + '<td><div class="row-actions"><button class="mini-btn" type="button" data-action="delete" data-id="' + esc(item.id) + '">삭제</button><button class="mini-btn danger" type="button" data-action="exclude" data-id="' + esc(item.id) + '">제외</button></div></td>'
@@ -291,7 +307,7 @@
         item.courseTitle || '',
         typeLabel(item.courseType),
         item.name || '',
-        item.phone || '',
+        formatPhone(item.phone) || '',
         item.email || '',
         item.age || '',
         item.paymentMethod || '',

@@ -9,9 +9,23 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"/>
 <link rel="stylesheet" href="../shared.css"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17060350229"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17060350229');
+</script>
 <style>
   .eyebrow{ font-size:18px; font-weight:700; letter-spacing:-.01em; text-transform:none; color:var(--brand); }
   .page-hero .eyebrow{ font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.55); }
+  @media(max-width:900px){
+    body .page-hero h1{ font-size:clamp(24px, 7vw, 32px) !important; word-break:keep-all !important; }
+  }
+  @media(max-width:480px){
+    body .page-hero h1{ font-size:clamp(21px, 6.4vw, 26px) !important; }
+  }
   h2.h{ font-size:clamp(26px,3.6vw,38px); font-weight:700; line-height:1.28; letter-spacing:-.015em; }
   .btn{ border-radius:999px !important; }
 
@@ -47,12 +61,8 @@
     background:radial-gradient(ellipse 80% 60% at 50% -10%, rgba(59,130,246,.18) 0%, transparent 70%);
     opacity:0; transition:opacity .28s;
   }
-  .proc-flow-card:hover::before,
-  .proc-flow-card.is-hover::before,
-  .proc-flow-card:focus-within::before { opacity:1; }
-  .proc-flow-card:hover,
-  .proc-flow-card.is-hover,
-  .proc-flow-card:focus-within {
+  .proc-flow-card.is-hover::before { opacity:1; }
+  .proc-flow-card.is-hover {
     background:#eef4ff; border-color:#3b82f6;
     transform:translateY(-6px);
     box-shadow:0 0 16px 4px rgba(59,130,246,.18), 0 16px 36px rgba(37,99,235,.1);
@@ -65,12 +75,33 @@
     line-height:1; letter-spacing:-.04em; text-indent:-.08em;
     transition:color .22s;
   }
-  .proc-flow-card:hover .proc-badge,
-  .proc-flow-card.is-hover .proc-badge,
-  .proc-flow-card:focus-within .proc-badge { color:#2563eb; }
+  .proc-flow-card.is-hover .proc-badge { color:#2563eb; }
   .proc-card-title { font-size:16px; font-weight:700; color:var(--ink); word-break:keep-all; }
   .proc-card-desc { margin-top:10px; font-size:13px; color:var(--muted); line-height:1.7; word-break:keep-all; }
-  @media(max-width:860px){ .proc-flow{ flex-wrap:wrap; gap:16px; } .proc-arrow{ display:none; } .proc-flow .proc-flow-card{ flex:1 1 calc(50% - 8px); min-width:0; } }
+  @media(max-width:860px){
+    .proc-flow{ display:flex; flex-direction:column; gap:0; flex-wrap:nowrap; }
+    .proc-flow .proc-flow-card{ flex:none; }
+    .proc-flow-card{
+      width:100%; min-width:0; min-height:0;
+      display:grid; grid-template-columns:66px 1fr; grid-template-rows:auto auto;
+      column-gap:14px; align-items:start;
+      text-align:left; padding:18px 20px;
+    }
+    .proc-badge{
+      grid-row:1 / 3; grid-column:1; align-self:center; justify-self:center;
+      margin:0; font-size:60px; transform:translateX(-6px);
+    }
+    .proc-card-title{ grid-row:1; grid-column:2; }
+    .proc-card-desc{ grid-row:2; grid-column:2; margin-top:4px; }
+    .desktop-break{ display:none; }
+    .proc-arrow{
+      display:flex; align-items:center; justify-content:center;
+      padding:2px 0; color:#94a3b8; font-size:20px; font-weight:700;
+      transform:rotate(90deg);
+    }
+    .proc-flow-card{ opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
+    .proc-flow-card.is-in{ opacity:1; transform:none; }
+  }
 
   @media (max-width:900px){
     .apply-layout{ grid-template-columns:1fr; gap:40px; }
@@ -93,6 +124,10 @@
   .benefit p { color:var(--muted) !important; margin-top:0; }
   .benefit-ic { background:var(--brand-50) !important; }
   .benefit-ic svg { stroke:var(--brand); }
+  @media (max-width:900px){
+    .apply-aside > p { color:#1f2937 !important; }
+    .benefit p { color:#1f2937 !important; }
+  }
 
   /* 글래스모피즘 폼 */
   .apply-form {
@@ -110,9 +145,9 @@
     color:var(--ink); border-radius:8px;
   }
   .apply-form .form-select {
-    background:#fff; border:1px solid rgba(0,0,0,.1);
+    background:rgba(255,255,255,.8); border:1px solid rgba(0,0,0,.1);
     color:var(--ink); border-radius:8px; color-scheme:light;
-    -webkit-appearance:auto; appearance:auto;
+    -webkit-appearance:none; appearance:none; background-image:none;
   }
   .apply-form .form-select option { background:#fff !important; color:#111 !important; }
   .apply-form .form-input:focus,
@@ -134,6 +169,15 @@
   .file-drop-input { position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; }
   .file-drop-main { font-size:14px; font-weight:700; pointer-events:none; }
   .file-drop-sub { font-size:12px; color:var(--hint); line-height:1.6; pointer-events:none; }
+  .file-drop-mobile-text{ display:none; }
+  @media(max-width:700px){
+    .file-drop-desktop-text{ display:none; }
+    .file-drop-mobile-text{ display:inline; }
+    .file-dropzone{ min-height:auto; padding:12px 16px; display:flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; }
+    .file-drop-main{ font-size:13.5px; }
+    .file-drop-sub{ display:none; }
+    #f-link::placeholder{ font-size:13.5px; }
+  }
 
   /* 폼 버튼 */
   .apply-form .btn {
@@ -166,10 +210,11 @@
   .nav:not(.scrolled) .logo-white { display: none !important; }
   .nav:not(.scrolled) .logo-ink { display: block !important; }
   .nav:not(.scrolled) .nav-cta .btn { background: var(--brand); color: #fff; }
+  .nav:not(.scrolled) .hamb { color: var(--ink) !important; }
   .aurora-bg-layer {
-    position: absolute; inset: -40px; pointer-events: none; will-change: transform;
+    position: absolute; inset: -40px; pointer-events: none;
     background-image:
-      repeating-linear-gradient(100deg, #fff 0%, #fff 7%, transparent 10%, transparent 12%, #fff 16%),
+      repeating-linear-gradient(100deg, rgba(255,255,255,.4) 0%, rgba(255,255,255,.4) 7%, transparent 10%, transparent 12%, rgba(255,255,255,.4) 16%),
       repeating-linear-gradient(100deg, #3b82f6 10%, #818cf8 15%, #06b6d4 20%, #6366f1 25%, #3b82f6 30%);
     background-size: 300%, 200%;
     background-position: 50% 50%, 50% 50%;
@@ -182,6 +227,19 @@
   @keyframes hero-aurora {
     from { background-position: 50% 50%, 50% 50%; }
     to   { background-position: 350% 50%, 350% 50%; }
+  }
+  /* 히어로/지원 섹션 하단 경계: 블러 레이어가 overflow:hidden에 잘리며 생기는 선을
+     각 섹션 배경색과 같은 톤의 페이드로 덮어서 가림 */
+  .beams-hero{ position:relative; }
+  .beams-hero::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:36px; z-index:0;
+    background:linear-gradient(to bottom, rgba(238,242,247,0) 0%, rgba(238,242,247,1) 70%);
+    pointer-events:none;
+  }
+  .apply-aurora::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:36px; z-index:0;
+    background:linear-gradient(to bottom, rgba(219,234,254,0) 0%, rgba(219,234,254,1) 70%);
+    pointer-events:none;
   }
 </style>
 <style>
@@ -207,8 +265,35 @@
 <body>
 
 <!-- NAV -->
-<div data-site-nav></div>
-<script src="assets/site-layout.js"></script>
+<nav class="nav" id="nav">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="AI 리더스 협회 홈"><img class="logo logo-white" src="../images/logo-white.png" alt="AI 리더스 협회"/><img class="logo logo-ink" src="../images/logo-ink.png" alt="AI 리더스 협회"/></a>
+    <div class="menu" role="navigation" aria-label="주요 메뉴">
+      <a class="nav-link" href="about.html">소개</a>
+      <div class="nav-item">
+        <a class="nav-link" href="course-free.html">전체 강연<svg class="ar" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+        <div class="dropdown">
+          <a href="course-free.html">무료 강연</a>
+          <a href="course-paid.html">유료 강연</a>
+          <a href="course-corporate.html">기업 강연</a>
+        </div>
+      </div>
+      <a class="nav-link" href="reviews.html">강연 후기</a>
+      <a class="nav-link" href="faq.html">FAQ</a>
+      <div class="nav-item">
+        <a class="nav-link active" href="corporate.html">문의·지원<svg class="ar" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+        <div class="dropdown">
+          <a href="corporate.html">출강 문의</a>
+          <a href="instructor-apply.html">강사 지원</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-cta"><a class="btn" href="corporate.html">출강 문의</a></div>
+    <button class="hamb" id="hamb" aria-label="메뉴 열기" aria-expanded="false">
+      <svg fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
 
 <!-- PAGE HERO -->
 <header class="page-hero beams-hero" style="padding-top: calc(var(--nav-h) + 130px); padding-bottom: 150px;">
@@ -245,7 +330,7 @@
       <div class="proc-flow-card">
         <div class="proc-badge">4</div>
         <div class="proc-card-title">첫 강의 오픈</div>
-        <p class="proc-card-desc">모객과 운영은 저희가 맡고,<br>강사는 강의에 집중합니다.</p>
+        <p class="proc-card-desc">모객과 운영은 저희가 맡고,<br class="desktop-break"/> 강사는 강의에 집중합니다.</p>
       </div>
     </div>
   </div>
@@ -283,23 +368,23 @@
 
       <div class="apply-form reveal">
         <h3>강사 지원서</h3>
-        <form onsubmit="submitForm(event)">
+        <form onsubmit="submitForm(event)" novalidate>
           <div class="two-col">
             <div class="form-group"><label class="form-label" for="f-name">성함<span class="req">*</span></label><input class="form-input" id="f-name" type="text" placeholder="홍길동" required autocomplete="name"/></div>
             <div class="form-group"><label class="form-label" for="f-phone">연락처<span class="req">*</span></label><input class="form-input" id="f-phone" type="tel" placeholder="010-0000-0000" required autocomplete="tel"/></div>
           </div>
           <div class="two-col" style="margin-top:16px;">
             <div class="form-group"><label class="form-label" for="f-email">이메일<span class="req">*</span></label><input class="form-input" id="f-email" type="email" placeholder="you@email.com" required autocomplete="email"/></div>
-            <div class="form-group"><label class="form-label" for="f-region">활동 가능 지역</label>
-              <select class="form-select" id="f-region"><option value="">선택</option><option>수도권 (서울·경기·인천)</option><option>충청권</option><option>영남권</option><option>호남권</option><option>강원·제주</option><option>온라인 전용</option><option>전국 가능</option></select>
+            <div class="form-group"><label class="form-label" for="f-region">활동 가능 지역<span class="req">*</span></label>
+              <select class="form-select" id="f-region" required><option value="">선택</option><option>수도권 (서울·경기·인천)</option><option>충청권</option><option>영남권</option><option>호남권</option><option>강원·제주</option><option>온라인 전용</option><option>전국 가능</option></select>
             </div>
           </div>
           <div class="two-col" style="margin-top:16px;">
-            <div class="form-group"><label class="form-label" for="f-career">강의 경력</label>
-              <select class="form-select" id="f-career"><option value="">선택</option><option>없음 (현장 실무 경험 위주)</option><option>1년 미만</option><option>1–3년</option><option>3–5년</option><option>5년 이상</option></select>
+            <div class="form-group"><label class="form-label" for="f-career">강의 경력<span class="req">*</span></label>
+              <select class="form-select" id="f-career" required><option value="">선택</option><option>없음 (현장 실무 경험 위주)</option><option>1년 미만</option><option>1–3년</option><option>3–5년</option><option>5년 이상</option></select>
             </div>
-            <div class="form-group"><label class="form-label" for="f-mode">선호 강의 형태</label>
-              <select class="form-select" id="f-mode"><option value="">선택</option><option>오프라인</option><option>온라인 라이브</option><option>둘 다 가능</option></select>
+            <div class="form-group"><label class="form-label" for="f-mode">선호 강의 형태<span class="req">*</span></label>
+              <select class="form-select" id="f-mode" required><option value="">선택</option><option>오프라인</option><option>온라인 라이브</option><option>둘 다 가능</option></select>
             </div>
           </div>
           <div class="form-group" style="margin-top:16px;"><label class="form-label">전문 분야 <span style="font-weight:400;color:var(--hint);">(복수 선택)</span></label>
@@ -320,7 +405,7 @@
             <label class="form-label" for="f-file">포트폴리오 · 이력 파일 첨부</label>
             <div class="file-dropzone" id="f-file-dropzone" role="button" tabindex="0" aria-describedby="f-file-help">
               <input class="file-drop-input" id="f-file" type="file"/>
-              <div class="file-drop-main">파일을 드래그하거나 클릭해서 첨부</div>
+              <div class="file-drop-main"><span class="file-drop-desktop-text">파일을 드래그하거나 클릭해서 첨부</span><span class="file-drop-mobile-text">탭해서 파일 첨부하기</span></div>
               <div class="file-drop-sub">PDF, PPT, DOCX, ZIP 등 포트폴리오·이력 파일을 올릴 수 있습니다.</div>
             </div>
             <p id="f-file-help" style="margin-top:8px;font-size:12px;color:var(--hint);line-height:1.6;">100MB 이하 파일만 첨부할 수 있습니다. 100MB를 초과하는 파일은 위 링크 입력으로 제출해주세요.</p>
@@ -330,7 +415,7 @@
             <input type="checkbox" required style="margin-top:2px;"/> 개인정보 수집·이용에 동의합니다. (지원 검토 목적으로만 사용됩니다)
           </label>
           <button class="btn" type="submit" style="width:100%;height:54px;font-size:16px;margin-top:24px;"><span>지원서 제출하기</span></button>
-          <p style="margin-top:12px;font-size:12px;color:var(--hint);text-align:center;">검토 후 평일 기준 3~5일 이내에 담당자가 개별 연락드립니다.</p>
+          <p style="margin-top:12px;font-size:12px;color:var(--hint);text-align:center;word-break:keep-all;">검토 후 영업일 기준 3~5일 이내에 담당자가 개별 연락드립니다.</p>
         </form>
       </div>
 
@@ -339,8 +424,24 @@
 </section>
 
 <!-- FOOTER -->
-<div data-site-footer></div>
-<script>window.AiLeadersLayout && window.AiLeadersLayout.renderFooter();</script>
+<footer class="footer site-footer">
+  <div class="container">
+    <div class="ft-wrap">
+      <div class="ft-left">
+        <div class="ft-logo"><img class="logo" src="../images/logo-ink.png" alt="AI 리더스 협회"/></div>
+        <div class="ft-social">
+          <a href="https://www.youtube.com/@AI%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C" target="_blank" rel="noopener" class="sbtn" aria-label="유튜브"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.77-1.77C19.27 5 12 5 12 5s-7.27 0-8.83.53A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.77 1.77C4.73 19 12 19 12 19s7.27 0 8.83-.53A2.5 2.5 0 0 0 22.6 16.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l6.2 3.3-6.2 3.3z"/></svg></a>
+          <a href="https://www.instagram.com/ai_leaders_/" target="_blank" rel="noopener" class="sbtn" aria-label="인스타그램"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-right">
+        <p class="ft-biz">AI리더스협회<span class="bar">|</span>주소 : 영등포구 선유로70 우리벤처타운2<span class="bar">|</span>대표 : 김영주<span class="bar">|</span>사업자등록번호 : 352-88-01460<span class="bar">|</span>TEL : 010-4269-0213</p>
+        <p class="ft-copy">COPYRIGHT ⓒ AI리더스협회 ALL RIGHTS RESERVED</p>
+        <p class="ft-links"><a href="#" onclick="openLegal('privacyModal');return false;">개인정보처리방침</a><a href="#" onclick="openLegal('termsModal');return false;">이용약관</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <script src="assets/supabase-store-common.js"></script>
 <script src="assets/site-content-store.js"></script>
@@ -354,24 +455,67 @@
   hamb?.addEventListener('click',()=>{const open=nav.classList.toggle('open');hamb.setAttribute('aria-expanded',String(open));hamb.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');});
   document.addEventListener('click',e=>{if(nav.classList.contains('open')&&!nav.contains(e.target)){nav.classList.remove('open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','메뉴 열기');}});
   const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');ro.unobserve(e.target);}}),{threshold:0.1});
-  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+  document.querySelectorAll('.reveal, .proc-flow-card').forEach(el=>ro.observe(el));
 })();
 (function(){
-  var cards = Array.prototype.slice.call(document.querySelectorAll('.proc-flow-card, .proc-step'));
-  var active = null;
-  function setActive(card) {
-    if (active && active !== card) active.classList.remove('is-hover');
-    active = card || null;
-    if (active) active.classList.add('is-hover');
+  const procFlow=document.querySelector('.proc-flow');
+  const procCards=Array.prototype.slice.call(document.querySelectorAll('.proc-flow-card'));
+  if(procFlow && procCards.length){
+    const procRo=new IntersectionObserver(entries=>entries.forEach(e=>{
+      if(e.isIntersecting){
+        let i=0;
+        function step(){
+          procCards.forEach(c=>c.classList.remove('is-hover'));
+          procCards[i].classList.add('is-hover');
+          i=(i+1)%procCards.length;
+        }
+        step();
+        setInterval(step,2000);
+        procRo.unobserve(e.target);
+      }
+    }),{threshold:0.2});
+    procRo.observe(procFlow);
   }
-  cards.forEach(function(card) {
-    card.addEventListener('pointerenter', function() { setActive(card); });
-    card.addEventListener('pointerleave', function() { if (active === card) setActive(null); });
-    card.addEventListener('touchstart', function() { setActive(card); }, { passive:true });
-  });
-  document.addEventListener('touchstart', function(event) {
-    if (!event.target.closest('.proc-flow-card, .proc-step')) setActive(null);
-  }, { passive:true });
+})();
+(function(){
+  function autoHyphenPhone(raw) {
+    var v = String(raw || '').replace(/[^0-9]/g, '').slice(0, 11);
+    var isSeoul = v.slice(0, 2) === '02';
+    if (isSeoul) v = v.slice(0, 10);
+    if (v.length <= (isSeoul ? 2 : 3)) return v;
+    if (isSeoul) {
+      if (v.length <= 6) return v.slice(0, 2) + '-' + v.slice(2);
+      if (v.length <= 9) return v.slice(0, 2) + '-' + v.slice(2, v.length - 4) + '-' + v.slice(-4);
+      return v.slice(0, 2) + '-' + v.slice(2, 6) + '-' + v.slice(6, 10);
+    }
+    if (v.length <= 7) return v.slice(0, 3) + '-' + v.slice(3);
+    if (v.length <= 10) return v.slice(0, 3) + '-' + v.slice(3, v.length - 4) + '-' + v.slice(-4);
+    return v.slice(0, 3) + '-' + v.slice(3, 7) + '-' + v.slice(7, 11);
+  }
+  function isPlausibleKoreanPhone(raw) {
+    var digits = String(raw || '').replace(/[^0-9]/g, '');
+    if (digits.length < 9 || digits.length > 11) return false;
+    if (/^(\d)\1{8,10}$/.test(digits)) return false;
+    var prefixLen = /^01/.test(digits) ? 3 : (digits.slice(0, 2) === '02' ? 2 : 3);
+    var rest = digits.slice(prefixLen);
+    if (rest.length >= 6 && /^(\d)\1+$/.test(rest)) return false;
+    var isMobile = /^01[016789]/.test(digits) && (digits.length === 10 || digits.length === 11);
+    var isSeoul = /^02/.test(digits) && (digits.length === 9 || digits.length === 10);
+    var isOtherAreaCode = /^0(3[1-3]|4[1-4]|5[1-5]|6[1-4]|70)\d{6,8}$/.test(digits) && digits.length >= 9 && digits.length <= 11;
+    return isMobile || isSeoul || isOtherAreaCode;
+  }
+  var phoneInput = document.getElementById('f-phone');
+  if (phoneInput) {
+    phoneInput.setAttribute('inputmode', 'numeric');
+    phoneInput.addEventListener('input', function() {
+      phoneInput.value = autoHyphenPhone(phoneInput.value);
+      if (phoneInput.value && !isPlausibleKoreanPhone(phoneInput.value)) {
+        phoneInput.setCustomValidity('연락처 형식을 다시 확인해주세요.');
+      } else {
+        phoneInput.setCustomValidity('');
+      }
+    });
+  }
 })();
 function fieldValue(id) {
   var el = document.getElementById(id);
@@ -441,9 +585,77 @@ document.getElementById('f-file')?.addEventListener('change', function () {
     acceptPortfolioFile(file || null);
   });
 })();
+function clearFieldPopup(field) {
+  field.classList.remove('is-invalid');
+  if (field.__errorEl) {
+    field.__errorEl.remove();
+    field.__errorEl = null;
+  }
+}
+function showFieldPopup(field) {
+  field.classList.add('is-invalid');
+  var container = field.closest('.form-group') || field.closest('label') || field.parentElement;
+  if (!container.style.position) container.style.position = 'relative';
+  if (!field.__errorEl) {
+    field.__errorEl = document.createElement('div');
+    field.__errorEl.className = 'field-popup';
+    field.__errorEl.innerHTML = '<span class="fp-icon" aria-hidden="true">!</span><span class="fp-text"></span>';
+    container.appendChild(field.__errorEl);
+  }
+  field.__errorEl.querySelector('.fp-text').textContent = field.validationMessage || '이 항목을 확인해주세요.';
+}
+function validateField(field) {
+  var valid = typeof field.checkValidity === 'function' ? field.checkValidity() : true;
+  if (valid) clearFieldPopup(field);
+  else showFieldPopup(field);
+  return valid;
+}
+function validateRequiredFields(form) {
+  var fields = Array.prototype.slice.call(form.querySelectorAll('[required]'));
+  var firstInvalid = null;
+  fields.forEach(function (field) {
+    var valid = typeof field.checkValidity === 'function' ? field.checkValidity() : true;
+    if (valid || firstInvalid) {
+      clearFieldPopup(field);
+      if (valid) return;
+    }
+    if (!valid && !firstInvalid) firstInvalid = field;
+  });
+  if (firstInvalid) {
+    showFieldPopup(firstInvalid);
+    return [firstInvalid];
+  }
+  return [];
+}
+(function bindLiveValidation() {
+  Array.prototype.forEach.call(document.querySelectorAll('form [required]'), function (field) {
+    var evt = (field.tagName === 'SELECT' || field.type === 'checkbox') ? 'change' : 'input';
+    field.addEventListener(evt, function () { validateField(field); });
+  });
+})();
+function showSuccessPopup(title, message) {
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:600;display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.innerHTML = '<div style="background:#fff;border-radius:16px;padding:36px 22px;max-width:400px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.2);">'
+    + '<div style="width:52px;height:52px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">'
+    + '<svg width="26" height="26" fill="none" stroke="#16a34a" stroke-width="2.4" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    + '</div>'
+    + '<h3 style="font-size:18px;font-weight:700;color:#111;margin-bottom:10px;">' + title + '</h3>'
+    + '<p style="font-size:13px;color:#6b7280;line-height:1.7;word-break:keep-all;white-space:normal;">' + message + '</p>'
+    + '<button type="button" style="margin-top:24px;width:100%;height:48px;background:#111;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;">확인</button>'
+    + '</div>';
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('button').addEventListener('click', function () { overlay.remove(); });
+  document.body.appendChild(overlay);
+}
 async function submitForm(e) {
   e.preventDefault();
   var form = e.target;
+  var invalidFields = validateRequiredFields(form);
+  if (invalidFields.length) {
+    invalidFields[0].focus();
+    return;
+  }
   var submitButton = form.querySelector('button[type="submit"]');
   var fileInput = document.getElementById('f-file');
   var file = selectedPortfolioFile || (fileInput && fileInput.files ? fileInput.files[0] : null);
@@ -486,7 +698,7 @@ async function submitForm(e) {
         source: 'instructor-apply'
       });
     }
-  alert('강사 지원서가 접수되었습니다!\n검토 후 평일 기준 3~5일 이내에 연락드리겠습니다.');
+  showSuccessPopup('강사 지원서가 접수되었습니다!', '검토 후 영업일 기준 3~5일 이내에<br>담당자가 개별 연락드립니다.');
   form.reset();
     clearPortfolioFile();
   } catch (error) {
@@ -524,25 +736,47 @@ async function submitForm(e) {
   .quick-bar .q-top:hover{ background:#000; color:#fff; }
   .quick-bar .q-top svg{ width:18px; height:18px; }
   .quick-bar .q-top span{ font-size:10px; font-weight:700; letter-spacing:.06em; }
-  @media (max-width:760px){ .quick-bar{ width:46px; top:auto; bottom:16px; transform:none; opacity:0; pointer-events:none; transition:opacity .25s ease; } .quick-bar.qb-show{ opacity:1; pointer-events:auto; } .quick-bar .qitem{ height:46px; } .quick-bar .qitem svg{ width:18px; height:18px; } .quick-bar .q-top svg{ width:14px; height:14px; } .quick-bar .q-top span{ font-size:8px; } .quick-bar .rtip{ display:none; } }
+  .quick-bar .q-toggle{ display:none; }
+  @media (max-width:760px){
+    .quick-bar{ width:46px; top:auto; bottom:16px; right:14px; transform:none; opacity:0; pointer-events:none; transition:opacity .25s ease; background:none; border:none; border-radius:0; box-shadow:none; overflow:visible; }
+    .quick-bar.qb-show{ opacity:1; pointer-events:auto; }
+    .quick-bar .qitem{ height:46px; width:46px; border-radius:50%; margin-bottom:10px; background:#0c1828; color:#fff; box-shadow:0 6px 16px rgba(12,24,40,.22); }
+    .quick-bar .qitem:last-child{ margin-bottom:0; }
+    .quick-bar .qitem + .qitem{ border-top:none; }
+    .quick-bar .qitem svg{ width:18px; height:18px; }
+    .quick-bar .qitem.qsns{ display:none; }
+    .quick-bar.qb-expanded .qitem.qsns{ display:flex; }
+    .quick-bar .q-ig{ background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); }
+    .quick-bar .q-fb{ background:#1877f2; }
+    .quick-bar .q-yt{ background:#ff0000; }
+    .quick-bar .q-toggle{ display:flex; background:#0c1828; color:#fff; }
+    .quick-bar .q-toggle svg{ width:20px; height:20px; transition:transform .2s ease; }
+    .quick-bar.qb-expanded .q-toggle svg{ transform:rotate(45deg); }
+    .quick-bar .q-top svg{ width:14px; height:14px; }
+    .quick-bar .q-top span{ font-size:8px; }
+    .quick-bar .rtip{ display:none; }
+  }
+  @media (min-width:761px){
+    .quick-bar{ opacity:0; pointer-events:none; transition:opacity .25s ease; }
+    .quick-bar.qb-show{ opacity:1; pointer-events:auto; }
+  }
 </style>
 <div class="quick-bar" aria-label="퀵 메뉴">
-  <a class="qitem" href="https://www.instagram.com/ai_leaders_/" target="_blank" rel="noopener" aria-label="인스타그램">
+  <a class="qitem qsns q-ig" href="https://www.instagram.com/ai_leaders_/" target="_blank" rel="noopener" aria-label="인스타그램">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
     <span class="rtip">인스타그램</span>
   </a>
-  <a class="qitem" href="https://www.facebook.com/people/Ai%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C/61567872351191/#" target="_blank" rel="noopener" aria-label="페이스북">
+  <a class="qitem qsns q-fb" href="https://www.facebook.com/people/Ai%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C/61567872351191/#" target="_blank" rel="noopener" aria-label="페이스북">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12Z"/></svg>
     <span class="rtip">페이스북</span>
   </a>
-  <a class="qitem" href="#" target="_blank" rel="noopener" aria-label="카카오 채널">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.54 2 10.6c0 2.62 1.86 4.92 4.66 6.22-.2.71-.73 2.66-.84 3.07-.13.5.18.49.39.36.16-.11 2.5-1.7 3.52-2.39.74.11 1.5.17 2.27.17 5.52 0 10-3.54 10-7.6S17.52 3 12 3Z"/></svg>
-    <span class="rtip">카카오 채널</span>
-  </a>
-  <a class="qitem" href="https://www.youtube.com/@AI%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C" target="_blank" rel="noopener" aria-label="유튜브">
+  <a class="qitem qsns q-yt" href="https://www.youtube.com/@AI%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C" target="_blank" rel="noopener" aria-label="유튜브">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.77-1.77C19.27 5 12 5 12 5s-7.27 0-8.83.53A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.77 1.77C4.73 19 12 19 12 19s7.27 0 8.83-.53A2.5 2.5 0 0 0 22.6 16.7C23 15.2 23 12 23 12ZM9.8 15.3V8.7l6.2 3.3-6.2 3.3Z"/></svg>
     <span class="rtip">유튜브</span>
   </a>
+  <button class="qitem q-toggle" type="button" aria-label="빠른 메뉴 열기" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
   <button class="qitem q-top" type="button" aria-label="맨 위로">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
     <span>TOP</span>
@@ -552,6 +786,15 @@ async function submitForm(e) {
 (function(){
   var t=document.querySelector('.q-top');
   if(t){ t.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); }); }
+  var toggle=document.querySelector('.q-toggle');
+  var bar=document.querySelector('.quick-bar');
+  if(toggle && bar){
+    toggle.addEventListener('click', function(){
+      var open = !bar.classList.contains('qb-expanded');
+      bar.classList.toggle('qb-expanded', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  }
 })();
 </script>
 <!-- ===== 리모컨 바 끝 ===== -->
@@ -725,5 +968,6 @@ async function submitForm(e) {
 })();
 </script>
 <script src="assets/mobile-nav.js"></script>
+<script src="assets/chatbot-launcher.js"></script>
 </body>
 </html>

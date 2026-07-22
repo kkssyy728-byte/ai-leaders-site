@@ -9,10 +9,25 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"/>
 <link rel="stylesheet" href="../shared.css"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17060350229"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17060350229');
+</script>
 <style>
   /* ── Hero 한 줄 강제 ── */
   .page-hero h1 { white-space: nowrap; }
   .page-hero .ph-desc { max-width: none; white-space: nowrap; }
+  /* ── 히어로 폰트 스타일 통일 (강연 후기 페이지 기준) ── */
+  @media (max-width:900px) {
+    body .page-hero h1 { font-size:clamp(24px, 7vw, 32px) !important; word-break:keep-all !important; }
+  }
+  @media (max-width:480px) {
+    body .page-hero h1 { font-size:clamp(21px, 6.4vw, 26px) !important; }
+  }
 
   /* ── Aurora hero ── */
   .aurora-hero { background: #000 !important; position: relative; overflow: hidden; }
@@ -149,7 +164,17 @@
   .c-footer .btn.sm:hover { background: #2563c9; box-shadow: 0 6px 18px rgba(59,125,232,.45); transform: translateY(-1px); }
 
   @media (max-width:860px) { .course-grid { grid-template-columns:repeat(2,1fr); } }
-  @media (max-width:540px) { .course-grid { grid-template-columns:1fr; } }
+  @media (max-width:540px) {
+    .course-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
+    #courseGrid .card .cc-deadline-badge { top:8px; left:8px; height:22px; padding:0 8px; font-size:10px; }
+    #courseGrid .card .course-body { padding:12px 8px 14px; }
+    #courseGrid .card .course-body h3 { font-size:17px; line-height:1.4; margin-bottom:6px; word-break:keep-all; }
+    #courseGrid .card .cc-instructor { font-size:12px; margin:0 0 4px; }
+    #courseGrid .card .cc-remaining { font-size:11px; margin:0 0 8px; }
+    #courseGrid .card .cc-price { font-size:15px; margin-bottom:8px; }
+    #courseGrid .card .cc-tags { gap:4px; }
+    #courseGrid .card .cc-tags span { font-size:10px; padding:3px 8px; }
+  }
 
   /* CTA 배경 — 아래→위 무한 그라디언트 (끊김 없는 타일 방식) */
   #cta-gradient-bg { position:absolute; inset:0; overflow:hidden; }
@@ -182,7 +207,34 @@
   }
   .filter-btn:hover  { border-bottom-color: var(--brand); color: var(--brand); background: transparent; }
   .filter-btn.active { border-bottom-color: var(--brand); color: var(--ink); font-weight: 700; background: transparent; }
-  .subfilters { display: flex; gap: 8px; flex-wrap: wrap; margin: -18px 0 32px; }
+
+  /* 필터탭 안전장치 — 탭 개수가 늘어나 폭을 넘으면 줄바꿈 대신 가로 스크롤 처리 */
+  @media (max-width: 640px) {
+    .filters {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter-btn { flex: 0 0 auto; white-space: nowrap; }
+  }
+
+  .subfilters { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: -18px 0 32px; }
+  .region-search-bar { display: none; }
+  @media (min-width: 641px) {
+    .region-search-bar {
+      display: flex; align-items: center; gap: 8px; margin-left: auto;
+      width: 320px; height: 46px; padding: 0 16px;
+      border: 1px solid var(--line); border-radius: 12px; background: #fff;
+    }
+    .region-search-bar .dd-search-icon { width: 18px; height: 18px; color: var(--muted); flex: none; }
+    .region-search-bar .dd-search-input {
+      flex: 1; min-width: 0; border: none; outline: none; background: transparent;
+      font-size: 15px; font-weight: 600; color: var(--ink);
+    }
+    .region-search-bar .dd-search-input::placeholder { color: #9aa5b1; font-weight: 500; }
+  }
   .dd { position: relative; }
   .dd-btn {
     display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px;
@@ -192,18 +244,71 @@
   .dd-btn:hover, .dd.open .dd-btn { border-color: var(--brand); color: var(--brand); background: var(--brand-50); }
   .dd-btn svg { width: 16px; height: 16px; stroke: currentColor; transition: transform .18s ease; }
   .dd.open .dd-btn svg { transform: rotate(180deg); }
+  .dd-sheet-backdrop { display: none; }
+  .dd-sheet-head { display: none; }
+  .dd-search { display: none; }
   .dd-menu {
     position: absolute; left: 0; top: calc(100% + 8px); z-index: 20; display: none;
     min-width: 240px; max-width: min(320px, calc(100vw - 40px)); padding: 8px;
     border: 1px solid var(--line); border-radius: 12px; background: #fff;
     box-shadow: 0 18px 44px rgba(20,30,50,.14);
   }
-  .dd.open .dd-menu { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; }
+  .dd.open .dd-menu { display: block; }
+  .dd-opt-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; }
+  .dd-opt-grid-city { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+  .dd-opt-city { border: 1px solid var(--brand); color: var(--brand); background: #fff; }
+  .dd-opt-city.active, .dd-opt-city:hover { background: var(--brand); color: #fff; }
   .dd-opt {
     min-height: 34px; border: 0; border-radius: 8px; background: transparent; color: var(--muted);
     font-size: 13px; font-weight: 700; cursor: pointer;
   }
   .dd-opt:hover, .dd-opt.active { background: var(--brand-50); color: var(--brand); }
+  .dd-opt.hidden-by-search { display: none; }
+
+  /* ── 지역 필터 — 모바일에서는 하단 바텀시트로 전환 ── */
+  @media (max-width: 640px) {
+    .dd.open .dd-sheet-backdrop {
+      display: block; position: fixed; inset: 0; background: rgba(12,24,40,.55);
+      z-index: 998; animation: ddFadeIn .2s ease;
+    }
+    .dd.open .dd-menu {
+      position: fixed; left: 0; right: 0; bottom: 0; top: auto; z-index: 999;
+      display: block; min-width: 0; max-width: 100%; width: 100%; margin: 0;
+      border-radius: 18px 18px 0 0; max-height: 75vh; overflow-y: auto;
+      padding: 0 18px calc(60px + env(safe-area-inset-bottom, 0px));
+      box-shadow: 0 -18px 44px rgba(12,24,40,.22);
+      animation: ddSheetUp .28s cubic-bezier(.16,1,.3,1);
+    }
+    @keyframes ddFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes ddSheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .dd-sheet-head {
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; background: #fff;
+      padding: 18px 0 14px; margin-bottom: 6px; border-bottom: 1px solid var(--line);
+      font-size: 16px; font-weight: 800; color: var(--ink);
+    }
+    .dd-sheet-close {
+      width: 30px; height: 30px; border: none; background: var(--paper); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; color: var(--muted); cursor: pointer;
+    }
+    .dd-sheet-close svg { width: 15px; height: 15px; }
+    .dd-search {
+      display: flex; align-items: center; gap: 8px; margin-top: 14px;
+      height: 46px; padding: 0 16px; border: 1px solid var(--line); border-radius: 12px; background: #fff;
+    }
+    .dd-search-icon { width: 18px; height: 18px; color: var(--muted); flex: none; }
+    .dd-search-input {
+      flex: 1; min-width: 0; border: none; outline: none; background: transparent;
+      font-size: 15px; font-weight: 600; color: var(--ink);
+    }
+    .dd-search-input::placeholder { color: #9aa5b1; font-weight: 500; }
+    .dd-opt-grid { display: flex; flex-wrap: wrap; grid-template-columns: none; gap: 8px; padding: 14px 0 6px; }
+    .dd-opt {
+      flex: 0 0 auto; min-height: 38px; height: 38px; padding: 0 16px; border-radius: 999px;
+      border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 15px; font-weight: 700;
+    }
+    .dd-opt.active, .dd-opt:hover { background: var(--brand); color: #fff; border-color: var(--brand); }
+  }
 
   /* ===== 리모콘 바 ===== */
   .quick-bar{ position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:60;
@@ -223,7 +328,30 @@
   .quick-bar .q-top:hover{ background:#000; color:#fff; }
   .quick-bar .q-top svg{ width:18px; height:18px; }
   .quick-bar .q-top span{ font-size:10px; font-weight:700; letter-spacing:.06em; }
-  @media (max-width:760px){ .quick-bar{ width:46px; top:auto; bottom:16px; transform:none; opacity:0; pointer-events:none; transition:opacity .25s ease; } .quick-bar.qb-show{ opacity:1; pointer-events:auto; } .quick-bar .qitem{ height:46px; } .quick-bar .qitem svg{ width:18px; height:18px; } .quick-bar .q-top svg{ width:14px; height:14px; } .quick-bar .q-top span{ font-size:8px; } .quick-bar .rtip{ display:none; } }
+  .quick-bar .q-toggle{ display:none; }
+  @media (max-width:760px){
+    .quick-bar{ width:46px; top:auto; bottom:16px; right:14px; transform:none; opacity:0; pointer-events:none; transition:opacity .25s ease; background:none; border:none; border-radius:0; box-shadow:none; overflow:visible; }
+    .quick-bar.qb-show{ opacity:1; pointer-events:auto; }
+    .quick-bar .qitem{ height:46px; width:46px; border-radius:50%; margin-bottom:10px; background:#0c1828; color:#fff; box-shadow:0 6px 16px rgba(12,24,40,.22); }
+    .quick-bar .qitem:last-child{ margin-bottom:0; }
+    .quick-bar .qitem + .qitem{ border-top:none; }
+    .quick-bar .qitem svg{ width:18px; height:18px; }
+    .quick-bar .qitem.qsns{ display:none; }
+    .quick-bar.qb-expanded .qitem.qsns{ display:flex; }
+    .quick-bar .q-ig{ background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); }
+    .quick-bar .q-fb{ background:#1877f2; }
+    .quick-bar .q-yt{ background:#ff0000; }
+    .quick-bar .q-toggle{ display:flex; background:#0c1828; color:#fff; }
+    .quick-bar .q-toggle svg{ width:20px; height:20px; transition:transform .2s ease; }
+    .quick-bar.qb-expanded .q-toggle svg{ transform:rotate(45deg); }
+    .quick-bar .q-top svg{ width:14px; height:14px; }
+    .quick-bar .q-top span{ font-size:8px; }
+    .quick-bar .rtip{ display:none; }
+  }
+  @media (min-width:761px){
+    .quick-bar{ opacity:0; pointer-events:none; transition:opacity .25s ease; }
+    .quick-bar.qb-show{ opacity:1; pointer-events:auto; }
+  }
   .eyebrow{ font-size:18px; font-weight:700; letter-spacing:-.01em; text-transform:none; color:var(--brand); }
 </style>
 <style>
@@ -248,8 +376,28 @@
 </head>
 <body>
 
-<div data-site-nav></div>
-<script src="assets/site-layout.js"></script>
+<nav class="nav" id="nav">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="AI 리더스 협회 홈"><img class="logo logo-white" src="../images/logo-white.png" alt="AI 리더스 협회"/><img class="logo logo-ink" src="../images/logo-ink.png" alt="AI 리더스 협회"/></a>
+    <div class="menu" role="navigation" aria-label="주요 메뉴">
+      <a class="nav-link" href="about.html">소개</a>
+      <div class="nav-item">
+        <a class="nav-link active" href="course-free.html">전체 강연<svg class="ar" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></a>
+        <div class="dropdown"><a href="course-free.html">무료 강연</a><a href="course-paid.html">유료 강연</a><a href="course-corporate.html">기업 강연</a></div>
+      </div>
+      <a class="nav-link" href="reviews.html">강연 후기</a>
+      <a class="nav-link" href="faq.html">FAQ</a>
+      <div class="nav-item">
+        <a class="nav-link" href="corporate.html">문의·지원<svg class="ar" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></a>
+        <div class="dropdown"><a href="corporate.html">출강 문의</a><a href="instructor-apply.html">강사 지원</a></div>
+      </div>
+    </div>
+    <div class="nav-cta"><a class="btn" href="corporate.html">출강 문의</a></div>
+    <button class="hamb" id="hamb" aria-label="메뉴 열기" aria-expanded="false">
+      <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
 
 <header class="page-hero aurora-hero" style="padding-top: calc(var(--nav-h) + 130px); padding-bottom: 150px;">
   <div class="aurora-base"></div>
@@ -281,30 +429,48 @@
 
       <div class="subfilters reveal" role="group" aria-label="지역 필터">
         <div class="dd" id="regionDd">
+          <div class="dd-sheet-backdrop" onclick="closeRegionDd()"></div>
           <button class="dd-btn" type="button" onclick="toggleRegionDd(event)">
             <span id="regionDdLabel">지역</span>
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </button>
           <div class="dd-menu" id="regionDdMenu">
-            <button class="dd-opt active" type="button" data-region="all" onclick="filterRegion('all',this)">전체</button>
-            <button class="dd-opt" type="button" data-region="서울" onclick="filterRegion('서울',this)">서울</button>
-            <button class="dd-opt" type="button" data-region="부산" onclick="filterRegion('부산',this)">부산</button>
-            <button class="dd-opt" type="button" data-region="대구" onclick="filterRegion('대구',this)">대구</button>
-            <button class="dd-opt" type="button" data-region="인천" onclick="filterRegion('인천',this)">인천</button>
-            <button class="dd-opt" type="button" data-region="광주" onclick="filterRegion('광주',this)">광주</button>
-            <button class="dd-opt" type="button" data-region="대전" onclick="filterRegion('대전',this)">대전</button>
-            <button class="dd-opt" type="button" data-region="울산" onclick="filterRegion('울산',this)">울산</button>
-            <button class="dd-opt" type="button" data-region="세종" onclick="filterRegion('세종',this)">세종</button>
-            <button class="dd-opt" type="button" data-region="경기" onclick="filterRegion('경기',this)">경기</button>
-            <button class="dd-opt" type="button" data-region="강원" onclick="filterRegion('강원',this)">강원</button>
-            <button class="dd-opt" type="button" data-region="충북" onclick="filterRegion('충북',this)">충북</button>
-            <button class="dd-opt" type="button" data-region="충남" onclick="filterRegion('충남',this)">충남</button>
-            <button class="dd-opt" type="button" data-region="전북" onclick="filterRegion('전북',this)">전북</button>
-            <button class="dd-opt" type="button" data-region="전남" onclick="filterRegion('전남',this)">전남</button>
-            <button class="dd-opt" type="button" data-region="경북" onclick="filterRegion('경북',this)">경북</button>
-            <button class="dd-opt" type="button" data-region="경남" onclick="filterRegion('경남',this)">경남</button>
-            <button class="dd-opt" type="button" data-region="제주" onclick="filterRegion('제주',this)">제주</button>
+            <div class="dd-sheet-head">
+              <span>지역</span>
+              <button type="button" class="dd-sheet-close" onclick="closeRegionDd()" aria-label="닫기">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <div class="dd-search">
+              <svg class="dd-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" class="dd-search-input" id="regionSearchInput" placeholder="찾으시는 지역을 입력해주세요" oninput="filterRegionOptions(this.value)" autocomplete="off"/>
+            </div>
+            <div class="dd-opt-grid">
+              <button class="dd-opt active" type="button" data-region="all" onclick="filterRegion('all',this)">전체</button>
+              <button class="dd-opt" type="button" data-region="서울" onclick="filterRegion('서울',this)">서울</button>
+              <button class="dd-opt" type="button" data-region="경기" onclick="filterRegion('경기',this)">경기</button>
+              <button class="dd-opt" type="button" data-region="인천" onclick="filterRegion('인천',this)">인천</button>
+              <button class="dd-opt" type="button" data-region="부산" onclick="filterRegion('부산',this)">부산</button>
+              <button class="dd-opt" type="button" data-region="대구" onclick="filterRegion('대구',this)">대구</button>
+              <button class="dd-opt" type="button" data-region="대전" onclick="filterRegion('대전',this)">대전</button>
+              <button class="dd-opt" type="button" data-region="광주" onclick="filterRegion('광주',this)">광주</button>
+              <button class="dd-opt" type="button" data-region="울산" onclick="filterRegion('울산',this)">울산</button>
+              <button class="dd-opt" type="button" data-region="세종" onclick="filterRegion('세종',this)">세종</button>
+              <button class="dd-opt" type="button" data-region="강원" onclick="filterRegion('강원',this)">강원</button>
+              <button class="dd-opt" type="button" data-region="충북" onclick="filterRegion('충북',this)">충북</button>
+              <button class="dd-opt" type="button" data-region="충남" onclick="filterRegion('충남',this)">충남</button>
+              <button class="dd-opt" type="button" data-region="전북" onclick="filterRegion('전북',this)">전북</button>
+              <button class="dd-opt" type="button" data-region="전남" onclick="filterRegion('전남',this)">전남</button>
+              <button class="dd-opt" type="button" data-region="경북" onclick="filterRegion('경북',this)">경북</button>
+              <button class="dd-opt" type="button" data-region="경남" onclick="filterRegion('경남',this)">경남</button>
+              <button class="dd-opt" type="button" data-region="제주" onclick="filterRegion('제주',this)">제주</button>
+            </div>
+            <div class="dd-opt-grid dd-opt-grid-city" id="regionCityResults" style="display:none;"></div>
           </div>
+        </div>
+        <div class="region-search-bar">
+          <svg class="dd-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="dd-search-input" id="mainRegionSearchInput" placeholder="찾으시는 지역을 입력해주세요" oninput="handleMainRegionSearch(this.value)" autocomplete="off"/>
         </div>
       </div>
 
@@ -416,7 +582,7 @@
     <p id="modalCourseName" style="font-size:16px;color:var(--brand);font-weight:600;margin-bottom:20px;"></p>
     <form onsubmit="submitForm(event)">
       <div class="form-group"><label class="form-label" for="m-name">이름<span class="req">*</span></label><input class="form-input" id="m-name" type="text" placeholder="홍길동" required autocomplete="name"/></div>
-      <div class="form-group" style="margin-top:14px;"><label class="form-label" for="m-phone">연락처<span class="req">*</span></label><input class="form-input" id="m-phone" type="tel" placeholder="010-0000-0000" required autocomplete="tel"/></div>
+      <div class="form-group" style="margin-top:14px;"><label class="form-label" for="m-phone">연락처<span class="req">*</span></label><input class="form-input" id="m-phone" type="tel" placeholder="010-0000-0000" required autocomplete="tel" inputmode="numeric"/></div>
       <div class="form-group" style="margin-top:14px;"><label class="form-label" for="m-age">연령대<span class="req">*</span></label><select class="form-select" id="m-age" required><option value="">선택해주세요</option><option>30대</option><option>40대</option><option>50대</option><option>60세~65세 이하</option></select></div>
       <div class="form-group" style="margin-top:20px;">
         <p style="font-size:13px;color:var(--ink);line-height:1.6;margin-bottom:4px;">중복 참여시 당첨 알림문자가 있더라도, 현장에서 입장이 제한됩니다.</p>
@@ -526,8 +692,24 @@
   </div>
 </div>
 
-<div data-site-footer></div>
-<script>window.AiLeadersLayout && window.AiLeadersLayout.renderFooter();</script>
+<footer class="footer site-footer">
+  <div class="container">
+    <div class="ft-wrap">
+      <div class="ft-left">
+        <div class="ft-logo"><img class="logo" src="../images/logo-ink.png" alt="AI 리더스 협회"/></div>
+        <div class="ft-social">
+          <a href="https://www.youtube.com/@AI%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C" target="_blank" rel="noopener" class="sbtn" aria-label="유튜브"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.77-1.77C19.27 5 12 5 12 5s-7.27 0-8.83.53A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.77 1.77C4.73 19 12 19 12 19s7.27 0 8.83-.53A2.5 2.5 0 0 0 22.6 16.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l6.2 3.3-6.2 3.3z"/></svg></a>
+          <a href="https://www.instagram.com/ai_leaders_/" target="_blank" rel="noopener" class="sbtn" aria-label="인스타그램"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-right">
+        <p class="ft-biz">AI리더스협회<span class="bar">|</span>주소 : 영등포구 선유로70 우리벤처타운2<span class="bar">|</span>대표 : 김영주<span class="bar">|</span>사업자등록번호 : 352-88-01460<span class="bar">|</span>TEL : 010-4269-0213</p>
+        <p class="ft-copy">COPYRIGHT ⓒ AI리더스협회 ALL RIGHTS RESERVED</p>
+        <p class="ft-links"><a href="#" onclick="openLegal('privacyModal');return false;">개인정보처리방침</a><a href="#" onclick="openLegal('termsModal');return false;">이용약관</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <script src="assets/supabase-store-common.js"></script>
 <script src="assets/courses-store.js"></script>
@@ -559,19 +741,124 @@ function toggleRegionDd(e) {
   if (dd) dd.classList.toggle('open');
 }
 
+function closeRegionDd() {
+  var dd = document.getElementById('regionDd');
+  if (dd) dd.classList.remove('open');
+  var input = document.getElementById('regionSearchInput');
+  if (input) input.value = '';
+  filterRegionOptions('');
+}
+
+function handleMainRegionSearch(value) {
+  if (window.CoursePageRenderer && window.CoursePageRenderer.searchLocation) {
+    window.CoursePageRenderer.searchLocation(value);
+  }
+}
+
 function filterRegion(region, btn) {
   if (window.CoursePageRenderer && window.CoursePageRenderer.filterRegion) {
     window.CoursePageRenderer.filterRegion(region, btn);
   }
 }
 
+function filterRegionOptions(keyword) {
+  var q = String(keyword || '').trim();
+  var opts = document.querySelectorAll('#regionDdMenu .dd-opt-grid:not(.dd-opt-grid-city) .dd-opt');
+  // 검색 중에는 대분류(전체/서울 등) 버튼은 모두 숨기고,
+  // 카드 속 구체적 지역명과 일치하는 결과만 별도 탭버튼으로 보여준다.
+  var matchedCities = [];
+  if (q && window.CourseStore && typeof window.CourseStore.getCourses === 'function') {
+    var seenCities = {};
+    window.CourseStore.getCourses().forEach(function (course) {
+      var loc = String(course.location || '').trim();
+      if (loc && loc.indexOf(q) !== -1 && !seenCities[loc]) {
+        seenCities[loc] = true;
+        matchedCities.push(loc);
+      }
+    });
+  }
+  opts.forEach(function (opt) {
+    opt.classList.toggle('hidden-by-search', !!q);
+  });
+  renderCityResultPills(q ? matchedCities : []);
+}
+
+function renderCityResultPills(cities) {
+  var container = document.getElementById('regionCityResults');
+  if (!container) return;
+  if (!cities.length) {
+    container.innerHTML = '';
+    container.style.display = 'none';
+    return;
+  }
+  container.style.display = '';
+  container.innerHTML = cities.map(function (city) {
+    var safe = String(city).replace(/'/g, "\\'");
+    return '<button class="dd-opt dd-opt-city" type="button" data-city="' + city + '" onclick="selectCityLocation(\'' + safe + '\',this)">' + city + '</button>';
+  }).join('');
+}
+
+function selectCityLocation(city, btn) {
+  if (window.CoursePageRenderer && window.CoursePageRenderer.selectLocation) {
+    window.CoursePageRenderer.selectLocation(city);
+  }
+  document.querySelectorAll('#regionDdMenu .dd-opt').forEach(function (el) { el.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  var label = document.getElementById('regionDdLabel');
+  if (label) label.textContent = city;
+  closeRegionDd();
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeRegionDd();
+});
+
 document.addEventListener('click', function(e) {
   var dd = document.getElementById('regionDd');
-  if (dd && dd.classList.contains('open') && !dd.contains(e.target)) {
+  if (dd && dd.classList.contains('open') && !dd.contains(e.target) && !e.target.closest('.region-search-bar')) {
     dd.classList.remove('open');
   }
 });
 
+function autoHyphenPhone(raw) {
+  var v = String(raw || '').replace(/[^0-9]/g, '').slice(0, 11);
+  var isSeoul = v.slice(0, 2) === '02';
+  if (isSeoul) v = v.slice(0, 10);
+  if (v.length <= (isSeoul ? 2 : 3)) return v;
+  if (isSeoul) {
+    if (v.length <= 6) return v.slice(0, 2) + '-' + v.slice(2);
+    if (v.length <= 9) return v.slice(0, 2) + '-' + v.slice(2, v.length - 4) + '-' + v.slice(-4);
+    return v.slice(0, 2) + '-' + v.slice(2, 6) + '-' + v.slice(6, 10);
+  }
+  if (v.length <= 7) return v.slice(0, 3) + '-' + v.slice(3);
+  if (v.length <= 10) return v.slice(0, 3) + '-' + v.slice(3, v.length - 4) + '-' + v.slice(-4);
+  return v.slice(0, 3) + '-' + v.slice(3, 7) + '-' + v.slice(7, 11);
+}
+function isPlausibleKoreanPhone(raw) {
+  var digits = String(raw || '').replace(/[^0-9]/g, '');
+  if (digits.length < 9 || digits.length > 11) return false;
+  if (/^(\d)\1{8,10}$/.test(digits)) return false;
+  var prefixLen = /^01/.test(digits) ? 3 : (digits.slice(0, 2) === '02' ? 2 : 3);
+  var rest = digits.slice(prefixLen);
+  if (rest.length >= 6 && /^(\d)\1+$/.test(rest)) return false;
+  var isMobile = /^01[016789]/.test(digits) && (digits.length === 10 || digits.length === 11);
+  var isSeoul = /^02/.test(digits) && (digits.length === 9 || digits.length === 10);
+  var isOtherAreaCode = /^0(3[1-3]|4[1-4]|5[1-5]|6[1-4]|70)\d{6,8}$/.test(digits) && digits.length >= 9 && digits.length <= 11;
+  return isMobile || isSeoul || isOtherAreaCode;
+}
+(function() {
+  var phoneEl = document.getElementById('m-phone');
+  if (phoneEl) {
+    phoneEl.addEventListener('input', function() {
+      phoneEl.value = autoHyphenPhone(phoneEl.value);
+      if (phoneEl.value && !isPlausibleKoreanPhone(phoneEl.value)) {
+        phoneEl.setCustomValidity('연락처 형식을 다시 확인해주세요.');
+      } else {
+        phoneEl.setCustomValidity('');
+      }
+    });
+  }
+})();
 function openModal(courseName) {
   document.getElementById('modalCourseName').textContent = courseName;
   document.getElementById('modalBg').classList.add('open');
@@ -583,6 +870,21 @@ function closeModal() {
 document.getElementById('modalBg').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
+function showSuccessPopup(title, message) {
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:600;display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.innerHTML = '<div style="background:#fff;border-radius:16px;padding:40px 36px;max-width:400px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.2);">'
+    + '<div style="width:52px;height:52px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">'
+    + '<svg width="26" height="26" fill="none" stroke="#16a34a" stroke-width="2.4" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    + '</div>'
+    + '<h3 style="font-size:18px;font-weight:700;color:#111;margin-bottom:10px;">' + title + '</h3>'
+    + '<p style="font-size:14px;color:#6b7280;line-height:1.7;word-break:keep-all;">' + message + '</p>'
+    + '<button type="button" style="margin-top:24px;width:100%;height:48px;background:#111;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;">확인</button>'
+    + '</div>';
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('button').addEventListener('click', function () { overlay.remove(); });
+  document.body.appendChild(overlay);
+}
 async function submitForm(e) {
   e.preventDefault();
   const c1 = document.getElementById('chk1');
@@ -604,29 +906,28 @@ async function submitForm(e) {
       return;
     }
   }
-  alert('신청이 완료되었습니다!\n카카오 채널을 통해 확정 메시지를 보내드립니다.');
+  showSuccessPopup('신청이 완료되었습니다!', '안내 문자는 영업일 기준 1~3일 이내 순차 발송됩니다. 선정되신 분에 한해 개별 안내 문자를 보내드립니다.');
   closeModal();
   e.target.reset();
 }
 </script>
 
 <div class="quick-bar" aria-label="퀵 메뉴">
-  <a class="qitem" href="https://www.instagram.com/ai_leaders_/" target="_blank" rel="noopener" aria-label="인스타그램">
+  <a class="qitem qsns q-ig" href="https://www.instagram.com/ai_leaders_/" target="_blank" rel="noopener" aria-label="인스타그램">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
     <span class="rtip">인스타그램</span>
   </a>
-  <a class="qitem" href="https://www.facebook.com/people/Ai%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C/61567872351191/#" target="_blank" rel="noopener" aria-label="페이스북">
+  <a class="qitem qsns q-fb" href="https://www.facebook.com/people/Ai%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C/61567872351191/#" target="_blank" rel="noopener" aria-label="페이스북">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12Z"/></svg>
     <span class="rtip">페이스북</span>
   </a>
-  <a class="qitem" href="#" target="_blank" rel="noopener" aria-label="카카오 채널">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.54 2 10.6c0 2.62 1.86 4.92 4.66 6.22-.2.71-.73 2.66-.84 3.07-.13.5.18.49.39.36.16-.11 2.5-1.7 3.52-2.39.74.11 1.5.17 2.27.17 5.52 0 10-3.54 10-7.6S17.52 3 12 3Z"/></svg>
-    <span class="rtip">카카오 채널</span>
-  </a>
-  <a class="qitem" href="https://www.youtube.com/@AI%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C" target="_blank" rel="noopener" aria-label="유튜브">
+  <a class="qitem qsns q-yt" href="https://www.youtube.com/@AI%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C" target="_blank" rel="noopener" aria-label="유튜브">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.77-1.77C19.27 5 12 5 12 5s-7.27 0-8.83.53A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.77 1.77C4.73 19 12 19 12 19s7.27 0 8.83-.53A2.5 2.5 0 0 0 22.6 16.7C23 15.2 23 12 23 12ZM9.8 15.3V8.7l6.2 3.3-6.2 3.3Z"/></svg>
     <span class="rtip">유튜브</span>
   </a>
+  <button class="qitem q-toggle" type="button" aria-label="빠른 메뉴 열기" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
   <button class="qitem q-top" type="button" aria-label="맨 위로">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
     <span>TOP</span>
@@ -636,6 +937,15 @@ async function submitForm(e) {
 (function(){
   var t=document.querySelector('.q-top');
   if(t){ t.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); }); }
+  var toggle=document.querySelector('.q-toggle');
+  var bar=document.querySelector('.quick-bar');
+  if(toggle && bar){
+    toggle.addEventListener('click', function(){
+      var open = !bar.classList.contains('qb-expanded');
+      bar.classList.toggle('qb-expanded', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  }
 })();
 </script>
 <!-- ===== 리모컨 바 끝 ===== -->
@@ -808,5 +1118,6 @@ async function submitForm(e) {
 })();
 </script>
 <script src="assets/mobile-nav.js"></script>
+<script src="assets/chatbot-launcher.js"></script>
 </body>
 </html>
