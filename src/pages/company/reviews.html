@@ -89,6 +89,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"/>
 <link rel="stylesheet" href="../shared.css"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17060350229"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17060350229');
+</script>
 <style>
   .rating-summary { display:grid; grid-template-columns:auto 1fr; gap:40px; align-items:center; background:var(--paper); border:1px solid var(--line); padding:40px; }
   .rating-big { text-align:center; }
@@ -126,12 +134,26 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .rv-name { font-size:13px; font-weight:700; color:var(--ink); }
   .rv-meta { font-size:12px; color:var(--muted); margin-top:1px; }
   .rv-course-tag { display:inline-block; font-size:15px; font-weight:700; letter-spacing:.04em; color:var(--brand); background:none; padding:0; margin-bottom:6px; }
+  .rv-more{ display:none; }
+  @media(max-width:900px){
+    .rv-text{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .rv-text.rv-expanded{ display:block; -webkit-line-clamp:unset; overflow:visible; }
+    .rv-more{ display:inline-block; align-self:flex-start; background:none; border:none; padding:0; margin-top:-6px; color:var(--brand); font-size:13px; font-weight:700; cursor:pointer; }
+    .rv-card{ opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
+    .rv-card.is-in{ opacity:1; transform:none; }
+  }
 
   .photo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
   .photo-item { aspect-ratio:1; background:var(--paper); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; overflow:hidden; }
   .photo-item svg { width:32px; height:32px; stroke:var(--hint); }
 
-  @media (max-width:900px) { .review-grid { grid-template-columns:1fr; } .photo-grid { grid-template-columns:repeat(2,1fr); } .rating-summary { grid-template-columns:1fr; } }
+  .mobile-break{ display:none; }
+  @media (max-width:900px) { .review-grid { grid-template-columns:1fr; } .photo-grid { grid-template-columns:repeat(2,1fr); } .rating-summary { grid-template-columns:1fr; } .mobile-break{ display:block; }
+    body .page-hero h1{ font-size:clamp(24px, 7vw, 32px) !important; word-break:keep-all !important; }
+  }
+  @media (max-width:480px){
+    body .page-hero h1{ font-size:clamp(21px, 6.4vw, 26px) !important; }
+  }
 
   /* ── Animated Gradient hero ── */
   header.page-hero.beams-hero {
@@ -210,7 +232,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <header class="page-hero beams-hero" style="padding-top: calc(var(--nav-h) + 130px); padding-bottom: 150px;">
   <div class="container">
     <h1>수강생이 직접 말하는 변화</h1>
-    <p class="ph-desc">과장 없이, 솔직하게. AI리더스협회를 먼저 경험한 수강생들의 이야기입니다.</p>
+    <p class="ph-desc">과장 없이, 솔직하게. AI리더스협회를 먼저 경험한 <br class="mobile-break"/>수강생들의 이야기입니다.</p>
   </div>
 </header>
 
@@ -590,7 +612,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       all.forEach(function(c){ c.style.display = 'none'; });
       filtered.slice(start, start + perPage).forEach(function(c){ c.style.display = 'flex'; });
       renderPagination(totalPages);
-      if (shouldScroll) scheduleReviewScroll();
+      var isMobileView = mobileReviewsQuery && mobileReviewsQuery.matches;
+      if (shouldScroll && !isMobileView) scheduleReviewScroll();
     }
 
     function renderPagination(totalPages) {
@@ -648,7 +671,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- PHOTO RESULTS -->
   <section class="section" style="padding-bottom:0;overflow:hidden;">
     <div class="container">
-      <div class="sec-head reveal"><div><p class="eyebrow">Photo</p><h2 class="h">강의 현장 모습</h2></div></div>
+      <div class="sec-head reveal photo-sec-head"><div><p class="eyebrow">Photo</p><h2 class="h">강의 현장 모습</h2></div></div>
     </div>
     <style>
       @keyframes scroll-right {
@@ -689,6 +712,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         background: #fff;
         padding: 40px 0 56px;
         position: relative;
+      }
+      @media (max-width:900px){
+        .photo-sec-head{ margin-bottom:16px; }
+        .photo-gallery-wrap{ padding:8px 0 32px; }
+        .gallery-image-item{ width:180px; height:180px; }
       }
     </style>
     <div class="photo-gallery-wrap">
@@ -814,13 +842,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       from { opacity: 0; transform: translateY(40px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+    @media (max-width:900px){
+      .aurora-section{ padding:56px 0; }
+      .aurora-section h2.h{ font-size:clamp(24px,7vw,32px) !important; }
+      .aurora-sub{ font-size:16px !important; word-break:keep-all; }
+    }
   </style>
   <section class="aurora-section">
     <div class="aurora-layer"></div>
     <div class="aurora-mask"></div>
     <div class="container aurora-content" style="text-align:center;">
       <h2 class="h" style="color:#fff;">AI, 지금 바로 시작할 수 있습니다</h2>
-      <p style="color:rgba(255,255,255,.7);margin-top:12px;">무료 강의로 먼저 경험해보세요. 부담 없이 시작할 수 있습니다.</p>
+      <p class="aurora-sub" style="color:rgba(255,255,255,.7);margin-top:12px;">무료 강의로 먼저 경험해보세요. 부담 없이 <br class="mobile-break"/>시작할 수 있습니다.</p>
       <div style="margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
         <a class="btn inv" href="/course-free/">무료 특강 신청</a>
         <a class="btn ghost" href="/course-paid/">유료 특강 신청</a>
@@ -829,8 +862,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 </main>
 
-<div data-site-footer></div>
-<script>window.AiLeadersLayout && window.AiLeadersLayout.renderFooter();</script>
+<footer class="footer site-footer">
+  <div class="container">
+    <div class="ft-wrap">
+      <div class="ft-left">
+        <div class="ft-logo"><img class="logo" src="../images/logo-ink.png" alt="AI 리더스 협회"/></div>
+        <div class="ft-social">
+          <a href="https://www.youtube.com/@AI%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C" target="_blank" rel="noopener" class="sbtn" aria-label="유튜브"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.77-1.77C19.27 5 12 5 12 5s-7.27 0-8.83.53A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.77 1.77C4.73 19 12 19 12 19s7.27 0 8.83-.53A2.5 2.5 0 0 0 22.6 16.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l6.2 3.3-6.2 3.3z"/></svg></a>
+          <a href="https://www.instagram.com/ai_leaders_/" target="_blank" rel="noopener" class="sbtn" aria-label="인스타그램"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-right">
+        <p class="ft-biz">AI리더스협회<span class="bar">|</span>주소 : 영등포구 선유로70 우리벤처타운2<span class="bar">|</span>대표 : 김영주<span class="bar">|</span>사업자등록번호 : 352-88-01460<span class="bar">|</span>TEL : 010-4269-0213</p>
+        <p class="ft-copy">COPYRIGHT ⓒ AI리더스협회 ALL RIGHTS RESERVED</p>
+        <p class="ft-links"><a href="#" onclick="openLegal('privacyModal');return false;">개인정보처리방침</a><a href="#" onclick="openLegal('termsModal');return false;">이용약관</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <script>
 (function(){
@@ -841,6 +890,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   document.addEventListener('click',e=>{if(nav.classList.contains('open')&&!nav.contains(e.target)){nav.classList.remove('open');hamb.setAttribute('aria-expanded','false');hamb.setAttribute('aria-label','메뉴 열기');}});
   const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');ro.unobserve(e.target);}}),{threshold:0.1});
   document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+  const roCard=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');roCard.unobserve(e.target);}}),{threshold:0.1});
+  document.querySelectorAll('.rv-card').forEach(el=>roCard.observe(el));
+
+  document.querySelectorAll('.rv-text').forEach(function(p){
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='rv-more';
+    btn.textContent='더보기';
+    btn.addEventListener('click',function(){
+      const expanded=p.classList.toggle('rv-expanded');
+      btn.textContent=expanded?'접기':'더보기';
+    });
+    p.insertAdjacentElement('afterend',btn);
+  });
 })();
 
 </script>
@@ -1011,5 +1075,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ===== 리모컨 바 끝 ===== -->
 
 <script src="/assets/mobile-nav.js"></script>
+<script src="/assets/chatbot-launcher.js"></script>
 </body>
 </html>

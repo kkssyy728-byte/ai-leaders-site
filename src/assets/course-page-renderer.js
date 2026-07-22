@@ -9,6 +9,19 @@
     return type === 'paid' ? '유료' : '무료';
   }
 
+  function titleWithLocation(title, location) {
+    var text = String(title || '').trim();
+    var place = String(location || '').trim();
+    if (!place) return text;
+    if (!text) return '[' + place + ']';
+    if (/^\[[^\]]+\]/.test(text)) return text.replace(/^\[[^\]]+\]/, '[' + place + ']');
+    return '[' + place + '] ' + text;
+  }
+
+  function displayTitle(course) {
+    return titleWithLocation(course.title, course.location);
+  }
+
   function toDate(value) {
     if (!value) return null;
     var match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
@@ -161,7 +174,7 @@
     var discount = orig > price && price > 0 ? Math.round((1 - price / orig) * 100) : 0;
     return ''
       + '<div class="c-price" style="margin-bottom:14px;">'
-      + (discount ? '<span><span style="color:#ef1f1f;font-weight:700;font-size:12px;">' + discount + '%</span>&nbsp;<span class="orig">' + orig.toLocaleString('ko-KR') + '원</span></span>' : '')
+      + (discount ? '<span><span class="disc-pct" style="color:#ef1f1f;font-weight:700;font-size:12px;">' + discount + '%</span>&nbsp;<span class="orig">' + orig.toLocaleString('ko-KR') + '원</span></span>' : '')
       + '<span class="final" style="font-size:18px;">' + (price ? price.toLocaleString('ko-KR') + '원' : '무료') + '</span>'
       + '</div>';
   }
@@ -200,6 +213,7 @@
     var remaining = s.remainingSeats(course);
     var status = statusText(course);
     var muted = /마감|완료|비공개/.test(status) ? ' style="color:#555;"' : '';
+    var title = displayTitle(course);
     var thumb = typeof s.courseThumbnail === 'function' ? s.courseThumbnail(course) : (course.thumbImg || '/images/logo-ink.png');
     var loading = index === 0 ? 'eager' : 'lazy';
     var fallbackCode = global.AiLeadersUtils && global.AiLeadersUtils.stablePublicCode
@@ -213,11 +227,11 @@
       + '<a href="' + s.escapeHtml(href) + '" class="card-link">'
       + '<div class="course-thumb" style="background:#e8f1ff;">'
       + lowSeatsBadge(course, remaining)
-      + '<img src="' + s.escapeHtml(thumb) + '" alt="' + s.escapeHtml(course.title || '강연 이미지') + '" width="720" height="720" loading="' + loading + '" decoding="async"/>'
+      + '<img src="' + s.escapeHtml(thumb) + '" alt="' + s.escapeHtml(title || '강연 이미지') + '" width="720" height="720" loading="' + loading + '" decoding="async"/>'
       + closedOverlayMarkup(course)
       + '</div>'
       + '<div class="course-body">'
-      + '<h3>' + s.escapeHtml(course.title || '강연명 미정') + '</h3>'
+      + '<h3>' + s.escapeHtml(title || '강연명 미정') + '</h3>'
       + instructorMarkup(course)
       + remainingMarkup(course, remaining)
       + '<p class="cc-price"' + muted + '>' + status + '</p>'
@@ -242,7 +256,7 @@
   var storeSubscribed = false;
 
   function pageSize() {
-    return global.matchMedia && global.matchMedia('(max-width:540px)').matches ? 3 : 6;
+    return global.matchMedia && global.matchMedia('(max-width:540px)').matches ? 4 : 6;
   }
 
   function allCoursesForState() {
@@ -255,10 +269,12 @@
   function filteredCourses() {
     var currentFilter = pagedState && pagedState.filter ? pagedState.filter : 'all';
     var currentRegion = pagedState && pagedState.region ? pagedState.region : 'all';
+    var locationQuery = pagedState && pagedState.locationQuery ? pagedState.locationQuery : '';
     return allCoursesForState().filter(function (course) {
       var matchesFilter = currentFilter === 'all' || filterKey(course) === currentFilter;
       var matchesRegion = currentRegion === 'all' || regionKey(course) === currentRegion;
-      return matchesFilter && matchesRegion;
+      var matchesLocation = !locationQuery || String(course.location || '').indexOf(locationQuery) !== -1;
+      return matchesFilter && matchesRegion && matchesLocation;
     });
   }
 
@@ -421,6 +437,7 @@
   function filterRegionPaged(region, button) {
     if (!pagedState) return;
     pagedState.region = region || 'all';
+    pagedState.locationQuery = '';
     pagedState.page = 0;
     if (button) {
       Array.prototype.forEach.call(document.querySelectorAll('.dd-opt'), function (btn) {
@@ -430,6 +447,21 @@
     }
     var dd = document.getElementById('regionDd');
     if (dd) dd.classList.remove('open');
+    renderCurrentPage();
+  }
+
+  function searchLocationPaged(text) {
+    if (!pagedState) return;
+    pagedState.locationQuery = String(text || '').trim();
+    pagedState.page = 0;
+    renderCurrentPage();
+  }
+
+  function selectLocationPaged(text) {
+    if (!pagedState) return;
+    pagedState.region = 'all';
+    pagedState.locationQuery = String(text || '').trim();
+    pagedState.page = 0;
     renderCurrentPage();
   }
 
@@ -450,5 +482,5 @@
     renderPaged(options);
   }
 
-  global.CoursePageRenderer = { render: renderPaged, filter: filterPaged, filterRegion: filterRegionPaged };
+  global.CoursePageRenderer = { render: renderPaged, filter: filterPaged, filterRegion: filterRegionPaged, searchLocation: searchLocationPaged, selectLocation: selectLocationPaged };
 })(window);

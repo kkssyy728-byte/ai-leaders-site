@@ -125,6 +125,22 @@
     }
   }
 
+  function hexToRgb(hex) {
+    var value = String(hex || '').trim().replace(/^#/, '');
+    if (!/^[0-9a-fA-F]{6}$/.test(value)) return null;
+    return {
+      r: parseInt(value.slice(0, 2), 16),
+      g: parseInt(value.slice(2, 4), 16),
+      b: parseInt(value.slice(4, 6), 16)
+    };
+  }
+
+  function overlayGradient(hex) {
+    var rgb = hexToRgb(hex) || { r: 2, g: 22, b: 66 };
+    var base = 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',';
+    return 'linear-gradient(180deg, ' + base + '.34) 0%, ' + base + '.14) 40%, ' + base + '.66) 100%)';
+  }
+
   function imageMarkup(src, alt, className) {
     if (!src) return '';
     return '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(alt || '') + '"' + (className ? ' class="' + escapeHtml(className) + '"' : '') + ' loading="lazy" decoding="async">';
@@ -324,6 +340,7 @@
     var primaryUrlFallback = links[0] ? (links[0].getAttribute('href') || '/course-free/') : '/course-free/';
     var secondaryUrlFallback = links[1] ? (links[1].getAttribute('href') || '/course-paid/') : '/course-paid/';
     var slides = document.getElementById('slides');
+    var scrim = hero.querySelector('.hero-scrim');
     var hasManagedMedia = banners.some(function (banner) {
       return banner.desktopImage || banner.mobileImage || banner.videoUrl;
     });
@@ -331,6 +348,7 @@
 
     function applyBanner(index) {
       var item = banners[index] || banners[0];
+      if (scrim) scrim.style.background = overlayGradient(item.overlayColor);
       if (title && item.title) title.textContent = item.title;
       if (subtitle && item.subtitle) subtitle.textContent = item.subtitle;
 
@@ -472,6 +490,31 @@
       hero.addEventListener('mouseleave', startAuto);
       hero.addEventListener('focusin', stopAuto);
       hero.addEventListener('focusout', startAuto);
+
+      // 모바일: 손가락으로 좌우 스와이프하면 배너 전환
+      var touchStartX = null;
+      var touchStartY = null;
+      function isMobileHeroWidth() {
+        return window.matchMedia('(max-width:700px)').matches;
+      }
+      hero.addEventListener('touchstart', function (e) {
+        if (!isMobileHeroWidth() || !e.touches || !e.touches.length) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      hero.addEventListener('touchend', function (e) {
+        if (touchStartX === null) return;
+        var touch = (e.changedTouches && e.changedTouches[0]) || null;
+        var startX = touchStartX, startY = touchStartY;
+        touchStartX = null;
+        touchStartY = null;
+        if (!touch) return;
+        var dx = touch.clientX - startX;
+        var dy = touch.clientY - startY;
+        if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+        goTo(index + (dx < 0 ? 1 : -1));
+        startAuto();
+      }, { passive: true });
     }
 
     applyBanner(0);
@@ -488,6 +531,29 @@
       return (instructor.name || '강사') + ' 강사는 ' + instructor.role + '로 실무 중심 AI 교육을 진행합니다.';
     }
     return (instructor.name || '강사') + '의 실무 경험을 바탕으로 AI 활용 방법을 안내합니다.';
+  }
+
+  var LANDING_INSTRUCTOR_DETAILS = {
+    aion: [
+      'AI 이미지·영상·숏폼 제작 실습',
+      '수강생 결과물 중심의 실무형 커리큘럼',
+      '기초부터 실전 활용까지 단계별 코칭',
+      '현장에서 바로 쓰는 생성형 AI 활용 교육'
+    ],
+    moon: [
+      '브랜드 마케팅 컴퍼니 탈론 대표 / 브랜드 디렉터',
+      'ChatGPT·생성형 AI 기반 브랜드 메시지 및 콘텐츠 기획 교육',
+      'AI 활용 SNS·유튜브 콘텐츠 전략 및 마케팅 문안 실습',
+      '국내 주요 기업·브랜드 마케팅 컨설팅 및 브랜드 프로젝트 수행'
+    ]
+  };
+
+  function instructorLandingDetails(instructor) {
+    if (Array.isArray(instructor.landingDetails) && instructor.landingDetails.length) {
+      return instructor.landingDetails;
+    }
+    var key = instructor.slug || instructor.id;
+    return LANDING_INSTRUCTOR_DETAILS[key] || [];
   }
 
   function renderLandingInstructors() {
@@ -535,10 +601,15 @@
       });
       var copy = root.querySelector('.ctd-copy');
       if (copy) {
+        var detailItems = instructorLandingDetails(item);
+        var detailsMarkup = detailItems.length
+          ? '<ul class="tc-desc-list">' + detailItems.map(function (s) { return '<li>' + escapeHtml(s) + '</li>'; }).join('') + '</ul>'
+          : '';
         copy.innerHTML = '<div class="ctd-copy-inner">'
           + '<p class="ctd-quote">' + escapeHtml(instructorSummary(item, 'landing')) + '</p>'
           + '<p class="ctd-name">' + escapeHtml(item.name + ' 강사') + '</p>'
           + '<p class="ctd-designation">' + escapeHtml(item.role || '') + '</p>'
+          + detailsMarkup
           + '<div class="ctd-actions">'
           + '<button class="ctd-arrow" type="button" data-ctd-prev aria-label="이전 강사"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>'
           + '<button class="ctd-arrow" type="button" data-ctd-next aria-label="다음 강사"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></button>'
@@ -550,6 +621,8 @@
 
     function startAuto() {
       stopAuto();
+      // 모바일(이 컴포넌트가 세로 레이아웃으로 바뀌는 900px 이하)에서는 자동 전환 끄고 수동(이전/다음 버튼)만 허용
+      if (global.matchMedia && global.matchMedia('(max-width:900px)').matches) return;
       if (instructors.length > 1) timer = setInterval(function () { goTo(idx + 1); }, 4000);
     }
 
@@ -560,7 +633,21 @@
 
     build();
     goTo(0);
-    startAuto();
+
+    // 섹션이 화면에 처음 보일 때 항상 첫 번째 강사부터 노출되도록 리셋
+    var section = root.closest('section') || root;
+    var seen = false;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          if (!seen) { seen = true; goTo(0); }
+          startAuto();
+        } else {
+          stopAuto();
+        }
+      });
+    }, { threshold: .3 });
+    io.observe(section);
   }
 
   function renderAboutInstructors() {

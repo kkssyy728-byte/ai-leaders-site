@@ -8,7 +8,10 @@
   var toNumber = utils.toNumber;
   var toBoolean = utils.toBoolean;
   var normalizeAssetUrl = utils.normalizeAssetUrl || function (value) { return text(value); };
-  var CONTENT_ASSETS_BUCKET = 'site-assets';
+  // 'site-assets' 버킷은 실제로 Supabase Storage에 생성된 적이 없어서
+  // 업로드 시 항상 "Bucket not found"로 실패했음. 배너/강사 SQL 마이그레이션에서
+  // 실제로 만들고 RLS 정책까지 세팅해 둔 'instructor-portfolio' 버킷을 재사용한다.
+  var CONTENT_ASSETS_BUCKET = 'instructor-portfolio';
   var OPTION_GROUPS = {
     corporate_region: '출강 문의 지역',
     corporate_preferred_instructor: '출강 문의 선호 강사',
@@ -51,6 +54,7 @@
     item.desktopImage = normalizeAssetUrl(item.desktopImage, 'images');
     item.mobileImage = normalizeAssetUrl(item.mobileImage, 'images');
     item.videoUrl = text(item.videoUrl);
+    item.overlayColor = text(item.overlayColor) || '#021642';
     item.primaryLabel = text(item.primaryLabel);
     item.primaryUrl = text(item.primaryUrl);
     item.secondaryLabel = text(item.secondaryLabel);
@@ -71,6 +75,7 @@
     item.landingSummary = text(item.landingSummary);
     item.aboutSummary = text(item.aboutSummary);
     item.careerItems = parseArray(item.careerItems);
+    item.landingDetails = parseArray(item.landingDetails);
     item.sortOrder = toNumber(item.sortOrder, 0);
     item.isActive = toBoolean(item.isActive, true);
     return item;
@@ -97,6 +102,7 @@
       desktopImage: row.desktop_image,
       mobileImage: row.mobile_image,
       videoUrl: row.video_url,
+      overlayColor: row.overlay_color,
       primaryLabel: row.primary_label,
       primaryUrl: row.primary_url,
       secondaryLabel: row.secondary_label,
@@ -117,6 +123,7 @@
       desktop_image: item.desktopImage || null,
       mobile_image: item.mobileImage || null,
       video_url: item.videoUrl || null,
+      overlay_color: item.overlayColor || '#021642',
       primary_label: item.primaryLabel || null,
       primary_url: item.primaryUrl || null,
       secondary_label: item.secondaryLabel || null,
@@ -137,6 +144,7 @@
       landingSummary: row.landing_summary,
       aboutSummary: row.about_summary,
       careerItems: row.career_items,
+      landingDetails: row.landing_details,
       sortOrder: row.sort_order,
       isActive: row.is_active
     });
@@ -154,6 +162,7 @@
       landing_summary: item.landingSummary || null,
       about_summary: item.aboutSummary || null,
       career_items: item.careerItems,
+      landing_details: item.landingDetails,
       sort_order: item.sortOrder,
       is_active: item.isActive
     };

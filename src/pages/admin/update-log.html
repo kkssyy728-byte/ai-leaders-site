@@ -88,7 +88,7 @@
     </div>
 
     <section class="timeline" aria-label="업데이트 타임라인">
-      <details class="log-card" open>
+      <details class="log-card">
         <summary class="log-head">
           <div class="log-date">2026.07.21</div>
           <div class="log-head-actions">
@@ -301,6 +301,129 @@
             <ul>
               <li>Google Ads 기본 태그를 공개 페이지의 공통 레이아웃에서 한 번만 불러오도록 정리하고, 관리자 화면은 추적 대상에서 제외했습니다.</li>
               <li>신청 완료 페이지에서 `lecture_application_complete` 이벤트를 전송하도록 연결했으며, 전환 전용 `send_to` 이벤트는 라벨 확인 후 추가할 수 있도록 남겨뒀습니다.</li>
+            </ul>
+          </section>
+        </div>
+      </details>
+
+      <details class="log-card">
+        <summary class="log-head">
+          <div class="log-date">2026.07.14</div>
+          <div class="log-head-actions">
+            <span class="log-tag">모바일 반응형·관리자 UI 정비</span>
+            <span class="log-toggle" aria-hidden="true"></span>
+          </div>
+        </summary>
+        <div class="log-body">
+          <section class="log-section">
+            <h2>관리자 사이트 콘텐츠 페이지 UI 통일</h2>
+            <ul>
+              <li>`html/admin-site-content.html` 사이드바를 다른 관리자 페이지와 같은 구조로 맞췄습니다. Pretendard 폰트를 적용하고, 텍스트만 있던 로고를 다른 페이지와 같은 브랜드 아이콘(`AI` 마크) 형태로 바꿨습니다.</li>
+              <li>업데이트 로그 버튼 스타일과 하단 안내 문구를 다른 관리자 페이지와 동일한 톤으로 맞췄습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>랜딩페이지 차별점 섹션 정리</h2>
+            <ul>
+              <li>`html/index.html`의 차별점(features) 섹션에 반복 누적되어 있던 중복 CSS 선언을 정리했습니다. 실제로는 항상 뒤에 있는 코드만 적용되고 있던 이전 버전 블록을 제거했습니다.</li>
+              <li>모바일 화면에서 차별점 섹션의 메인 제목과 카드 설명 문구 크기를 정리하고, 최종적으로 대표 강연 섹션 제목(`.course-head h2`) 모바일 크기(26px)와 통일했습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>대표 강연 미리보기 카드 모바일 제목 크기 조정</h2>
+            <ul>
+              <li>메인홈 대표 강연 미리보기 카드(`.section-carousel h2`)의 모바일 제목 크기를 20px에서 16px로 줄였습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>출강 문의·강사 지원 히어로 하단 선 버그 수정</h2>
+            <ul>
+              <li>`html/corporate.html`, `html/instructor-apply.html`의 히어로·지원 섹션 하단에 모바일에서만 나타나던 얇은 선을 수정했습니다.</li>
+              <li>원인은 `.aurora-bg-layer`에 걸려 있던 `will-change: transform`이었습니다. 실제 애니메이션은 `background-position`만 움직이는데 이 속성 때문에 브라우저가 별도 합성 레이어로 승격시켰고, 여기에 블러·반전 필터가 겹치면서 부모의 `overflow:hidden` 클리핑을 벗어나 선이 보였습니다. 해당 속성을 제거해 정상적으로 잘리도록 고쳤습니다.</li>
+              <li>배경 그라데이션 위에 덮여 있던 흰색 반짝임 패턴의 불투명도를 100%에서 40%로 낮춰, 그라데이션 색이 더 잘 보이도록 조정했습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>관리자 이미지·영상 업로드 흐름 버그 수정</h2>
+            <ul>
+              <li>`html/admin-site-content.html`에서 배너 이미지/영상, 강사 사진을 새로 선택한 뒤 `업로드` 버튼을 누르지 않고 바로 `저장`만 눌러도, 저장 시점에 선택돼 있는 파일을 자동으로 먼저 업로드한 뒤 저장하도록 수정했습니다. 이전에는 `업로드` 버튼을 따로 누르지 않으면 이전 파일 경로가 그대로 저장되어 "새 이미지/영상으로 교체가 안 된다"는 문제가 있었습니다.</li>
+              <li>강사진·배너 사진 업로드가 실제로 생성된 적 없는 `site-assets` 버킷을 참조해 항상 실패하던 문제를 실제 Storage 버킷인 `instructor-portfolio`를 재사용하도록 수정했습니다.</li>
+              <li>히어로 영상이 특정 CSS 선택자(`.hero .slide img.hero-bg-img`)가 `<video>` 요소를 인식하지 못해 재생은 되지만 크기·위치가 깨지던 문제를 `video.hero-bg-img` 선택자를 추가해 수정했습니다.</li>
+              <li>배너별로 오버레이 색상을 직접 지정할 수 있는 기능을 추가했습니다.</li>
+              <li>출강 문의·강사 지원 폼의 드롭다운 옵션(`form_options`)을 관리자에서 삭제해도 실제로는 삭제되지 않던 문제를 발견해, 누락돼 있던 삭제 권한(RLS 정책) SQL을 반영했습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>출강 문의·강사 지원 폼 입력 검증 강화</h2>
+            <ul>
+              <li>전화번호 입력 시 자동으로 하이픈이 붙도록 하고, 휴대폰·유선전화 형식에 맞는지 검증하는 로직을 추가했습니다.</li>
+              <li>브라우저 기본 알림창(`alert`) 대신, 필수 항목 미입력 시 안내해 주는 커스텀 팝업과 제출 완료를 알려주는 커스텀 성공 팝업으로 교체했습니다.</li>
+              <li>일부 드롭다운 항목을 필수 입력으로 지정해, 값을 선택하지 않으면 제출되지 않도록 막았습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>강연 후기 페이지 카드 인터랙션 추가</h2>
+            <ul>
+              <li>`html/reviews.html`의 후기 카드 본문을 모바일에서 2줄까지만 보여주고, `더보기`를 누르면 전체 내용이 펼쳐지도록 기능을 추가했습니다.</li>
+              <li>후기 카드가 스크롤로 화면에 들어오면 아래에서 위로 페이드인되며 나타나는 효과를 추가했습니다(모바일 전용).</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>스크롤 시 카드 노출 효과 확대</h2>
+            <ul>
+              <li>메인홈 차별점 카드(`#features .fcard`), 출강 문의·강사 지원 진행 절차 카드(`.proc-flow-card`)에도 후기 카드와 동일하게 스크롤로 화면에 들어오면 나타나는 효과를 적용했습니다(모바일 전용).</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>우측 퀵메뉴(리모컨) 바 PC 노출 방식 수정</h2>
+            <ul>
+              <li>전체 페이지 공통으로, PC 화면에서 페이지 최상단에 있을 때는 우측 퀵메뉴 바가 숨겨져 있다가 스크롤을 260px 이상 내리면 나타나도록 수정했습니다. 이전에는 이 효과가 모바일에서만 적용돼 PC에서는 항상 보이는 상태였습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>소개 페이지 히어로 섹션 모바일 정리</h2>
+            <ul>
+              <li>`html/about.html` 히어로 제목("AI 시대를 준비하는 가장 쉬운 시작")과 하단 설명 문구의 모바일 줄바꿈 위치를 정리하고, 최종적으로 다른 페이지(강연 후기, 출강 문의, FAQ, 메인홈)와 동일한 반응형 폰트 크기 규칙(900px 이하 `clamp(24px,7vw,32px)`, 480px 이하 `clamp(21px,6.4vw,26px)`)으로 통일했습니다.</li>
+              <li>모바일 히어로 상하 여백(패딩)을 줄여 다른 페이지의 히어로 높이와 비슷하게 맞췄습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>소개 페이지 본문 섹션 모바일 레이아웃 정리</h2>
+            <ul>
+              <li>`Our Story` 섹션의 마우스 추적 로고 이미지를 모바일 화면에서는 노출되지 않도록 숨겼습니다.</li>
+              <li>대표 인용구("배운 순간 바로 활용할 수 있어야...")를 모바일에서 왼쪽 정렬로 바꾸고, 지정된 위치로 줄바꿈했습니다.</li>
+              <li>`교육 철학` 소제목과 Goal 배너 문구를 모바일 전용 줄바꿈으로 다듬었습니다.</li>
+              <li>교육 철학 카드와 Goal 배너 사이에, 모바일에서만 보이는 브랜드 그라데이션 색상의 2단 화살표(셰브론) 그래픽을 추가했습니다.</li>
+              <li>`Instructor` 섹션의 강사 카드가 모바일에서 1열로 쌓이지 않고 PC와 같이 2열로 나란히 보이도록 수정했습니다.</li>
+              <li>`Focus ON / Carry ON` 소개 블록 중 `Carry ON` 항목이 모바일에서 이미지보다 텍스트가 먼저 나오도록(다른 블록과 같은 순서로) 노출 순서를 바꿨습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>메인홈 히어로 슬라이더 모바일 조작 방식 개선</h2>
+            <ul>
+              <li>`html/index.html` 메인 히어로 배너의 좌우 화살표 버튼(`.h-arrows`)을 모바일 화면에서 숨겼습니다.</li>
+              <li>대신 손가락으로 좌우로 스와이프하면 배너가 전환되도록 `html/assets/site-content-renderer.js`에 터치 스와이프 기능을 추가했습니다. 세로 스크롤과 헷갈리지 않도록 가로 이동이 뚜렷할 때만 반응하도록 처리했습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>메인홈 현장 맛보기 카테고리 모바일 드롭다운화</h2>
+            <ul>
+              <li>`html/index.html` `현장 맛보기` 영상 카테고리 탭이 모바일에서는 선택된 항목 1개만 보이고, 탭하면 나머지 항목이 드롭다운으로 펼쳐지도록 바꿨습니다.</li>
+              <li>다른 카테고리를 선택하면 영상이 전환되면서 해당 항목이 목록 맨 위로 이동하고 드롭다운은 자동으로 닫히며, 다음에 다시 열어도 마지막 선택 항목이 최상단에 유지되도록 했습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>메인홈 강사진(서클 테스티모니얼) 섹션 모바일 정리</h2>
+            <ul>
+              <li>`#tutors` 섹션에서 제목과 강사 사진 사이 간격을 모바일에서 더 넓혔습니다.</li>
+              <li>강사 소개 하단의 알약 모양 태그 목록을 모바일에서는 숨겼습니다.</li>
+              <li>강사 소개 내용이 모바일에서 이름 → 역할(회색 글자) → 소개글 순서로 보이도록 정리했습니다. 이 섹션은 기본 데모 데이터(`tc-` 클래스)와 실제 관리자(CMS) 강사 데이터(`ctd-` 클래스)가 서로 다른 마크업으로 렌더링되는 점을 확인해 두 경우 모두에 순서 규칙을 반영했습니다.</li>
+            </ul>
+          </section>
+          <section class="log-section">
+            <h2>메인홈 히어로 CTA 버튼 모바일 크기 조정</h2>
+            <ul>
+              <li>`html/index.html` 메인 히어로의 `무료 특강 신청` / `유료 특강 신청` 버튼을 모바일에서 높이 32px→40px, 글자 크기 12px→16px로 키웠습니다.</li>
             </ul>
           </section>
         </div>

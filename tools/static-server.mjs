@@ -51,6 +51,6 @@ createServer((req, res) => {
     'Cache-Control': 'no-store'
   });
   createReadStream(target).pipe(res);
-}).listen(port, '127.0.0.1', () => {
-  console.log(`Serving ${root} at http://127.0.0.1:${port}/`);
+}).listen(port, '0.0.0.0', () => {
+  console.log(`Serving ${root} at http://127.0.0.1:${port}/ (also reachable from your phone via your computer's local IP, e.g. http://192.168.x.x:${port}/)`);
 });

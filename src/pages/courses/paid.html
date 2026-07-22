@@ -89,10 +89,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"/>
 <link rel="stylesheet" href="../shared.css"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17060350229"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17060350229');
+</script>
 <style>
 /* ── Hero 한 줄 강제 ── */
   .page-hero h1 { white-space: nowrap; }
   .page-hero .ph-desc { max-width: none; white-space: nowrap; }
+  /* ── 히어로 폰트 스타일 통일 (강연 후기 페이지 기준) ── */
+  @media (max-width:900px) {
+    body .page-hero h1 { font-size:clamp(24px, 7vw, 32px) !important; word-break:keep-all !important; }
+  }
+  @media (max-width:480px) {
+    body .page-hero h1 { font-size:clamp(21px, 6.4vw, 26px) !important; }
+  }
 
   /* ── Aurora hero ── */
   .aurora-hero { background: #000 !important; position: relative; overflow: hidden; }
@@ -204,7 +219,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .featured-card .fc-footer { margin-top:24px; padding-top:20px; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
 
   @media (max-width:900px) { .course-grid { grid-template-columns:repeat(2,1fr); } .featured-card { grid-template-columns:1fr; } .featured-card .fc-img { padding:36px 28px; } }
-  @media (max-width:540px) { .course-grid { grid-template-columns:1fr; } }
+  @media (max-width:540px) { .course-grid { grid-template-columns:repeat(2,1fr); gap:12px; } }
+  @media (max-width:640px) {
+    .filters {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter-btn { flex: 0 0 auto; white-space: nowrap; }
+  }
 
   /* Modal */
   .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:500; align-items:center; justify-content:center; padding:20px; }
@@ -240,6 +265,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   #courseGrid .card .cc-tags { display:flex; flex-wrap:wrap; gap:6px; }
   #courseGrid .card .cc-tags span { font-size:11px; font-weight:700; padding:4px 10px; border-radius:4px; color:#5b6675; background:rgba(12,24,40,.055); }
   #courseGrid .card .cc-tags .hot { color:#0172fe; background:#e8f1ff; }
+  @media (max-width:540px) {
+    #courseGrid .card .cc-deadline-badge { top:8px; left:8px; height:22px; padding:0 8px; font-size:10px; }
+    #courseGrid .card .course-body { padding:12px 8px 14px; }
+    #courseGrid .card .course-body h3 { font-size:17px; line-height:1.4; margin-bottom:6px; word-break:keep-all; }
+    #courseGrid .card .cc-instructor { font-size:12px; margin:0 0 4px; }
+    #courseGrid .card .cc-remaining { font-size:11px; margin:0 0 8px; }
+    #courseGrid .card .cc-price { font-size:15px; margin-bottom:8px; }
+    #courseGrid .card .cc-tags { gap:4px; }
+    #courseGrid .card .cc-tags span { font-size:10px; padding:3px 8px; }
+    #courseGrid .card .c-price .disc-pct,
+    #courseGrid .card .c-price span[style*="ef1f1f"] { font-size:15px !important; }
+    #courseGrid .card .c-price .orig { font-size:14px; }
+    #courseGrid .card .c-price .final { font-size:15px !important; }
+  }
 </style>
 <style>
   .legal-modal-bg{position:fixed;inset:0;z-index:9999;background:rgba(12,24,40,.55);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s ease;}
@@ -364,7 +403,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="modal-course" id="modalCourseName"></p>
     <form onsubmit="submitForm(event)">
       <div class="form-group"><label class="form-label" for="m-name">이름<span class="req">*</span></label><input class="form-input" id="m-name" type="text" placeholder="홍길동" required autocomplete="name"/></div>
-      <div class="form-group"><label class="form-label" for="m-phone">연락처<span class="req">*</span></label><input class="form-input" id="m-phone" type="tel" placeholder="01012345678" required autocomplete="tel" inputmode="numeric" pattern="[0-9]{9,11}" maxlength="11" title="연락처는 숫자만 9~11자리로 입력해 주세요."/></div>
+      <div class="form-group"><label class="form-label" for="m-phone">연락처<span class="req">*</span></label><input class="form-input" id="m-phone" type="tel" placeholder="010-0000-0000" required autocomplete="tel" inputmode="numeric" title="숫자만 입력하면 자동으로 하이픈(-)이 입력됩니다."/></div>
       <div class="form-group"><label class="form-label" for="m-email">이메일<span class="req">*</span></label><input class="form-input" id="m-email" type="email" placeholder="example@email.com" required autocomplete="email"/></div>
       <div class="form-group">
         <label class="form-label">결제방식<span class="req">*</span></label>
@@ -395,8 +434,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
-<div data-site-footer></div>
-<script>window.AiLeadersLayout && window.AiLeadersLayout.renderFooter();</script>
+<footer class="footer site-footer">
+  <div class="container">
+    <div class="ft-wrap">
+      <div class="ft-left">
+        <div class="ft-logo"><img class="logo" src="../images/logo-ink.png" alt="AI 리더스 협회"/></div>
+        <div class="ft-social">
+          <a href="https://www.youtube.com/@AI%EB%A6%AC%EB%8D%94%EC%8A%A4%ED%98%91%ED%9A%8C" target="_blank" rel="noopener" class="sbtn" aria-label="유튜브"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.77-1.77C19.27 5 12 5 12 5s-7.27 0-8.83.53A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.77 1.77C4.73 19 12 19 12 19s7.27 0 8.83-.53A2.5 2.5 0 0 0 22.6 16.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l6.2 3.3-6.2 3.3z"/></svg></a>
+          <a href="https://www.instagram.com/ai_leaders_/" target="_blank" rel="noopener" class="sbtn" aria-label="인스타그램"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-right">
+        <p class="ft-biz">AI리더스협회<span class="bar">|</span>주소 : 영등포구 선유로70 우리벤처타운2<span class="bar">|</span>대표 : 김영주<span class="bar">|</span>사업자등록번호 : 352-88-01460<span class="bar">|</span>TEL : 010-4269-0213</p>
+        <p class="ft-copy">COPYRIGHT ⓒ AI리더스협회 ALL RIGHTS RESERVED</p>
+        <p class="ft-links"><a href="#" onclick="openLegal('privacyModal');return false;">개인정보처리방침</a><a href="#" onclick="openLegal('termsModal');return false;">이용약관</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <script src="/assets/supabase-store-common.js?v=20260721-performance-1"></script>
 <script src="/assets/courses-store.js?v=20260721-performance-3"></script>
@@ -458,16 +513,61 @@ function openModal(name){
 function closeModal(){document.getElementById('modalBg').classList.remove('open');}
 document.getElementById('modalBg').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+function autoHyphenPhone(raw){
+  var v=String(raw||'').replace(/[^0-9]/g,'').slice(0,11);
+  var isSeoul=v.slice(0,2)==='02';
+  if(isSeoul) v=v.slice(0,10);
+  if(v.length<=(isSeoul?2:3)) return v;
+  if(isSeoul){
+    if(v.length<=6) return v.slice(0,2)+'-'+v.slice(2);
+    if(v.length<=9) return v.slice(0,2)+'-'+v.slice(2,v.length-4)+'-'+v.slice(-4);
+    return v.slice(0,2)+'-'+v.slice(2,6)+'-'+v.slice(6,10);
+  }
+  if(v.length<=7) return v.slice(0,3)+'-'+v.slice(3);
+  if(v.length<=10) return v.slice(0,3)+'-'+v.slice(3,v.length-4)+'-'+v.slice(-4);
+  return v.slice(0,3)+'-'+v.slice(3,7)+'-'+v.slice(7,11);
+}
+function isPlausibleKoreanPhone(raw){
+  var digits=String(raw||'').replace(/[^0-9]/g,'');
+  if(digits.length<9||digits.length>11) return false;
+  if(/^(\d)\1{8,10}$/.test(digits)) return false;
+  var prefixLen=/^01/.test(digits)?3:(digits.slice(0,2)==='02'?2:3);
+  var rest=digits.slice(prefixLen);
+  if(rest.length>=6&&/^(\d)\1+$/.test(rest)) return false;
+  var isMobile=/^01[016789]/.test(digits)&&(digits.length===10||digits.length===11);
+  var isSeoul=/^02/.test(digits)&&(digits.length===9||digits.length===10);
+  var isOtherAreaCode=/^0(3[1-3]|4[1-4]|5[1-5]|6[1-4]|70)\d{6,8}$/.test(digits)&&digits.length>=9&&digits.length<=11;
+  return isMobile||isSeoul||isOtherAreaCode;
+}
 function setupPhoneField(){
   const phoneEl=document.getElementById('m-phone');
   if(!phoneEl||phoneEl.dataset.numericBound==='true') return;
   phoneEl.dataset.numericBound='true';
   phoneEl.addEventListener('input',function(){
-    const digitsOnly=this.value.replace(/\D+/g,'');
-    if(this.value!==digitsOnly) this.value=digitsOnly;
+    this.value=autoHyphenPhone(this.value);
+    if(this.value && !isPlausibleKoreanPhone(this.value)){
+      this.setCustomValidity('연락처 형식을 다시 확인해주세요.');
+    } else {
+      this.setCustomValidity('');
+    }
   });
 }
 setupPhoneField();
+function showSuccessPopup(title, message) {
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:600;display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.innerHTML = '<div style="background:#fff;border-radius:16px;padding:40px 36px;max-width:400px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.2);">'
+    + '<div style="width:52px;height:52px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">'
+    + '<svg width="26" height="26" fill="none" stroke="#16a34a" stroke-width="2.4" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    + '</div>'
+    + '<h3 style="font-size:18px;font-weight:700;color:#111;margin-bottom:10px;">' + title + '</h3>'
+    + '<p style="font-size:14px;color:#6b7280;line-height:1.7;word-break:keep-all;">' + message + '</p>'
+    + '<button type="button" style="margin-top:24px;width:100%;height:48px;background:#111;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;">확인</button>'
+    + '</div>';
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) overlay.remove(); });
+  overlay.querySelector('button').addEventListener('click', function () { overlay.remove(); });
+  document.body.appendChild(overlay);
+}
 async function submitForm(e){
   e.preventDefault();
   const nameEl = document.getElementById('m-name');
@@ -516,7 +616,7 @@ async function submitForm(e){
       return;
     }
   }
-  alert('수강 신청이 완료되었습니다!\n1영업일 이내 연락드리겠습니다.');
+  showSuccessPopup('수강 신청이 완료되었습니다!', '안내 문자는 영업일 기준 1~3일 이내 순차 발송됩니다. 선정되신 분에 한해 개별 안내 문자를 보내드립니다.');
   closeModal();
   e.target.reset();
 }
@@ -595,5 +695,6 @@ async function submitForm(e){
 
 
 <script src="/assets/mobile-nav.js"></script>
+<script src="/assets/chatbot-launcher.js"></script>
 </body>
 </html>
