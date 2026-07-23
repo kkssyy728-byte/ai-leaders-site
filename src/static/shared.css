@@ -179,6 +179,11 @@ h3.sh {
 @media (max-width: 768px) {
   input:not([type="checkbox"]):not([type="radio"]), select, textarea { font-size: 16px !important; }
 }
+/* iOS 성능: 모바일에서 backdrop-filter(배경 흐림) 비활성화 — 렉 방지. 흰색 콘텐츠 카드는 불투명 처리 */
+@media (max-width: 768px) {
+  * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .nav.scrolled, .rv-card, .prog-card { background: #fff !important; }
+}
 .field-popup {
   position: absolute; top: 100%; left: 0; margin-top: 8px; z-index: 40;
   display: inline-flex; align-items: center; gap: 7px;
