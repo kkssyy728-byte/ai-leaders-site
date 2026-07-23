@@ -175,6 +175,10 @@ h3.sh {
 .form-hint   { font-size: 12px; color: var(--hint); }
 .form-group { position: relative; }
 .form-input.is-invalid, .form-select.is-invalid, .form-textarea.is-invalid { border-color: #e11d48 !important; }
+/* iOS Safari가 16px 미만 입력창을 탭할 때 화면이 자동 확대(줌인)되는 현상 방지 — 모바일에서 폼 요소 최소 16px */
+@media (max-width: 768px) {
+  input:not([type="checkbox"]):not([type="radio"]), select, textarea { font-size: 16px !important; }
+}
 .field-popup {
   position: absolute; top: 100%; left: 0; margin-top: 8px; z-index: 40;
   display: inline-flex; align-items: center; gap: 7px;
