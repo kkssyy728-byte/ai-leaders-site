@@ -199,7 +199,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   #cp3-svg.play .cp3-s2 { opacity:1; transform:none; transition-delay:.50s; }
   #cp3-svg.play .cp3-s3 { opacity:1; transform:none; transition-delay:.82s; }
   @media (prefers-reduced-motion: reduce){ #cp3-svg .cp3-step { opacity:1; transform:none; transition:none; } }
-  @media (max-width:760px){ #cp3-svg .cp3-step { opacity:1; transform:none; transition:none; } }
   .curric-divider { max-width:1000px; margin:32px auto 0; display:flex; align-items:center; justify-content:center; }
   .curric-divider .curric-plus { color:#0172fe; font-size:34px; font-weight:800; line-height:1; }
   .curric-toggle { display:none; width:100%; max-width:1000px; margin:32px auto 0; box-sizing:border-box; align-items:center; justify-content:space-between; gap:12px; background:#fff; border:1px solid #e3ebf7; border-radius:14px; padding:16px 20px; box-shadow:0 6px 16px rgba(79,86,180,.08); font-size:15px; font-weight:800; color:#171a2b; cursor:pointer; text-align:left; }
@@ -211,10 +210,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .curric-label { font-size:16px; font-weight:800; color:#171a2b; word-break:keep-all; }
   @media (max-width:760px){
     .curric-divider { display:none; }
-    .curric-toggle { display:flex; }
+    .curric-toggle { display:flex; border:1px solid #bcd4fb; border-radius:14px; background:#eef5ff; color:#0172fe; box-shadow:none; }
     .curric-list { grid-template-columns:1fr; gap:0; margin-top:12px; display:none; }
-    .curric-list.open { display:block; width:88%; margin:12px auto 0; background:#fff; border-radius:14px; box-shadow:0 6px 16px rgba(79,86,180,.08); padding:2px 16px; opacity:1; transform:none; }
-    .curric-list.open .curric-item { background:none; box-shadow:none; border-radius:0; padding:13px 0; gap:12px; border-bottom:1px solid #eef1f7; }
+    .curric-list.open { display:block; width:88%; margin:0 auto; background:rgba(255,255,255,0.9); border:1px solid #bcd4fb; border-top:none; border-radius:0 0 14px 14px; box-shadow:0 6px 18px rgba(79,86,180,.12); padding:2px 16px; opacity:1; transform:none; }
+    .curric-list.open .curric-item { background:none; box-shadow:none; border-radius:0; padding:13px 0; gap:12px; border-bottom:1px solid #e3ecfb; }
     .curric-list.open .curric-item:last-child { border-bottom:none; }
     .curric-item { padding:12px 16px; border-radius:12px; }
     .curric-num { min-width:30px; height:26px; font-size:12px; }
@@ -228,10 +227,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .cp-desc { font-size:14px; margin-top:10px; }
     .cp-meta { font-size:13px; margin-top:10px; }
     .cp-tags-box { padding:16px 14px; border-radius:14px; }
-    .cp-tags-row { gap:7px; animation:none !important; }
-    .cp-tags-box .cp-tags-row:nth-child(1){ transform:translateX(-24px) !important; }
-    .cp-tags-box .cp-tags-row:nth-child(2){ transform:translateX(-64px) !important; }
-    .cp-tags-box .cp-tags-row:nth-child(3){ transform:translateX(-40px) !important; }
+    .cp-tags-row { gap:7px; }
     .cp-tags-row + .cp-tags-row { margin-top:7px; }
     .cp-tags-row span { font-size:13px; padding:7px 13px; }
     .cp-tile { padding:18px 12px; }
@@ -502,21 +498,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <line x1="136" y1="51" x2="174" y2="51" stroke="#a9c8fb" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 9"/>
                 <circle cx="122" cy="51" r="11" fill="#cfe0fd"/>
                 <circle cx="122" cy="51" r="6" fill="#0172fe"/>
-                <rect x="178" y="25" width="190" height="52" rx="26" fill="url(#cp3-pill)" filter="url(#cp3-shadow)"/>
+                <rect x="178" y="28" width="190" height="52" rx="26" fill="#0b57c4" opacity="0.13"/>
+                <rect x="178" y="25" width="190" height="52" rx="26" fill="url(#cp3-pill)"/>
                 <text x="273" y="51" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-size="22" font-weight="700">AI 도입 전략</text>
               </g>
               <g class="cp3-step cp3-s2">
                 <line x1="136" y1="131" x2="174" y2="131" stroke="#a9c8fb" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 9"/>
                 <circle cx="122" cy="131" r="11" fill="#cfe0fd"/>
                 <circle cx="122" cy="131" r="6" fill="#0172fe"/>
-                <rect x="178" y="105" width="190" height="52" rx="26" fill="url(#cp3-pill)" filter="url(#cp3-shadow)"/>
+                <rect x="178" y="108" width="190" height="52" rx="26" fill="#0b57c4" opacity="0.13"/>
+                <rect x="178" y="105" width="190" height="52" rx="26" fill="url(#cp3-pill)"/>
                 <text x="273" y="131" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-size="22" font-weight="700">업무 혁신 실행</text>
               </g>
               <g class="cp3-step cp3-s3">
                 <line x1="136" y1="211" x2="174" y2="211" stroke="#a9c8fb" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 9"/>
                 <circle cx="122" cy="211" r="11" fill="#cfe0fd"/>
                 <circle cx="122" cy="211" r="6" fill="#0172fe"/>
-                <rect x="178" y="185" width="190" height="52" rx="26" fill="url(#cp3-pill)" filter="url(#cp3-shadow)"/>
+                <rect x="178" y="188" width="190" height="52" rx="26" fill="#0b57c4" opacity="0.13"/>
+                <rect x="178" y="185" width="190" height="52" rx="26" fill="url(#cp3-pill)"/>
                 <text x="273" y="211" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-size="22" font-weight="700">조직 변화 관리</text>
               </g>
             </svg>
@@ -625,7 +624,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const cp3=document.getElementById('cp3-svg');
   if(cp3){
     const cp3spine=document.getElementById('cp3-spine-anim');
-    const cp3reduce=window.matchMedia&&(window.matchMedia('(prefers-reduced-motion: reduce)').matches||window.matchMedia('(max-width:760px)').matches);
+    const cp3reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(cp3reduce){cp3.classList.add('play');const l=document.getElementById('cp3-spine');if(l)l.setAttribute('y2','262');}
     else{const cp3io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){cp3.classList.add('play');if(cp3spine&&cp3spine.beginElement){try{cp3spine.beginElement();}catch(_){}}cp3io.unobserve(cp3);}}),{threshold:0.35});cp3io.observe(cp3);}
   }
@@ -686,13 +685,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const rows=rowEls.map(r=>Array.prototype.slice.call(r.querySelectorAll('span')));
   const hasChips=rows.some(r=>r.length);
   if(tagsBox && hasChips){
-    const cpMobile = window.matchMedia && window.matchMedia('(max-width:760px)').matches;
-    if(cpMobile){
-      // 모바일: 정지 상태에서 줄마다 서로 멀리 떨어진 태그 1개씩(총 3개)만 클릭(on) 고정
-      const onIdx=[1,4,2];
-      rows.forEach(function(arr,r){ arr.forEach(function(chip,i){ chip.classList.toggle('on', i===onIdx[r]); }); });
-      return;
-    }
     // 하나의 타이머로 2초마다 on/off를 판정하되, 같은 줄에서 바로 옆 태그와는
     // 동시에 켜지지 않도록 하고, 줄마다 최소 1개는 항상 켜져 있도록 보장
     const onChance=0.16;
