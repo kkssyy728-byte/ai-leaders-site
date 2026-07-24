@@ -256,7 +256,9 @@
   var storeSubscribed = false;
 
   function pageSize() {
-    return global.matchMedia && global.matchMedia('(max-width:540px)').matches ? 4 : 6;
+    var isMobile = global.matchMedia && global.matchMedia('(max-width:540px)').matches;
+    if (isMobile) return (pagedState && pagedState.mobilePageSize) || 4;
+    return 6;
   }
 
   function allCoursesForState() {
@@ -421,6 +423,7 @@
     pagedState = {
       type: options.type,
       gridId: options.gridId || 'courseGrid',
+      mobilePageSize: options.mobilePageSize,
       filter: 'all',
       region: 'all',
       page: 0

@@ -302,19 +302,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
 
   .subfilters { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: -18px 0 32px; }
-  .region-search-bar { display: none; }
+  .region-search-bar {
+    display: flex; align-items: center; gap: 8px;
+    flex: 1; min-width: 140px; height: 38px; padding: 0 14px;
+    border: 1px solid var(--line); border-radius: 12px; background: #fff;
+  }
+  .region-search-bar .dd-search-icon { width: 18px; height: 18px; color: var(--muted); flex: none; }
+  .region-search-bar .dd-search-input {
+    flex: 1; min-width: 0; border: none; outline: none; background: transparent;
+    font-size: 15px; font-weight: 600; color: var(--ink);
+  }
+  .region-search-bar .dd-search-input::placeholder { color: #9aa5b1; font-weight: 500; }
   @media (min-width: 641px) {
-    .region-search-bar {
-      display: flex; align-items: center; gap: 8px; margin-left: auto;
-      width: 320px; height: 46px; padding: 0 16px;
-      border: 1px solid var(--line); border-radius: 12px; background: #fff;
-    }
-    .region-search-bar .dd-search-icon { width: 18px; height: 18px; color: var(--muted); flex: none; }
-    .region-search-bar .dd-search-input {
-      flex: 1; min-width: 0; border: none; outline: none; background: transparent;
-      font-size: 15px; font-weight: 600; color: var(--ink);
-    }
-    .region-search-bar .dd-search-input::placeholder { color: #9aa5b1; font-weight: 500; }
+    .region-search-bar { height: 46px; padding: 0 16px; }
   }
   .dd { position: relative; }
   .dd-btn {
@@ -452,46 +452,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div class="subfilters reveal" role="group" aria-label="지역 필터">
-        <div class="dd" id="regionDd">
-          <div class="dd-sheet-backdrop" onclick="closeRegionDd()"></div>
-          <button class="dd-btn" type="button" onclick="toggleRegionDd(event)">
-            <span id="regionDdLabel">지역</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
-          <div class="dd-menu" id="regionDdMenu">
-            <div class="dd-sheet-head">
-              <span>지역</span>
-              <button type="button" class="dd-sheet-close" onclick="closeRegionDd()" aria-label="닫기">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              </button>
-            </div>
-            <div class="dd-search">
-              <svg class="dd-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" class="dd-search-input" id="regionSearchInput" placeholder="찾으시는 지역을 입력해주세요" oninput="filterRegionOptions(this.value)" autocomplete="off"/>
-            </div>
-            <div class="dd-opt-grid">
-              <button class="dd-opt active" type="button" data-region="all" onclick="filterRegion('all',this)">전체</button>
-              <button class="dd-opt" type="button" data-region="서울" onclick="filterRegion('서울',this)">서울</button>
-              <button class="dd-opt" type="button" data-region="경기" onclick="filterRegion('경기',this)">경기</button>
-              <button class="dd-opt" type="button" data-region="인천" onclick="filterRegion('인천',this)">인천</button>
-              <button class="dd-opt" type="button" data-region="부산" onclick="filterRegion('부산',this)">부산</button>
-              <button class="dd-opt" type="button" data-region="대구" onclick="filterRegion('대구',this)">대구</button>
-              <button class="dd-opt" type="button" data-region="대전" onclick="filterRegion('대전',this)">대전</button>
-              <button class="dd-opt" type="button" data-region="광주" onclick="filterRegion('광주',this)">광주</button>
-              <button class="dd-opt" type="button" data-region="울산" onclick="filterRegion('울산',this)">울산</button>
-              <button class="dd-opt" type="button" data-region="세종" onclick="filterRegion('세종',this)">세종</button>
-              <button class="dd-opt" type="button" data-region="강원" onclick="filterRegion('강원',this)">강원</button>
-              <button class="dd-opt" type="button" data-region="충북" onclick="filterRegion('충북',this)">충북</button>
-              <button class="dd-opt" type="button" data-region="충남" onclick="filterRegion('충남',this)">충남</button>
-              <button class="dd-opt" type="button" data-region="전북" onclick="filterRegion('전북',this)">전북</button>
-              <button class="dd-opt" type="button" data-region="전남" onclick="filterRegion('전남',this)">전남</button>
-              <button class="dd-opt" type="button" data-region="경북" onclick="filterRegion('경북',this)">경북</button>
-              <button class="dd-opt" type="button" data-region="경남" onclick="filterRegion('경남',this)">경남</button>
-              <button class="dd-opt" type="button" data-region="제주" onclick="filterRegion('제주',this)">제주</button>
-            </div>
-            <div class="dd-opt-grid dd-opt-grid-city" id="regionCityResults" style="display:none;"></div>
-          </div>
-        </div>
         <div class="region-search-bar">
           <svg class="dd-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <input type="text" class="dd-search-input" id="mainRegionSearchInput" placeholder="찾으시는 지역을 입력해주세요" oninput="handleMainRegionSearch(this.value)" autocomplete="off"/>
@@ -740,7 +700,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="/assets/course-page-renderer.js"></script>
 <script src="/assets/applications-store.js?v=20260721-form-submit-1"></script>
 <script>
-CoursePageRenderer.render({ type: 'free' });
+CoursePageRenderer.render({ type: 'free', mobilePageSize: 6 });
 </script>
 <script>
 (function(){
