@@ -206,7 +206,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .benefit-ic svg { stroke:var(--brand); }
   @media (max-width:900px){
     .apply-aside > p { color:#1f2937 !important; }
-    .benefit p { color:#1f2937 !important; }
+    .benefit p { display:none; }
+    .benefit{ align-items:center; }
   }
 
   /* 글래스모피즘 폼 */
@@ -517,7 +518,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 (function(){
   const procFlow=document.querySelector('.proc-flow');
   const procCards=Array.prototype.slice.call(document.querySelectorAll('.proc-flow-card'));
-  if(procFlow && procCards.length){
+  if(procFlow && procCards.length && !window.matchMedia('(max-width:860px)').matches){
     const procRo=new IntersectionObserver(entries=>entries.forEach(e=>{
       if(e.isIntersecting){
         let i=0;
@@ -772,7 +773,7 @@ async function submitForm(e) {
 <!-- ===== 우측 리모컨(퀵메뉴) 바 ===== -->
 
 <div data-site-quick-links></div>
-<script src="/assets/quick-links.js?v=20260719-mobile-tabs-1"></script>
+<script src="/assets/quick-links.js?v=20260723-mobile-toggle-2"></script>
 <!-- ===== 리모컨 바 끝 ===== -->
 
 <!-- ===== 개인정보·이용약관 팝업 ===== -->
@@ -937,5 +938,6 @@ async function submitForm(e) {
 
 <script src="/assets/mobile-nav.js"></script>
 <script src="/assets/chatbot-launcher.js"></script>
+<script src="/assets/mobile-tabbar.js?v=20260723-4"></script>
 </body>
 </html>

@@ -54,6 +54,7 @@ for (const expected of expectedLinks) {
 }
 if (count(component, 'class=\"qitem\"') !== 5) errors.push('src/assets/quick-links.js: expected exactly five social items');
 if (!component.includes('class=\"q-top\"')) errors.push('src/assets/quick-links.js: missing TOP button');
+if (!component.includes('class=\"q-toggle\"')) errors.push('src/assets/quick-links.js: missing mobile expand/collapse toggle button');
 if (!component.includes('class=\"q-naver-mark\"') || !component.includes('fill=\"currentColor\"') || !component.includes('fill=\"#ffffff\"')) {
   errors.push('src/assets/quick-links.js: missing tone-matched monochrome Naver Cafe icon');
 }
@@ -63,16 +64,21 @@ if (!component.includes('transform=\"translate(6.666667 6.666667) scale(.4444444
 
 const styles = await readFile(path.join(root, 'src/assets/quick-links.css'), 'utf8');
 const requiredStyles = [
-  'grid-template-columns: repeat(5, minmax(0, 1fr))',
-  'bottom: calc(var(--quick-links-tab-height) + env(safe-area-inset-bottom, 0px) + 12px)',
+  '.quick-links.is-expanded .qitem',
+  '.q-toggle',
   'border-radius: 50%',
-  'background: rgba(12, 24, 40, .78)',
+  '.quick-links .q-top {',
   '.quick-links.is-scrolled .q-top',
 ];
 for (const required of requiredStyles) {
   if (!styles.includes(required)) errors.push(`src/assets/quick-links.css: missing responsive rule ${required}`);
 }
-if (styles.includes('#03c75a')) errors.push('src/assets/quick-links.css: legacy green Naver color remains');
+if (!/\.quick-links \.q-top \{[^}]*background:\s*#0c1828/.test(styles)) {
+  errors.push('src/assets/quick-links.css: mobile TOP button must be a solid dark fill, not translucent');
+}
+if (!/\.quick-links\.is-expanded \.qitem:nth-child\(3\),\s*\n\s*\.quick-links\.is-expanded \.qitem:nth-child\(5\)\s*\{\s*\n\s*display:\s*none;/.test(styles)) {
+  errors.push('src/assets/quick-links.css: expanded mobile menu must show only Instagram, Facebook, YouTube (Kakao/Naver hidden)');
+}
 
 const layout = await readFile(path.join(root, 'src/assets/site-layout.js'), 'utf8');
 if (!layout.includes('href=\"https://cafe.naver.com/newaileaders\"')) {
@@ -91,4 +97,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`[quick-links] PASS (${pages.length} public pages, five mobile social tabs, floating TOP button)`);
+console.log(`[quick-links] PASS (${pages.length} public pages, expandable mobile SNS toggle, floating TOP button)`);

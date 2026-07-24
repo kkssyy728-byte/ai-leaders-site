@@ -1,7 +1,7 @@
 (function (global) {
   'use strict';
 
-  var STYLE_HREF = '/assets/quick-links.css?v=20260719-mobile-tabs-2';
+  var STYLE_HREF = '/assets/quick-links.css?v=20260723-mobile-toggle-2';
   var MOBILE_QUERY = '(max-width: 760px)';
   var HOME_REVEAL_OFFSET = 260;
 
@@ -29,6 +29,9 @@
     + '      <span class="q-label">네이버 카페</span><span class="q-tooltip">네이버 카페</span>'
     + '    </a>'
     + '  </nav>'
+    + '  <button class="q-toggle" type="button" aria-label="빠른 메뉴 열기" aria-expanded="false">'
+    + '    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>'
+    + '  </button>'
     + '  <button class="q-top" type="button" aria-label="페이지 맨 위로 이동">'
     + '    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>'
     + '    <span>TOP</span>'
@@ -66,6 +69,7 @@
 
     var root = document.querySelector('.quick-links');
     var topButton = root && root.querySelector('.q-top');
+    var toggleButton = root && root.querySelector('.q-toggle');
     var socialLinks = root ? Array.prototype.slice.call(root.querySelectorAll('.qitem')) : [];
     var mobile = global.matchMedia ? global.matchMedia(MOBILE_QUERY) : null;
     var home = isHomePage();
@@ -75,6 +79,11 @@
 
     function isMobile() {
       return mobile ? mobile.matches : global.innerWidth <= 760;
+    }
+
+    function setExpanded(open) {
+      root.classList.toggle('is-expanded', open);
+      if (toggleButton) toggleButton.setAttribute('aria-expanded', String(open));
     }
 
     function update() {
@@ -89,12 +98,24 @@
       });
       topButton.tabIndex = !isMobile() || scrolled ? 0 : -1;
       topButton.setAttribute('aria-hidden', isMobile() && !scrolled ? 'true' : 'false');
+      if (!isMobile()) setExpanded(false);
     }
 
     topButton.addEventListener('click', function () {
       var reduceMotion = global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
       global.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
     });
+
+    if (toggleButton) {
+      toggleButton.addEventListener('click', function () {
+        setExpanded(!root.classList.contains('is-expanded'));
+      });
+      document.addEventListener('click', function (event) {
+        if (!isMobile() || !root.classList.contains('is-expanded')) return;
+        if (root.contains(event.target)) return;
+        setExpanded(false);
+      });
+    }
 
     global.addEventListener('scroll', update, { passive: true });
     global.addEventListener('resize', update, { passive: true });

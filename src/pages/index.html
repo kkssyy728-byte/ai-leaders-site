@@ -965,15 +965,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .review .stars svg{ width:11px; height:11px; }
   }
   @media(max-width:600px){
-    .reviews-wrap{ display:block; width:min(calc(100% - 40px),320px); height:480px; margin:0 auto; }
-    .reviews-col{ width:100%; }
-    .reviews-col:nth-child(n+2){ display:none; }
-    .review{ padding:18px 16px; }
-    .review .q{ font-size:14px; line-height:1.65; }
-    .review .who b{ font-size:15px; }
-    .review .who span{ font-size:12px; }
-    .review .av{ width:36px; height:36px; font-size:13px; }
-    .review .stars svg{ width:13px; height:13px; }
+    .reviews-wrap{ gap:8px; height:460px; }
+    .reviews-col{ width:150px; }
+    .reviews-col:nth-child(3){ display:none; }
+    .review{ padding:14px 12px; }
+    .review .q{ font-size:12px; line-height:1.5; }
+    .review .who-row{ margin-bottom:8px; gap:8px; }
+    .review .who b{ font-size:13px; }
+    .review .who span{ font-size:10.5px; }
+    .review .av{ width:30px; height:30px; font-size:12px; }
+    .review .stars{ margin-bottom:6px; }
+    .review .stars svg{ width:11px; height:11px; }
   }
 
   /* 10. 기업교육 */
@@ -2560,15 +2562,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   .section-carousel .slide-visual{
     justify-self:center;
     align-self:auto;
-    width:min(100%,260px);
+    width:min(28%,110px);
     height:auto;
     aspect-ratio:1 / 1;
     max-height:none;
     overflow:hidden;
+    flex:none;
   }
   .section-carousel .slide-visual img{
     width:100%;
-    max-width:260px;
+    max-width:110px;
     height:100%;
     max-height:none;
     margin:0;
@@ -2587,7 +2590,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     font-size:13px;
   }
   .section-carousel .slide-visual{
-    width:min(100%,220px);
+    width:min(30%,96px);
   }
 }
 @media(prefers-reduced-motion:reduce){
@@ -3055,7 +3058,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="field-video-panel">
         <div class="field-video-frame">
-          <video id="fieldPreviewVideo" class="inline-field-video" controls playsinline preload="none" src="../videos/현장영상_쉽게 배우는 클로드2.mp4">
+          <video id="fieldPreviewVideo" class="inline-field-video" controls muted playsinline preload="none" src="../videos/현장영상_쉽게 배우는 클로드2.mp4">
             현재 브라우저에서는 영상을 재생할 수 없습니다.
           </video>
         </div>
@@ -3075,7 +3078,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   var section = document.getElementById('free');
   if(!tabs.length || !video) return;
   var currentIndex = 0;
-  var deferAutoplay = window.matchMedia && window.matchMedia('(max-width:700px)').matches;
+  var isMobileViewport = window.matchMedia && window.matchMedia('(max-width:700px)').matches;
 
   function switchToVideo(idx){
     currentIndex = (idx + videos.length) % videos.length;
@@ -3094,7 +3097,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   function requestVideoPlay(){
-    // 소리 켜진 상태로 재생 시도, 브라우저 차단 시 음소거로 대체
+    if(isMobileViewport){
+      // 모바일에서는 항상 음소거 상태로 자동 재생
+      video.muted = true;
+      video.play().catch(function(){});
+      return;
+    }
+    // 데스크탑: 소리 켜진 상태로 재생 시도, 브라우저 차단 시 음소거로 대체
     video.muted = false;
     var playAttempt = video.play();
     if(playAttempt && typeof playAttempt.catch === 'function'){
@@ -3122,7 +3131,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     video.pause();
     pausedByLeavingSection = true;
   }
-  if(!deferAutoplay && section && 'IntersectionObserver' in window){
+  if(section && 'IntersectionObserver' in window){
     var observer = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         var sectionActive = entry.isIntersecting && entry.intersectionRatio >= 0.35;
@@ -3138,7 +3147,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       });
     }, { threshold: [0, 0.35] });
     observer.observe(section);
-  } else if(!deferAutoplay) {
+  } else {
     playFirstVideo();
   }
   var actionsEl = document.querySelector('.field-preview-actions');
@@ -3743,7 +3752,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <!-- ===== 우측 리모컨(퀵메뉴) 바 ===== -->
 
 <div data-site-quick-links></div>
-<script src="/assets/quick-links.js?v=20260719-mobile-tabs-1"></script>
+<script src="/assets/quick-links.js?v=20260723-mobile-toggle-2"></script>
 <!-- ===== 리모컨 바 끝 ===== -->
 
 <!-- ===== 개인정보·이용약관 팝업 ===== -->
@@ -4079,6 +4088,7 @@ window.initFeaturedCourseCarousel();
 
 <script src="/assets/mobile-nav.js"></script>
 <script src="/assets/chatbot-launcher.js"></script>
+<script src="/assets/mobile-tabbar.js?v=20260723-4"></script>
 </body>
 </html>
 

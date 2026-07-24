@@ -36,10 +36,13 @@
     '  .chatbot-launcher svg{ width:24px; height:24px; }',
     '  .chatbot-launcher .cb-dot{ width:13px; height:13px; top:-2px; right:-2px; }',
     /* 모바일에서 우측 리모컨과 겹치지 않도록 위로 올림 */
-    '  .quick-bar{ bottom:88px !important; }',
+    '  .quick-links{ bottom:88px !important; }',
     /* 하단 고정 신청바(.sticky-cta 존재 = 디테일 페이지)가 있으면 그 위로 올림 */
     '  .has-sticky-cta .chatbot-launcher{ bottom:84px; }',
-    '  .has-sticky-cta .quick-bar{ bottom:142px !important; }',
+    '  .has-sticky-cta .quick-links{ bottom:142px !important; }',
+    /* 하단 모바일 탭바(.mobile-tabbar 존재)가 있으면 그 위로 올림 */
+    '  .has-mobile-tabbar .chatbot-launcher{ bottom:calc(64px + env(safe-area-inset-bottom, 0px) + 12px) !important; }',
+    '  .has-mobile-tabbar .quick-links{ bottom:calc(64px + env(safe-area-inset-bottom, 0px) + 70px) !important; }',
     '}'
   ].join('\n');
 

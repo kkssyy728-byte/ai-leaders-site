@@ -107,6 +107,10 @@
   flex: none;
 }
 
+.quick-links .q-toggle {
+  display: none;
+}
+
 .quick-links .q-top {
   display: flex;
   width: 100%;
@@ -156,94 +160,135 @@
   .quick-links.is-home:not(.is-visible) {
     position: fixed;
     top: auto;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 70;
-    width: auto;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    background: rgba(255, 255, 255, .96);
+    left: auto;
+    right: 14px;
+    bottom: 88px;
+    z-index: 65;
+    width: 46px;
+    padding-bottom: 0;
+    background: none;
     border: 0;
-    border-top: 1px solid rgba(12, 24, 40, .12);
-    border-radius: 16px 16px 0 0;
-    box-shadow: 0 -8px 28px rgba(12, 24, 40, .12);
+    border-radius: 0;
+    box-shadow: none;
     opacity: 1;
     pointer-events: auto;
     transform: none;
-    -webkit-backdrop-filter: blur(16px) saturate(130%);
-    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .quick-links-bar {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
   }
 
   .quick-links .qitem,
   .quick-links .qitem:first-child {
-    height: var(--quick-links-tab-height);
+    display: none;
+    width: 46px;
+    height: 46px;
     min-width: 0;
     flex-direction: column;
-    gap: 4px;
-    padding: 7px 2px 5px;
-    color: #344054;
-    background: transparent;
+    gap: 0;
+    padding: 0;
+    color: #fff;
+    background: #0c1828;
     border: 0;
-    border-radius: 0;
+    border-radius: 50%;
+    box-shadow: 0 6px 16px rgba(12, 24, 40, .22);
     -webkit-tap-highlight-color: transparent;
+  }
+
+  .quick-links.is-expanded .qitem {
+    display: flex;
+  }
+
+  /* 모바일 펼침 목록에는 인스타·페이스북·유튜브만 노출 (카카오·네이버 카페는 숨김) */
+  .quick-links.is-expanded .qitem:nth-child(3),
+  .quick-links.is-expanded .qitem:nth-child(5) {
+    display: none;
   }
 
   .quick-links .qitem:hover,
   .quick-links .qitem:focus-visible,
   .quick-links .qitem:active {
-    color: var(--brand, #0087ff);
-    background: rgba(0, 135, 255, .07);
+    color: #fff;
+    background: #0c1828;
   }
 
-  .quick-links .qitem:focus-visible {
-    outline: 2px solid rgba(0, 135, 255, .45);
-    outline-offset: -3px;
-  }
+  .quick-links .qitem:nth-child(1) { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); }
+  .quick-links .qitem:nth-child(2) { background: #1877f2; }
+  .quick-links .qitem:nth-child(3) { background: #fee500; color: #191919; }
+  .quick-links .qitem:nth-child(4) { background: #ff0000; }
+  .quick-links .qitem:nth-child(5) { background: #03c75a; }
 
   .quick-links .qitem svg,
   .quick-links .q-naver-mark {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
   }
 
   .quick-links .q-label {
-    display: block;
-    max-width: 100%;
-    overflow: hidden;
-    font-size: 10px;
-    font-weight: 650;
-    line-height: 1.15;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    display: none;
   }
 
   .quick-links .q-tooltip {
     display: none;
   }
 
-  .quick-links .q-top {
-    position: fixed;
-    right: 16px;
-    bottom: calc(var(--quick-links-tab-height) + env(safe-area-inset-bottom, 0px) + 12px);
-    width: 50px;
-    height: 50px;
-    gap: 0;
+  .quick-links .q-toggle {
+    display: flex;
+    width: 46px;
+    height: 46px;
+    margin: 0 auto 10px;
+    align-items: center;
+    justify-content: center;
     color: #fff;
-    background: rgba(12, 24, 40, .78);
-    border: 1px solid rgba(255, 255, 255, .28);
+    background: #0c1828;
+    border: 0;
     border-radius: 50%;
-    box-shadow: 0 8px 24px rgba(12, 24, 40, .22);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(8px) scale(.94);
-    transition: opacity .2s ease, transform .2s ease, background-color .15s ease;
-    -webkit-backdrop-filter: blur(10px) saturate(125%);
-    backdrop-filter: blur(10px) saturate(125%);
+    box-shadow: 0 6px 16px rgba(12, 24, 40, .22);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .quick-links .q-toggle:hover,
+  .quick-links .q-toggle:focus-visible {
+    background: #000;
+  }
+
+  .quick-links .q-toggle svg {
+    width: 22px;
+    height: 22px;
+    transition: transform .2s ease;
+  }
+
+  .quick-links.is-expanded .q-toggle svg {
+    transform: rotate(45deg);
+  }
+
+  .quick-links .q-top {
+    position: static;
+    display: flex;
+    width: 46px;
+    height: 46px;
+    margin: 0 auto;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: #0c1828;
+    border: 0;
+    border-radius: 50%;
+    box-shadow: 0 6px 16px rgba(12, 24, 40, .22);
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    transition: background-color .15s ease;
   }
 
   .quick-links.is-scrolled .q-top {
@@ -254,7 +299,7 @@
 
   .quick-links .q-top:hover,
   .quick-links .q-top:focus-visible {
-    background: rgba(12, 24, 40, .9);
+    background: #000;
   }
 
   .quick-links .q-top svg {
@@ -268,8 +313,7 @@
   }
 
   .quick-links-spacer {
-    display: block;
-    height: calc(var(--quick-links-tab-height) + env(safe-area-inset-bottom, 0px));
+    display: none;
   }
 }
 
@@ -277,7 +321,8 @@
   .quick-links,
   .quick-links .qitem,
   .quick-links .q-tooltip,
-  .quick-links .q-top {
+  .quick-links .q-top,
+  .quick-links .q-toggle svg {
     scroll-behavior: auto;
     transition: none;
   }
